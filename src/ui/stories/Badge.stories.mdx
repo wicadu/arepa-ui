@@ -1,0 +1,29 @@
+<!--- Badge.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Badge from '../atoms/Badge'
+
+<Meta title="Atoms/Badge" component={Badge} />
+
+# Badge
+
+With `MDX`, we can define a story for `Badge` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Badge">
+    <div>
+      <Badge>Lorem ipsum</Badge>
+      <Badge inverse>Lorem ipsum</Badge>
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Badge defaultColor='red'>Lorem ipsum</Badge>
+      <Badge defaultColor='red' inverse>Lorem ipsum</Badge>
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Badge defaultColor='green'>Lorem ipsum</Badge>
+      <Badge defaultColor='green' inverse>Lorem ipsum</Badge>
+    </div>
+  </Story>
+</Canvas>

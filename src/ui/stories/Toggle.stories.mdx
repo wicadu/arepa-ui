@@ -1,0 +1,21 @@
+<!--- Toggle.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Toggle from '../atoms/Toggle'
+
+<Meta title="Atoms/Toggle" component={Toggle} />
+
+# Toggle
+
+With `MDX`, we can define a story for `Toggle` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Toggle">
+    <Toggle defaultValue />
+    <Toggle defaultValue disabled />
+  </Story>
+</Canvas>
+
+

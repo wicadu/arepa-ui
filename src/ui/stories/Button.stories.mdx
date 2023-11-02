@@ -1,0 +1,45 @@
+<!--- Button.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Button from '../atoms/Button'
+
+<Meta title="Atoms/Button" component={Button} />
+
+# Button
+
+With `MDX`, we can define a story for `Button` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Button">
+    <div>
+      <Button type='primary'>Primary</Button>
+      <Button type='success'>Success</Button>
+      <Button type='error'>Error</Button>
+      <Button type='warning'>Warning</Button>
+      <Button type='ghost'>Ghost</Button>
+      <Button type='link'>Link</Button>
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Button inverse type='primary'>Primary</Button>
+      <Button inverse type='success'>Success</Button>
+      <Button inverse type='error'>Error</Button>
+      <Button inverse type='warning'>Warning</Button>
+    </div>
+    <div style={{ marginTop: 50 }}>
+      <Button loading type='primary'>Primary</Button>
+      <Button loading type='success'>Success</Button>
+      <Button loading type='error'>Error</Button>
+      <Button loading type='warning'>Warning</Button>
+      <Button loading type='ghost'>Ghost</Button>
+      <Button loading type='link'>Link</Button>
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Button inverse loading type='primary'>Primary</Button>
+      <Button inverse loading type='success'>Success</Button>
+      <Button inverse loading type='error'>Error</Button>
+      <Button inverse loading type='warning'>Warning</Button>
+    </div>
+  </Story>
+</Canvas>

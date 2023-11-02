@@ -1,0 +1,26 @@
+<!--- Input.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Input from '../atoms/Input'
+import Form from '../hocs/Form'
+
+<Meta title="Atoms/Input" component={Input} />
+
+# Input
+
+With `MDX`, we can define a story for `Input` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Input">
+    <Form>
+      <div>
+        <Input label='Lorem' placeholder='Lorem ipsum' name='lorem' />
+      </div>
+      <div style={{ marginTop: 15 }}>
+        <Input label='Lorem' withBorder placeholder='Lorem ipsum' name='ipsum' />
+      </div>
+    </Form>
+  </Story>
+</Canvas>

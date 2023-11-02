@@ -1,0 +1,52 @@
+<!--- ItemSnippetInList.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import ItemSnippetInList from '../molecules/ItemSnippetInList'
+
+<Meta title="Molecules/ItemSnippetInList" component={ItemSnippetInList} />
+
+# ItemSnippetInList
+
+With `MDX`, we can define a story for `ItemSnippetInList` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="ItemSnippetInList">
+    <div>
+      <ItemSnippetInList
+        image='https://i.ibb.co/2n6zT1X/1620226425821-750x750.png'
+        id={1}
+        title='Lorem ipsum Lorem ipsum dolor sit amet'
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+      />
+    </div>
+    <div style={{ marginTop: 15 }}>
+      <ItemSnippetInList
+        image='https://i.ibb.co/2n6zT1X/1620226425821-750x750.png'
+        id={1}
+        title='Lorem ipsum Lorem ipsum dolor sit amet'
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        quantity={0}
+      />
+    </div>
+    <div style={{ marginTop: 15 }}>
+      <ItemSnippetInList
+        image='https://i.ibb.co/2n6zT1X/1620226425821-750x750.png'
+        id={1}
+        title='Lorem ipsum Lorem ipsum dolor sit amet'
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        quantity={5}
+      />
+    </div>
+    <div style={{ marginTop: 15 }}>
+      <ItemSnippetInList
+        image='https://i.ibb.co/2n6zT1X/1620226425821-750x750.png'
+        id={1}
+        title='Lorem ipsum Lorem ipsum dolor sit amet'
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        quantity={20}
+      />
+    </div>
+  </Story>
+</Canvas>

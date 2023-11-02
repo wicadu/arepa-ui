@@ -1,0 +1,24 @@
+<!--- Icon.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Icon from '../atoms/Icon'
+
+<Meta title="Atoms/Icon" component={Icon} />
+
+# Icon
+
+With `MDX`, we can define a story for `Icon` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Icon">
+    <Icon name='fas fa-store' size={50} />
+    <div style={{ marginTop: 15 }}>
+      <Icon name='fas fa-store' size={50} withBackground />
+    </div>
+    <div style={{ marginTop: 15 }}>
+      <Icon name='fas fa-store' size={50} withBackground fullRounded />
+    </div>
+  </Story>
+</Canvas>

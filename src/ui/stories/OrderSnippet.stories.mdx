@@ -1,0 +1,31 @@
+<!--- OrderSnippet.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import { createMemorySource, createHistory, LocationProvider } from "@reach/router"
+
+import OrderSnippet from '../molecules/OrderSnippet'
+
+<Meta title="Molecules/OrderSnippet" component={OrderSnippet} />
+
+# OrderSnippet
+
+With `MDX`, we can define a story for `OrderSnippet` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="OrderSnippet">
+    <LocationProvider>
+      <OrderSnippet
+        id={1}
+        status='Preparando'
+        date='18 Feb. 2021'
+        total={5}
+        items={[
+          { id: 1, image: 'https://i.ibb.co/2n6zT1X/1620226425821-750x750.png' },
+          { id: 2, image: null },
+          { id: 3, image: 'https://i.ibb.co/2n6zT1X/1620226425821-750x750.png' },
+        ]}
+      />
+    </LocationProvider>
+  </Story>
+</Canvas>

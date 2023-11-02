@@ -1,0 +1,23 @@
+<!--- ImageUploader.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import ImageUploader from '../organisms/ImageUploader'
+import Form from '../hocs/Form'
+
+<Meta title="Organisms/ImageUploader" component={ImageUploader} />
+
+# ImageUploader
+
+With `MDX`, we can define a story for `ImageUploader` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="ImageUploader">
+    <Form>
+      <div>
+        <ImageUploader rounded />
+      </div>
+    </Form>
+  </Story>
+</Canvas>

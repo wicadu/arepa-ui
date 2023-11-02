@@ -1,0 +1,32 @@
+<!--- Notice.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Notice from '../atoms/Notice'
+
+<Meta title="Atoms/Notice" component={Notice} />
+
+# Notice
+
+With `MDX`, we can define a story for `Notice` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Notice">
+    <Notice
+      name='fas fa-users'
+      title='Lorem ipsum.'
+      description='Lorem ipsum dolor sit amet.'
+    />
+    <div style={{ marginTop: 25 }}>
+      <Notice
+        name='fas fa-chart-line'
+        title='Lorem ipsum.'
+        description='Lorem ipsum dolor sit amet.'
+        toActionText='Lorem'
+      />
+    </div>
+  </Story>
+</Canvas>
+
+

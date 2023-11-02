@@ -1,0 +1,24 @@
+<!--- Expand.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Expand from '../molecules/Expand'
+import Form from '../hocs/Form'
+
+<Meta title="Molecules/Expand" component={Expand} />
+
+# Expand
+
+With `MDX`, we can define a story for `Expand` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Expand">
+    <Form>
+      <Expand inCard>
+        <p>Header</p>
+        <p>body</p>
+      </Expand>
+    </Form>
+  </Story>
+</Canvas>

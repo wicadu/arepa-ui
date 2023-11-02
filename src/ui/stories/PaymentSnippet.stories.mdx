@@ -1,0 +1,18 @@
+<!--- PaymentSnippet.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import PaymentSnippet from '../molecules/PaymentSnippet'
+
+<Meta title="Molecules/PaymentSnippet" component={PaymentSnippet} />
+
+# PaymentSnippet
+
+With `MDX`, we can define a story for `PaymentSnippet` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="PaymentSnippet">
+    <PaymentSnippet method='Efectivo' date='18 Feb. 2021' amount={5000} status='Confirmado' />
+  </Story>
+</Canvas>

@@ -1,0 +1,30 @@
+<!--- Typography.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Theme from '../hocs/ThemeProvider'
+import Typography from '../atoms/Typography'
+
+<Meta title="Atoms/Typography" component={Typography} />
+
+# Typography
+
+With `MDX`, we can define a story for `Typography` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Typography">
+    <Typography type='title'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='title-2'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='title-3'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='title-4'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='helper'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='description'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='title' color='red'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='title' color='brown'>Lorem ipsum dolor sit amet.</Typography>
+    <Typography type='title' color='green'>Lorem ipsum dolor sit amet.</Typography>
+  </Story>
+</Canvas>
+
+

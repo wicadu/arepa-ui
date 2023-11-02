@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  builder:
+    container_name: dev-arepa-ui_builder
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./package.json:/root/code/package.json
+      - ./yarn.lock:/root/code/yarn.lock
+      - ./.babelrc:/root/code/.babelrc
+      - ./.storybook:/root/code/.storybook
+      - ./dist:/root/code/dist
+      - ./src:/root/code/src
+    entrypoint: ["tail", "-f", "/dev/null"]

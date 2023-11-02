@@ -1,0 +1,50 @@
+<!--- Alert.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Alert from '../molecules/Alert'
+
+<Meta title="Molecules/Alert" component={Alert} />
+
+# Alert
+
+With `MDX`, we can define a story for `Alert` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Alert">
+    <div style={{ marginTop: 10 }}>
+      <Alert
+        show
+        type='error'
+        message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        title='Lorem ipsum'
+        enableClose
+      />
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Alert
+        show
+        type='success'
+        message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        title='Lorem ipsum'
+      />
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Alert
+        show
+        type='info'
+        message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        title='Lorem ipsum'
+      />
+    </div>
+    <div style={{ marginTop: 10 }}>
+      <Alert
+        show
+        type='warning'
+        message='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae dignissim tellus.'
+        title='Lorem ipsum'
+      />
+    </div>
+  </Story>
+</Canvas>

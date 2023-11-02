@@ -1,0 +1,26 @@
+<!--- Stepper.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Stepper from '../molecules/Stepper'
+
+<Meta title="Molecules/Stepper" component={Stepper} />
+
+# Stepper
+
+With `MDX`, we can define a story for `Stepper` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Stepper">
+    <Stepper
+      currentStep={2}
+      steps={[
+        { name: 'Cliente', icon: 'far fa-user-circle' },
+        { name: 'Productos', icon: 'fas fa-shopping-bag' },
+        { name: 'Dirección', icon: 'far fa-map' },
+        { name: 'Pagos', icon: 'fas fa-credit-card' },
+      ]}
+    />
+  </Story>
+</Canvas>

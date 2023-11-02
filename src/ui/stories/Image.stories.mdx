@@ -1,0 +1,27 @@
+<!--- Image.stories.mdx -->
+
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+
+import Image from '../atoms/Image'
+
+<Meta title="Atoms/Image" component={Image} />
+
+# Image
+
+With `MDX`, we can define a story for `Image` right in the middle of our
+Markdown documentation.
+
+<Canvas>
+  <Story name="Image">
+    <Image src='https://pbs.twimg.com/profile_images/1297021727277547520/nlezvGIk_400x400.jpg' size={50} />
+    <span style={{ marginLeft: 15 }}>
+      <Image src='https://i.ibb.co/2n6zT1X/1620226425821-750x750.png' size={50} withBackground />
+    </span>
+    <div style={{ marginTop: 15 }}>
+      <Image src='https://pbs.twimg.com/profile_images/1297021727277547520/nlezvGIk_400x400.jpg' size={50} fullRounded />
+      <span style={{ marginLeft: 15 }}>
+        <Image src='https://i.ibb.co/2n6zT1X/1620226425821-750x750.png' size={50} withBackground fullRounded />
+      </span>
+    </div>
+  </Story>
+</Canvas>
