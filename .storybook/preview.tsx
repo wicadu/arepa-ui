@@ -2,8 +2,8 @@ import React from 'react'
 
 import { DocsContainer } from '@storybook/addon-docs/blocks'
 
-import Theme from '../src/hocs/ThemeProvider'
-import colors from '../src/constants/colors'
+import Theme from '../src/ui/hocs/ThemeProvider'
+import colors from '../src/ui/constants/colors'
 
 const withThemeProvider = (Story, context) => {
   return (
