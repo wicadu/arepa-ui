@@ -84,13 +84,13 @@ const WrapperButton = styled(Button)`
       if (size === buttonSizes.small)
         return `
         height: 35px;
-        font-size: 14px;
+        font-size: 12px;
       `
 
       if (size === buttonSizes.medium)
         return `
         height: 44px;
-        font-size: 12px;
+        font-size: 14px;
         border-radius: 7px;
       `
 
@@ -109,12 +109,14 @@ const WrapperButton = styled(Button)`
       if (type === buttonType.link) {
         style += `
           color: ${colors.MAIN.PRIMARY};
-          background: ${colors.NEUTRAL.TRANSPARENT};
+          background-color: ${colors.NEUTRAL.TRANSPARENT};
           font-weight: bold;
           padding: 0px;
           height: auto;
           margin: ${margin};
         `
+
+        return style
       }
 
       if (type === buttonType.ghost) {
@@ -122,6 +124,8 @@ const WrapperButton = styled(Button)`
           background-color: ${colors.NEUTRAL.SELECTED};
           color: ${colors.FONT.HELPER};
         `
+
+        return style
       }
 
       if (type === buttonType.white) {
@@ -131,13 +135,15 @@ const WrapperButton = styled(Button)`
           font-weight: 700;
           border: 1px solid ${colors.NEUTRAL.SELECTED};
         `
+
+        return style
       }
 
       const mainColor = colors.MAIN?.[String(type).toUpperCase()]
 
       style += `
         background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : mainColor};
-        color: ${outlined ? colors.FONT.CONTRAST : mainColor};
+        color: ${outlined ? mainColor : colors.NEUTRAL.BACKGROUND};
         border: 1px solid ${mainColor};
       `
 
