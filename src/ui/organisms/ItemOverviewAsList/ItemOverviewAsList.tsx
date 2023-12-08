@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 import ItemText from './ItemText/ItemText'
 import ImageContent from './ImageContent/ImageContent'
 import ItemSpec from './ItemSpec/ItemSpec'
+import ItemOverviewAsListSkeleton from './ItemOverviewAsList.Skeleton'
 
 type ItemSpec = {
   key?: string
@@ -75,5 +76,6 @@ const SpecsWrapper = styled.div`
 `
 
 ItemOverviewAsList.defaultProps = defaultProps
+ItemOverviewAsList.Skeleton = ItemOverviewAsListSkeleton
 
 export default ItemOverviewAsList
