@@ -60,8 +60,9 @@ function AddOrSubtractComponent({
 }: Props) {
   const [quantity, setQuantity] = useState(initialQuantity)
 
-  const { register, errors } = Form.useForm()
-  const hasError = useMemo(() => errors[name]?.message?.length, [errors[name]])
+  const { register, formState: { errors } } = Form.useForm()
+
+  const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]])
 
   const onChange = useCallback(
     (type: ActionType) => {
@@ -104,7 +105,7 @@ function AddOrSubtractComponent({
           <Spin />
         ) : (
           <InputAsCount
-            ref={register()}
+          {...(register(name) as any)}
             name={name}
             id={name}
             value={quantity}
@@ -119,7 +120,7 @@ function AddOrSubtractComponent({
         />
       </AddOrSubtract>
 
-      {hasError && <ErrorMessage>{errors[name]?.message}</ErrorMessage>}
+      {hasError && <ErrorMessage>{String(errors?.[name]?.message)}</ErrorMessage>}
     </Wrapper>
   )
 }

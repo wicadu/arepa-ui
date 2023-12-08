@@ -36,13 +36,10 @@ function SelectComponent({
   const [selectedOption, setSelectedOption] = useState()
   const [showOptions, setShowOptions] = useState<boolean>(false)
 
-  const { register, errors } = Form.useForm()
+  const { register, formState: { errors } } = Form.useForm()
   const ref = useRef(null)
 
-  const hasError = useMemo(
-    () => errors[name]?.message?.length,
-    [errors[name]?.message]
-  )
+  const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]?.message])
 
   const handleShowOptions = useCallback(() => {
     if (disabled) return
@@ -73,7 +70,7 @@ function SelectComponent({
       <Wrapper ref={ref}>
         <HiddenInput
           readOnly
-          ref={register()}
+          {...(register(name) as any)}
           value={value}
           name={name}
           id={name}
@@ -88,7 +85,7 @@ function SelectComponent({
           <Icon
             name={`expand_${showOptions ? 'less' : 'more'}`}
             size={22}
-            color='black'
+            color="black"
           />
         </SelectedValueRendering>
         {showOptions && (
@@ -108,7 +105,7 @@ function SelectComponent({
   )
 }
 
-const Wrapper = styled.div<any>`
+const Wrapper = styled.div`
   position: relative;
   webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -122,7 +119,7 @@ const HiddenInput = styled.input`
   display: none;
 `
 
-const SelectedValueRendering = styled.div<any>`
+const SelectedValueRendering = styled.div<Partial<Props>>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -136,9 +133,9 @@ const SelectedValueRendering = styled.div<any>`
 
   border: 1px solid
     ${({ theme, withBorder }) =>
-      withBorder
-        ? theme.colors.NEUTRAL.SELECTED
-        : theme.colors.NEUTRAL.TRANSPARENT};
+    withBorder
+      ? theme.colors.NEUTRAL.SELECTED
+      : theme.colors.NEUTRAL.TRANSPARENT};
 
   ${({ theme, hasError }) =>
     hasError && `border: 1px solid ${theme.colors.MAIN.ERROR};`}
@@ -181,7 +178,7 @@ const OptionItem = styled.li<any>`
   &:hover {
     border-radius: 5px;
     background-color: ${({ theme }) =>
-      hexToRbga(theme.colors.MAIN.PRIMARY, 0.04)};
+    hexToRbga(theme.colors.MAIN.PRIMARY, 0.04)};
   }
 `
 
