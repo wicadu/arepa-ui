@@ -46,7 +46,7 @@ const defaultProps: Props = {
   type: buttonType.primary,
   size: buttonSizes.small,
   htmlType: htmlType.button,
-  onClick() {},
+  onClick() { },
   loading: false,
 }
 
@@ -61,7 +61,7 @@ function Button({
 }: Props) {
   return (
     <button {...restOfProps} type={htmlType} disabled={disabled || loading}>
-      {loading ? <Spin type={type} size={20} /> : children}
+      {loading ? <Spin type={[buttonType.white, buttonType.link].includes(type) || outlined ? buttonType.primary : buttonType.white} size={20} /> : children}
     </button>
   )
 }
@@ -81,33 +81,33 @@ const WrapperButton = styled(Button)`
     ${({ width }) => width && `width: ${width};`}
 
     ${({ size }) => {
-      if (size === buttonSizes.small)
-        return `
+    if (size === buttonSizes.small)
+      return `
         height: 35px;
         font-size: 12px;
       `
 
-      if (size === buttonSizes.medium)
-        return `
+    if (size === buttonSizes.medium)
+      return `
         height: 44px;
         font-size: 14px;
         border-radius: 7px;
       `
 
-      if (size === buttonSizes.large)
-        return `
+    if (size === buttonSizes.large)
+      return `
         height: 50px;
         font-size: 18px;
       `
-    }}
+  }}
 
     ${({ type, outlined, theme, margin = '5px 0' }) => {
-      const { colors } = theme
+    const { colors } = theme
 
-      let style: string = ''
+    let style: string = ''
 
-      if (type === buttonType.link) {
-        style += `
+    if (type === buttonType.link) {
+      style += `
           color: ${colors.MAIN.PRIMARY};
           background-color: ${colors.NEUTRAL.TRANSPARENT};
           font-weight: bold;
@@ -116,51 +116,51 @@ const WrapperButton = styled(Button)`
           margin: ${margin};
         `
 
-        return style
-      }
+      return style
+    }
 
-      if (type === buttonType.ghost) {
-        style += `
+    if (type === buttonType.ghost) {
+      style += `
           background-color: ${colors.NEUTRAL.SELECTED};
           color: ${colors.FONT.HELPER};
         `
 
-        return style
-      }
+      return style
+    }
 
-      if (type === buttonType.white) {
-        style += `
+    if (type === buttonType.white) {
+      style += `
           background-color: ${colors.NEUTRAL.CARD};
           color: ${colors.FONT.TITLE};
           font-weight: 700;
           border: 1px solid ${colors.NEUTRAL.SELECTED};
         `
 
-        return style
-      }
+      return style
+    }
 
-      const mainColor = colors.MAIN?.[String(type).toUpperCase()]
+    const mainColor = colors.MAIN?.[String(type).toUpperCase()]
 
-      style += `
+    style += `
         background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : mainColor};
         color: ${outlined ? mainColor : colors.NEUTRAL.BACKGROUND};
         border: 1px solid ${mainColor};
       `
 
-      return style
-    }}
+    return style
+  }}
 
     ${({ disabled, type, theme }) => {
-      const { colors } = theme
+    const { colors } = theme
 
-      if (disabled && type === buttonType.link) {
-        return `
+    if (disabled && type === buttonType.link) {
+      return `
           color: ${colors.darkGray};
         `
-      }
+    }
 
-      if (disabled) return `opacity: 0.85;`
-    }}
+    if (disabled) return `opacity: 0.85;`
+  }}
   }
 `
 

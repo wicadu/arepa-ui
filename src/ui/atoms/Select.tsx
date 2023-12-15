@@ -5,18 +5,21 @@ import styled from '@emotion/styled'
 
 import InputFeedback from '../hocs/InputFeedback'
 import Icon from './Icon'
-import hexToRbga from '../../utils/hexToRGBA'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import Form from '../hocs/Form'
 import { InputSizesEnum } from '../ts/enums/InputSizesEnum'
+import { capitalize, hexToRGBA } from '../../utils'
 
 const propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
+  defaultValue: PropTypes.string,
+  disabled: PropTypes.bool,
   size: PropTypes.oneOf<InputSizesEnum>(Object.values(InputSizesEnum)),
   withBorder: PropTypes.bool,
   options: PropTypes.array,
+  doNotShowFeedback: PropTypes.bool,
 }
 
 type Props = InferProps<typeof propTypes>
@@ -25,18 +28,24 @@ const defaultProps = {
   size: InputSizesEnum.large,
 }
 
+type Option = {
+  label: string
+  value: string
+}
+
 function SelectComponent({
   name,
   placeholder,
   options,
   disabled,
   defaultValue,
+  doNotShowFeedback,
   ...props
 }: Props) {
-  const [selectedOption, setSelectedOption] = useState()
+  const [selectedOption, setSelectedOption] = useState<Option>()
   const [showOptions, setShowOptions] = useState<boolean>(false)
 
-  const { register, formState: { errors } } = Form.useForm()
+  const { register, formState: { errors }, setValue } = Form.useForm()
   const ref = useRef(null)
 
   const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]?.message])
@@ -47,33 +56,41 @@ function SelectComponent({
     setShowOptions(!showOptions)
   }, [disabled, showOptions])
 
-  const handleSetOption = useCallback(
-    (option) => {
-      handleShowOptions()
-      setSelectedOption(option)
-    },
-    [handleShowOptions]
-  )
+  const handleSetOption = ({ label, value }: Option) => {
+    const newOption = {
+      label: String(label || ''),
+      value: String(value || '')
+    }
+
+    handleShowOptions()
+    setSelectedOption(newOption)
+    setValue(name, newOption.value)
+  }
 
   useOutsideClick(ref, handleShowOptions, showOptions)
 
   useEffect(() => {
     if (Boolean(defaultValue)) {
-      setSelectedOption(options?.find(({ value }) => value === defaultValue))
+      setSelectedOption(options?.find(({ value }) => String(value) === String(defaultValue)))
     }
   }, [])
 
   const { label, value } = selectedOption || {}
 
+  const Container: React.FC<any> = useMemo(
+    () => (doNotShowFeedback ? Wrapper : InputFeedback),
+    [doNotShowFeedback]
+  )
+
   return (
-    <InputFeedback {...props} hasError={hasError} name={name}>
+    <Container {...props} hasError={hasError} name={name}>
       <Wrapper ref={ref}>
         <HiddenInput
           readOnly
-          {...(register(name) as any)}
           value={value}
           name={name}
           id={name}
+          {...(register(name) as any)}
         />
         <SelectedValueRendering
           {...props}
@@ -81,7 +98,7 @@ function SelectComponent({
           hasError={hasError}
           onClick={handleShowOptions}
         >
-          <p>{label || placeholder}</p>
+          <p>{capitalize(label || placeholder)}</p>
           <Icon
             name={`expand_${showOptions ? 'less' : 'more'}`}
             size={22}
@@ -95,13 +112,13 @@ function SelectComponent({
                 key={option?.value}
                 onClick={() => handleSetOption(option)}
               >
-                {option?.label}
+                {capitalize(option?.label)}
               </OptionItem>
             ))}
           </OptionsContainer>
         )}
       </Wrapper>
-    </InputFeedback>
+    </Container>
   )
 }
 
@@ -119,7 +136,7 @@ const HiddenInput = styled.input`
   display: none;
 `
 
-const SelectedValueRendering = styled.div<Partial<Props>>`
+const SelectedValueRendering = styled.div<Partial<Props & any>>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -129,7 +146,7 @@ const SelectedValueRendering = styled.div<Partial<Props>>`
 
   background-color: ${({ theme }) => theme.colors.NEUTRAL.CARD};
   color: ${({ readOnly, disabled, theme }) =>
-    hexToRbga(theme?.colors.FONT.TITLE, readOnly || disabled ? 0.65 : 1)};
+    hexToRGBA(theme?.colors.FONT.TITLE, readOnly || disabled ? 0.65 : 1)};
 
   border: 1px solid
     ${({ theme, withBorder }) =>
@@ -162,7 +179,7 @@ const OptionsContainer = styled.ul<any>`
   border-radius: 5px;
   background: ${({ theme }) => theme.colors.NEUTRAL.CARD};
   border: 1px solid
-    ${({ theme }: any) => hexToRbga(theme.colors.NEUTRAL.SELECTED, 0.5)};
+    ${({ theme }: any) => hexToRGBA(theme.colors.NEUTRAL.SELECTED, 0.5)};
   max-height: 350px;
   position: absolute;
   left: 0;
@@ -178,7 +195,7 @@ const OptionItem = styled.li<any>`
   &:hover {
     border-radius: 5px;
     background-color: ${({ theme }) =>
-    hexToRbga(theme.colors.MAIN.PRIMARY, 0.04)};
+    hexToRGBA(theme.colors.MAIN.PRIMARY, 0.04)};
   }
 `
 
