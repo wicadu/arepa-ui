@@ -10,18 +10,22 @@ const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   hasError: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]).isRequired,
+  doNotShowErrors: PropTypes.bool
 }
 
 type Props = InferProps<typeof propTypes>
 
-function InputFeedback({ label, name, hasError, children, ...props }: Props) {
+function InputFeedback({ label, name, hasError, children, doNotShowErrors, ...props }: Props) {
   const { formState: { errors } } = Form.useForm()
 
   return (
     <Wrapper {...props}>
       {label && <label htmlFor={name}>{label}</label>}
       {children}
-      <ErrorMessage hasError={hasError}>{errors?.[name]?.message}</ErrorMessage>
+
+      {!doNotShowErrors ? (
+        <ErrorMessage hasError={hasError}>{errors?.[name]?.message}</ErrorMessage>
+      ) : null}
     </Wrapper>
   )
 }
