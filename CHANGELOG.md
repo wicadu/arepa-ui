@@ -1,3 +1,10 @@
+# 1.18.0
+
+- Improvements to Button, Select and Typography.
+- Small improvements to InputFeedback, Alert and capitalize util.
+- Add ImageGallery organisms
+- Update all dependencies and certain organize exports at index.ts
+
 # 1.17.0
 
 - Bro, I changed too many things.
