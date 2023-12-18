@@ -7,7 +7,7 @@ WORKDIR /root/code
 COPY ["package.json", "yarn.lock", "./"]
 RUN yarn --frozen-lockfile
 COPY ["./.babelrc", "./.babelrc"]
-COPY ["./.storybook", "./.storybook"]
+COPY ["./tsconfig.json", "./tsconfig.json"]
 COPY ["./src", "./src"]
 
 FROM base AS builder
