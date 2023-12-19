@@ -6,6 +6,7 @@ WORKDIR /root/code
 
 COPY ["package.json", "yarn.lock", "./"]
 RUN yarn --frozen-lockfile
+
 COPY ["./.babelrc", "./.babelrc"]
 COPY ["./tsconfig.json", "./tsconfig.json"]
 COPY ["./src", "./src"]
