@@ -46,9 +46,10 @@ const HeaderTab = styled.li<any>`
   flex-basis: 100%;
   list-style-type: none;
   cursor: pointer;
-  padding: 10px 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 50px;
 
   border-bottom: 1px solid
     ${({ theme, isItSelected }: any) =>
