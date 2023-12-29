@@ -1,3 +1,10 @@
+# 1.19.0
+
+- Improvements Typography, Icon, Select and ItemOverviewAsList
+- Delete Notifications
+- Add getErrorMessage (utils)
+- Rename ListOfIOrderItems
+
 # 1.18.0
 
 - Improvements to Button, Select and Typography.
