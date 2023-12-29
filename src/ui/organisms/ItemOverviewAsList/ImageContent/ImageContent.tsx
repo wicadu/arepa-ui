@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import Icon from '../../../atoms/Icon'
 
 interface ImageContentProps {
   image?: string
@@ -8,7 +9,11 @@ interface ImageContentProps {
 function ImageContent({ image }: ImageContentProps) {
   return (
     <ImageContainer>
-      <Image src={image} />
+      {!image ? (
+        <Icon name='image' size={35} />
+      ) : (
+        <Image src={image} />
+      )}
     </ImageContainer>
   )
 }
