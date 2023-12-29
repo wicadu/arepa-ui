@@ -73,7 +73,7 @@ function SelectComponent({
     if (Boolean(defaultValue)) {
       setSelectedOption(options?.find(({ value }) => String(value) === String(defaultValue)))
     }
-  }, [])
+  }, [defaultValue])
 
   const { label, value } = selectedOption || {}
 
