@@ -26,6 +26,7 @@ const propTypes = {
 }
 
 type Props = InferProps<typeof propTypes>
+
 function ImageUploader ({
   name,
   defaultImage,
@@ -41,8 +42,10 @@ function ImageUploader ({
 }: Props) {
   const [image, setImage] = useState(defaultImage)
   const [editing, setEditing] = useState(false)
-  const { register, getValues, errors, reset } = useForm()
-  const hiddenInputFilePickerRef = useRef(null)
+
+  const { register, getValues, formState: { errors }, reset } = useForm()
+  const hiddenInputFilePickerRef = useRef<HTMLInputElement>(null)
+
   const isNewStoreImageLoaded = useMemo(() =>
     getValues(name)?.length > 0, [
       getValues(name)?.length,
@@ -78,7 +81,7 @@ function ImageUploader ({
       setImage(defaultImage)
       reset()
     } else {
-      onDelete()
+      onDelete?.()
     }
   }, [
     loading,
@@ -95,7 +98,7 @@ function ImageUploader ({
     if (isNewStoreImageLoaded)
       onLoadSubmit()
     else
-      hiddenInputFilePickerRef.current.click()
+      hiddenInputFilePickerRef?.current?.click()
   }, [
     loading,
     isNewStoreImageLoaded,
@@ -109,10 +112,7 @@ function ImageUploader ({
     if (files?.[0]) setImage(URL.createObjectURL(files?.[0]))
   }, [setImage])
 
-  const hasError = useMemo(
-    () => errors[name]?.message,
-    [errors[name]?.message]
-  )
+  const hasError = useMemo(() => errors?.[name]?.message, [errors?.[name]])
 
   return (
     <Container>
@@ -162,8 +162,8 @@ function ImageUploader ({
             noClose
             show
             type='ERROR'
-            title={errors[name].type}
-            message={errors[name].message}
+            title={errors?.[name].type}
+            message={errors?.[name].message}
           />
         )
       }
@@ -173,10 +173,8 @@ function ImageUploader ({
         name={name}
         accept='image/*'
         onChange={handleOnChangeImage}
-        ref={e => {
-          register(e)
-          hiddenInputFilePickerRef.current = e;
-        }}
+        {...register(name) as any}
+        ref={hiddenInputFilePickerRef}
       />
     </Container>
   )

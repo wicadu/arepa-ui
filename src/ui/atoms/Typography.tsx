@@ -15,28 +15,16 @@ enum htmlType {
 }
 
 const propTypes = {
-  children: function (props, propName, componentName) {
-    const thereIsInnerHtml =
-      props['dangerouslySetInnerHTML']?.__html?.length >= 1 ||
-      typeof props['dangerouslySetInnerHTML']?.__html === 'number'
-
-    if (thereIsInnerHtml) {
-      return
-    }
-
-    if (props[propName] == undefined) {
-      return new Error(
-        `Failed prop type: The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`undefined\``
-      )
-    }
-  },
-  type: PropTypes.oneOf(Object.values(htmlType)),
+  type: PropTypes.oneOf(Object.values(htmlType)).isRequired,
   align: PropTypes.oneOf(['left', 'center', 'right']),
-  weight: PropTypes.oneOf([100, 300, 400, 600, 700]),
+  weight: PropTypes.oneOf([100, 300, 400, 600, 700, 'bold']),
   size: PropTypes.number,
-  inverse: PropTypes.bool,
   color: PropTypes.string,
   numberOfLines: PropTypes.number,
+  children: PropTypes.node,
+  dangerouslySetInnerHTML: PropTypes.shape({
+    __html: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
   afterStyles: PropTypes.exact({
     content: PropTypes.string,
     size: PropTypes.number,
@@ -47,7 +35,7 @@ const propTypes = {
 
 type Props = InferProps<typeof propTypes>
 
-const defaultProps: Props = {
+const defaultProps: Partial<Props> = {
   type: htmlType.default,
   align: 'left',
   afterStyles: {
@@ -64,8 +52,8 @@ function Typography({ children, type, ...props }: Props) {
     if (type === htmlType['title-2']) return Title2
     if (type === htmlType['title-3']) return Title3
     if (type === htmlType['title-4']) return Title4
-    if (type === htmlType['helper']) return Small
-    if (type === htmlType['link']) return Link
+    if (type === htmlType.helper) return Small
+    if (type === htmlType.link) return Link
 
     return Default
   }, [type])
@@ -142,7 +130,7 @@ const Title4 = styled.h4`
   font-size: ${({ size }: any) => size || 18}px;
 `
 
-const Default = styled.p`
+const Default = styled.p<any>`
   ${(props) =>
     defaultStyles({
       weight: 400,
@@ -154,7 +142,9 @@ const Default = styled.p`
 
   font-size: ${({ size }: any) => size || 16}px;
 
-  ${({ bold }) => bold && `
+  ${({ bold }) =>
+    bold &&
+    `
     font-weight: bold;
     color: #6B6B6C;
   `}
@@ -175,7 +165,7 @@ const Small = styled.small`
   font-size: ${({ size }: any) => size || 13}px;
 `
 
-const Link = styled.a`
+const Link = styled.a<any>`
   ${(props) => defaultStyles({ weight: 400, ...props })}
   font-size: ${({ size }: any) => size || 16}px;
 

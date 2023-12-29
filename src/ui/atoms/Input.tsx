@@ -3,7 +3,7 @@ import PropTypes, { InferProps } from 'prop-types'
 
 import styled from '@emotion/styled'
 
-import InputFeedback from '../hocs/InputFeedback'
+import InputFeedback, { Wrapper } from '../hocs/InputFeedback'
 import Form from '../hocs/Form'
 import { InputSizesEnum } from '../ts/enums/InputSizesEnum'
 
@@ -11,39 +11,49 @@ const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   htmlType: PropTypes.string,
   name: PropTypes.string.isRequired,
+  doNotShowFeedback: PropTypes.bool,
   size: PropTypes.oneOf<InputSizesEnum>(Object.values(InputSizesEnum)),
   withBorder: PropTypes.bool,
 }
 
 type Props = InferProps<typeof propTypes>
 
-const defaultProps = {
+const defaultProps: Props = {
   htmlType: 'text',
   size: InputSizesEnum.large,
+  doNotShowFeedback: false,
 }
 
-function InputComponent({ name, htmlType, ...props }: Props) {
-  const { register, errors } = Form.useForm()
-  const hasError = useMemo(
-    () => errors[name]?.message?.length,
-    [errors[name]?.message]
+function InputComponent({
+  name,
+  htmlType,
+  doNotShowFeedback,
+  ...props
+}: Props) {
+  const { formState: { errors }, register } = Form.useForm()
+
+  const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]])
+
+  const Container: React.FC<any> = useMemo(
+    () => (doNotShowFeedback ? Wrapper : InputFeedback),
+    [doNotShowFeedback]
   )
 
   return (
-    <InputFeedback {...props} hasError={hasError} name={name}>
+    <Container {...props} hasError={hasError} name={name}>
       <Input
         {...props}
-        ref={register()}
         id={name}
         name={name}
         type={htmlType}
         hasError={hasError}
+        {...register(name) as any}
       />
-    </InputFeedback>
+    </Container>
   )
 }
 
-const Input = styled.input<Props>`
+const Input = styled.input<any>`
   border-radius: 10px;
   padding: 0 15px;
 
@@ -52,9 +62,9 @@ const Input = styled.input<Props>`
 
   border: 1px solid
     ${({ theme, withBorder }: any) =>
-      withBorder
-        ? theme.colors.NEUTRAL.SELECTED
-        : theme.colors.NEUTRAL.TRANSPARENT};
+    withBorder
+      ? theme.colors.NEUTRAL.SELECTED
+      : theme.colors.NEUTRAL.TRANSPARENT};
 
   ${({ theme, hasError }: any) =>
     hasError && `border: 1px solid ${theme.colors.MAIN.ERROR};`}

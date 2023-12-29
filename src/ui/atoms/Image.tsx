@@ -1,67 +1,63 @@
 import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 import styled from '@emotion/styled'
-import Icon from './Icon'
 
-const propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
-  withBackground: PropTypes.bool,
-  noPictureIcon: PropTypes.string,
-  noPictureIconSize: PropTypes.number,
+type ImageProps = {
+  backgroundColor?: string
+  width?: number
+  height?: number
 }
 
 const defaultProps = {
   width: 100,
   height: 100,
-  noPictureIconSize: 24,
 }
-
-type Props = InferProps<typeof propTypes>
 
 const Image = ({
   src,
-  withBackground,
-  noPictureIcon,
-  noPictureIconSize,
-  ...props
-}: Props) => {
+  width,
+  height,
+  alt,
+  onClick,
+  backgroundColor,
+}: ImageProps & React.ImgHTMLAttributes<HTMLImageElement>) => {
   return (
-    <Container {...props}>
-      {Boolean(src) ? (
-        <Figure withBackground={withBackground}>
-          <Img src={src} />
-        </Figure>
-      ) : (
-        <Icon name={noPictureIcon} size={noPictureIconSize} color='white' />
-      )}
-    </Container>
+    <Img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      onClick={onClick}
+      backgroundColor={backgroundColor}
+    />
   )
 }
 
-const Container = styled.div`
-  width: ${({ width }) => `${width}px`}; 
-  height: ${({ height }) => `${height}px`};
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const PADDING_PERCENTAGE = 25
+
+const Img = styled.img<ImageProps & React.ImgHTMLAttributes<HTMLImageElement>>`
+  ${({ backgroundColor, width, height, onClick }) => {
+    let styles: string = `
+      border-radius: 7px;
+      width: ${width}px;
+      height: ${height}px;
+      object-fit: cover;
+    `
+
+    if (backgroundColor?.length >= 1) {
+      styles += `
+        background-color: ${backgroundColor};
+        padding: ${(width * PADDING_PERCENTAGE) / 100}px;
+      `
+    }
+
+    if (onClick) {
+      styles += 'cursor: pointer;'
+    }
+
+    return styles
+  }}
 `
 
-const Figure = styled.figure`
-  width: 100%;
-  height: 100%;
-  ${({ theme, withBackground }) => withBackground &&
-    `background: ${theme.colors.NEUTRAL.BACKGROUND};`
-  }
-`
-
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
-
-Image.propTypes = propTypes
 Image.defaultProps = defaultProps
 
 export default Image

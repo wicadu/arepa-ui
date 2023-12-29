@@ -25,6 +25,7 @@ const propTypes = {
   autoClose: PropTypes.bool,
   noClose: PropTypes.bool,
   onCloseCallback: PropTypes.func,
+  width: PropTypes.string,
 }
 
 const defaultProps: Props = {
@@ -35,12 +36,14 @@ const defaultProps: Props = {
   show: false,
   autoClose: false,
   onCloseCallback() {},
+  width: '307px',
 }
 
 type Props = InferProps<typeof propTypes>
 
 function Alert({
   className,
+  width,
   message,
   type,
   title,
@@ -72,7 +75,7 @@ function Alert({
   if (!visible) return null
 
   return (
-    <Container className={className} float={float}>
+    <Container className={className} float={float} width={width}>
       <Tonality color={tonalityColor} noClose={noClose}>
         <Icon
           name={StatusIconsEnum[String(type).toUpperCase()]}
@@ -94,7 +97,6 @@ function Alert({
             name='cancel'
             color={tonalityColor}
             size={35}
-            strokeWidth='5'
             onClick={handleClose}
           />
         )}
@@ -104,7 +106,7 @@ function Alert({
 }
 
 const Container = styled.div<any>`
-  width: 307px;
+  width: ${({ width }) => width};
 
   ${({ float }) =>
     float &&
@@ -137,7 +139,7 @@ const Tonality = styled.div<any>`
   grid-template-columns: 28px 1fr ${({ noClose }) => (noClose ? '' : '28px')};
   gap: 12px;
   align-items: center;
-  background-color: ${({ color }) => hexToRGBA(color, .1)};
+  background-color: ${({ color }) => hexToRGBA(color, 0.1)};
   border: 1px solid ${({ color }) => color};
   border-radius: 10px;
   padding: 10px 20px;

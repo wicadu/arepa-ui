@@ -6,29 +6,38 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   size: PropTypes.number,
   color: PropTypes.string,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
 }
 
 type Props = InferProps<typeof propTypes>
 
 const defaultProps: Props = {
-  name: 'question_mark',
+  className: 'question_mark',
   size: 22,
 }
 
-function Icon({ className, name, ...props }: Props) {
+function Icon({ className, name, size, color, onClick }: Props) {
   return (
-    <Container className={`${className} material-icons`} {...props}>{name}</Container>
+    <Container
+      className={`${className} material-icons`}
+      size={size}
+      color={color}
+      onClick={onClick}
+    >
+      {name}
+    </Container>
   )
 }
 
-const Container = styled.span`
+const Container = styled.span<Props>`
   ${({ theme, size, color }) => `
     font-size: ${size}px;
     color: ${color || theme.colors.MAIN.PRIMARY}
   `}
 `
 
-Icon.defaultProps = defaultProps
 Icon.propTypes = propTypes
+Icon.defaultProps = defaultProps
 
 export default Icon

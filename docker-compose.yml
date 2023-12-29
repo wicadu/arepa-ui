@@ -10,6 +10,7 @@ services:
       - ./package.json:/root/code/package.json
       - ./yarn.lock:/root/code/yarn.lock
       - ./.babelrc:/root/code/.babelrc
+      - ./tsconfig.json:/root/code/tsconfig.json
       - ./.storybook:/root/code/.storybook
       - ./dist:/root/code/dist
       - ./src:/root/code/src

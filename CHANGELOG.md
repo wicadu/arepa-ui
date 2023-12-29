@@ -1,3 +1,11 @@
+# 1.18.0
+
+- Improvements to Button, Select and Typography.
+- Small improvements to InputFeedback, Alert and capitalize util.
+- Add ImageGallery organisms
+- Update all dependencies and certain organize exports at index.ts
+- @hookform/resolvers and yup pacakges were added
+
 # 1.17.1
 
 - Emotion packages were moved to dependencies section.

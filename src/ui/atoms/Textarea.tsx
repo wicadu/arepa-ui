@@ -21,14 +21,23 @@ const defaultProps = {
 }
 
 function TextareaComponent ({ label, name, ...props }: Props) {
-  const { register, errors } = Form.useForm()
-  const hasError = useMemo(() => errors[name]?.message?.length, [errors[name]?.message])
+  const { register, formState: { errors } } = Form.useForm()
+
+  const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]?.message])
 
   return (
     <Wrapper {...props}>
       {label && <label htmlFor={name}>{label}</label>}
-      <Textarea {...props} ref={register} id={name} name={name} hasError={hasError} />
-      {hasError && <ErrorMessage>{errors[name]?.message}</ErrorMessage>}
+
+      <Textarea
+        {...props}
+        {...(register(name) as any)}
+        id={name}
+        name={name}
+        hasError={hasError}
+      />
+      
+      {hasError && <ErrorMessage>{String(errors?.[name]?.message)}</ErrorMessage>}
     </Wrapper>
   )
 }
@@ -41,7 +50,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Textarea = styled.textarea`
+const Textarea = styled.textarea<Partial<Props>>`
   border-radius: 10px;
   padding: 15px;
   border: 1px solid ${({ theme, withBorder }) => withBorder ? theme.colors.NEUTRAL.SELECTED : theme.colors.NEUTRAL.TRANSPARENT};

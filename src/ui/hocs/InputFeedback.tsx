@@ -10,25 +10,28 @@ const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   hasError: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]).isRequired,
+  doNotShowErrors: PropTypes.bool
 }
 
 type Props = InferProps<typeof propTypes>
 
-function InputFeedback({ label, name, hasError, children, ...props }: Props) {
-  const { errors } = Form.useForm()
+function InputFeedback({ label, name, hasError, children, doNotShowErrors, ...props }: Props) {
+  const { formState: { errors } } = Form.useForm()
 
   return (
     <Wrapper {...props}>
       {label && <label htmlFor={name}>{label}</label>}
       {children}
-      <ErrorMessage hasError={hasError}>{errors[name]?.message}</ErrorMessage>
+
+      {!doNotShowErrors ? (
+        <ErrorMessage hasError={hasError}>{errors?.[name]?.message}</ErrorMessage>
+      ) : null}
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div<any>`
+export const Wrapper = styled.div<any>`
   display: grid;
-  min-height: 85px;
 
   label {
     font-weight: 700;
@@ -40,6 +43,7 @@ const ErrorMessage = styled.small<any>`
   color: ${({ theme }: any) => theme.colors.MAIN.ERROR};
   text-align: end;
   padding: 0 5px;
+  height: 25px;
 
   ${({ hasError }) => !hasError && 'opacity: 0;'}
 `
