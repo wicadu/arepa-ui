@@ -9,6 +9,7 @@ import debounce from './debounce'
 import capitalize from './capitalize'
 import formatCurrency from './formatCurrency'
 import dateFormat from './dateFormat'
+import getErrorMessage from './getErrorMessage'
 
 export {
   yupResolver,
@@ -21,5 +22,6 @@ export {
   debounce,
   capitalize,
   formatCurrency,
-  dateFormat
+  dateFormat,
+  getErrorMessage,
 }
