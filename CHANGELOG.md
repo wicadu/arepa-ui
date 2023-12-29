@@ -6,6 +6,10 @@
 - Update all dependencies and certain organize exports at index.ts
 - @hookform/resolvers and yup pacakges were added
 
+# 1.17.1
+
+- Emotion packages were moved to dependencies section.
+
 # 1.17.0
 
 - Bro, I changed too many things.
