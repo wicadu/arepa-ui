@@ -33,7 +33,7 @@ function Icon({ className, name, size, color, onClick }: Props) {
 const Container = styled.span<Props>`
   ${({ theme, size, color }) => `
     font-size: ${size}px;
-    color: ${color || theme.colors.MAIN.PRIMARY}
+    color: ${color || theme.colors.FONT.DESCRIPTION}
   `}
 `
 
