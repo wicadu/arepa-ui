@@ -10,12 +10,12 @@ const propTypes = {
 
 type Props = PropTypes.InferProps<typeof propTypes>
 
-function Tabs({ headers, tabs }: Props) {
+function Tabs({ headers, tabs, ...props }: Props) {
   const { colors } = useTheme()
   const [selectedTab, setSelectedTab] = useState(0)
 
   return (
-    <Container>
+    <Container {...props}>
       <HeadersRow>
         {headers?.map((children, index) => (
           <HeaderTab
@@ -34,7 +34,9 @@ function Tabs({ headers, tabs }: Props) {
   )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  height: 100%;
+`
 
 const Row = styled.div``
 
