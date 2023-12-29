@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 import ItemOverviewAsList from '../ItemOverviewAsList/ItemOverviewAsList'
 
-function ListOfItemOverviewsSkeleton() {
+function ListOfIOrderItemsSkeleton() {
   return (
     <ListWrapper>
       <ItemOverviewAsList.Skeleton />
@@ -21,4 +21,4 @@ export const ListWrapper = styled.ul`
   gap: 15px;
 `
 
-export default ListOfItemOverviewsSkeleton
+export default ListOfIOrderItemsSkeleton
