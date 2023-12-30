@@ -38,7 +38,9 @@ const Container = styled.div`
   height: 100%;
 `
 
-const Row = styled.div``
+const Row = styled.div`
+  height: 100%;
+`
 
 const HeadersRow = styled.ul`
   display: flex;

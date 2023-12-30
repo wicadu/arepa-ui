@@ -1,3 +1,9 @@
+# 1.18.2
+- `Tabs` component was updated to support custom height
+
+# 1.18.1
+- Version was added because 1.18.0 already existed
+
 # 1.18.0
 
 - Improvements to Button, Select and Typography.
