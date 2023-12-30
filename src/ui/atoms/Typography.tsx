@@ -155,7 +155,7 @@ const Default = styled.p<any>`
   }
 `
 
-const Small = styled.small`
+const Small = styled.p`
   ${(props) =>
     defaultStyles({
       weight: 400,
