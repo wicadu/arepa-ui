@@ -1,9 +1,15 @@
 # 1.19.0
 
-- Improvements Typography, Icon, Select and ItemOverviewAsList
+- `Improvements` `Typography`, `Icon`, `Select` and `OrderItem`
 - Delete Notifications
-- Add getErrorMessage (utils)
-- Rename ListOfIOrderItems
+- Add `getErrorMessage` (utils)
+- Rename `ListOfIOrderItems`
+
+# 1.18.2
+- `Tabs` component was updated to support custom height
+
+# 1.18.1
+- Version was added because 1.18.0 already existed
 
 # 1.18.0
 
@@ -12,6 +18,10 @@
 - Add ImageGallery organisms
 - Update all dependencies and certain organize exports at index.ts
 - @hookform/resolvers and yup pacakges were added
+
+# 1.17.1
+
+- Emotion packages were moved to dependencies section.
 
 # 1.17.0
 
