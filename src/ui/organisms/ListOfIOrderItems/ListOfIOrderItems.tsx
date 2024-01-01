@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import InfiniteScroll from '../../hocs/InfiniteScroll'
-import ListOfIOrderItemsSkeleton from './ListOfIOrderItems.Skeleton'
+import ListOfIOrderItemsSkeleton from './Skeleton'
 
 type DataExtracted<ItemT> = (info: ItemT) => Partial<ItemT>
 

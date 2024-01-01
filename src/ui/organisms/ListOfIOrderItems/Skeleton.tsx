@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import ItemOverviewAsList from '../ItemOverviewAsList/ItemOverviewAsList'
+import OrderItem from '../OrderItem/OrderItem'
 
 function ListOfIOrderItemsSkeleton() {
   return (
     <ListWrapper>
-      <ItemOverviewAsList.Skeleton />
-      <ItemOverviewAsList.Skeleton />
-      <ItemOverviewAsList.Skeleton />
-      <ItemOverviewAsList.Skeleton />
-      <ItemOverviewAsList.Skeleton />
+      <OrderItem.Skeleton />
+      <OrderItem.Skeleton />
+      <OrderItem.Skeleton />
+      <OrderItem.Skeleton />
+      <OrderItem.Skeleton />
     </ListWrapper>
   )
 }
