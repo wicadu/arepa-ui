@@ -22,6 +22,7 @@ const defaultProps: Props = {
   htmlType: 'text',
   size: InputSizesEnum.large,
   doNotShowFeedback: false,
+  withBorder: true
 }
 
 function InputComponent({

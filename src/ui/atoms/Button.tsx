@@ -44,7 +44,7 @@ type Props = InferProps<typeof propTypes>
 
 const defaultProps: Props = {
   type: buttonType.primary,
-  size: buttonSizes.small,
+  size: buttonSizes.medium,
   htmlType: htmlType.button,
   onClick() { },
   loading: false,
