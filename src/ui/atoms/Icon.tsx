@@ -1,18 +1,15 @@
-import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import React, { HTMLProps } from 'react'
 import styled from '@emotion/styled'
 
-const propTypes = {
-  name: PropTypes.string.isRequired,
-  size: PropTypes.number,
-  color: PropTypes.string,
-  onClick: PropTypes.func,
-  className: PropTypes.string,
+interface Props extends Partial<HTMLProps<HTMLSpanElement>> {
+  name: string,
+  size?: number,
+  color?: string,
+  onClick?: () => void
+  className: string,
 }
 
-type Props = InferProps<typeof propTypes>
-
-const defaultProps: Props = {
+const defaultProps: Partial<Props> = {
   className: '',
   size: 22,
 }
@@ -30,14 +27,13 @@ function Icon({ className, name, size, color, onClick }: Props) {
   )
 }
 
-const Container = styled.span<Props>`
+const Container = styled.span<Partial<Props>>`
   ${({ theme, size, color }) => `
     font-size: ${size}px;
     color: ${color || theme.colors.FONT.DESCRIPTION}
   `}
 `
 
-Icon.propTypes = propTypes
 Icon.defaultProps = defaultProps
 
 export default Icon
