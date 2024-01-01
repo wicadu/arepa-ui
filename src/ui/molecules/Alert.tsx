@@ -1,159 +1,177 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
-import { StatusEnum } from '../ts/enums/StatusEnum'
 import Typography from '../atoms/Typography'
 import Icon from '../atoms/Icon'
 import hexToRGBA from '../../utils/hexToRGBA'
 
-enum StatusIconsEnum {
-  SUCCESS = 'check_circle',
-  ERROR = 'cancel',
-  WARNING = 'error',
-  INFO = 'watch_later',
+enum AlertTypes {
+  Success = 'SUCCESS',
+  Error = 'ERROR',
+  Info = 'INFO',
+  Warning = 'WARNING'
 }
 
-const propTypes = {
-  message: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(Object.values(StatusEnum)),
-  float: PropTypes.bool,
-  show: PropTypes.bool,
-  autoClose: PropTypes.bool,
-  noClose: PropTypes.bool,
-  onCloseCallback: PropTypes.func,
-  width: PropTypes.string,
+enum AlertSize {
+  Small = 'SMALL',
+  Medium = 'MEDIUM',
 }
 
-const defaultProps: Props = {
-  message: '',
+const _types = {
+  [AlertTypes.Success]: 'check_circle',
+  [AlertTypes.Error]: 'cancel',
+  [AlertTypes.Info]: 'watch_later',
+  [AlertTypes.Warning]: 'watch_later',
+}
+
+interface Props {
+  title: string
+  description: string
+  type: AlertTypes
+  show: boolean
+  closeCallback?: () => void
+  width: string
+  autoClose: number | null
+  size?: AlertSize
+}
+
+const defaultProps: Partial<Props> = {
   title: '',
-  type: StatusEnum.INFO,
-  float: false,
-  show: false,
-  autoClose: false,
-  onCloseCallback() {},
-  width: '307px',
+  description: '',
+  type: AlertTypes.Info,
+  show: true,
+  closeCallback: null,
+  width: '100%',
+  autoClose: null,
+  size: AlertSize.Medium
 }
-
-type Props = InferProps<typeof propTypes>
 
 function Alert({
-  className,
-  width,
-  message,
-  type,
   title,
-  float,
+  description,
+  type,
   show,
+  closeCallback,
+  width,
   autoClose,
-  noClose,
-  onCloseCallback,
+  size
 }: Props) {
   const [visible, setVisibility] = useState(false)
-  const { colors }: any = useTheme()
 
-  const tonalityColor = useMemo(
-    () => colors.MAIN[String(type).toUpperCase()],
-    [type]
-  )
+  const { colors } = useTheme()
 
-  const handleClose = useCallback(() => {
+  const color = useMemo(() => colors.MAIN[String(type).toUpperCase()], [type])
+
+  const handleClose = () => {
     setVisibility(false)
-    onCloseCallback()
-  }, [setVisibility, onCloseCallback])
+    closeCallback?.()
+  }
 
   useEffect(() => {
     setVisibility(show)
 
-    if (autoClose && show) setTimeout(() => handleClose(), 5000)
-  }, [show])
-
-  if (!visible) return null
+    if (autoClose && show) {
+      setTimeout(() => handleClose(), autoClose)
+    }
+  }, [show, autoClose])
 
   return (
-    <Container className={className} float={float} width={width}>
-      <Tonality color={tonalityColor} noClose={noClose}>
+    <Container width={width} show={visible} type={type} size={size}>
+      <Icon name={_types?.[type]} size={28} color={color} />
+
+      <Content size={size}>
+        <Typography weight={700} size={14} color={color}>{title}</Typography>
+        <Typography size={12} color={color}>{description}</Typography>
+      </Content>
+
+      {closeCallback ? (
         <Icon
-          name={StatusIconsEnum[String(type).toUpperCase()]}
-          size={28}
-          color={tonalityColor}
+          name='close'
+          size={closeCallback ? 20 : 0}
+          color={color}
+          onClick={handleClose}
         />
+      ) : null}
 
-        <span>
-          <Typography weight={700} size={14} color={tonalityColor}>
-            {title}
-          </Typography>
-          <Typography size={12} color={tonalityColor}>
-            {message}
-          </Typography>
-        </span>
-
-        {!noClose && (
-          <Icon
-            name='cancel'
-            color={tonalityColor}
-            size={35}
-            onClick={handleClose}
-          />
-        )}
-      </Tonality>
+      <OpacityCanceler color={color} />
     </Container>
   )
 }
 
-const Container = styled.div<any>`
-  width: ${({ width }) => width};
-
-  ${({ float }) =>
-    float &&
-    `      
-    width: calc(100% - 335px);
-    min-width: 296px;
-    max-width: 770px;
-    position: absolute;
-    top: 25px;
-    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    z-index: 9;
-
-    @media screen and (max-width: 835px) {
-      top: 65px;
-      width: calc(100% - 24px);
-    }
-  `}
-
-  @media screen and (min-width: 768px) {
-    width: 715px;
-  }
-`
-
-const Tonality = styled.div<any>`
-  display: grid;
-  grid-template-columns: 28px 1fr ${({ noClose }) => (noClose ? '' : '28px')};
-  gap: 12px;
-  align-items: center;
-  background-color: ${({ color }) => hexToRGBA(color, 0.1)};
-  border: 1px solid ${({ color }) => color};
+const Container = styled.div<Partial<Props>>`
+  position: relative;
+  padding: 10px;
   border-radius: 10px;
-  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  
+  ${({ type, theme, show, width, size }) => {
+    if (!show) return 'display: none;'
 
-  @media screen and (min-width: 768px) {
-    grid-template-columns: 39px 1fr ${({ noClose }) => (noClose ? '' : '28px')};
+    const { colors } = theme
 
-    span {
-      font-size: 39px;
+    let style: string = ''
+
+    if (size === AlertSize.Small) {
+      style += `
+        padding: 6px;
+
+        .${_types?.[type]} {
+          font-size: 20px;
+        }
+
+        .close {
+          font-size: 14px;
+        }
+      `
+
+      console.log(style)
     }
-  }
+
+    const mainColor = colors.MAIN?.[String(type).toUpperCase()]
+
+    style += `
+      width: ${width};
+      color: ${mainColor};
+      background-color: ${colors.NEUTRAL.BACKGROUND};
+      border: 1px solid ${mainColor};
+    `
+
+    return style
+  }}
 `
 
-Alert.propTypes = propTypes
+const Content = styled.span<Partial<Props>>`
+  flex: 1;
+
+  ${({ size }) => {
+    let style: string = ''
+
+    if (size === AlertSize.Small) {
+      style += `
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      `
+    }
+
+    return style
+  }}
+`
+
+const OpacityCanceler = styled.div<Partial<Props>>`
+  border-radius: 10px;
+  background-color: ${({ color }) => hexToRGBA(color, 0.1)};
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`
+
 Alert.defaultProps = defaultProps
 
 export default Alert
