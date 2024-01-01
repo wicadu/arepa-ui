@@ -13,14 +13,14 @@ const propTypes = {
 type Props = InferProps<typeof propTypes>
 
 const defaultProps: Props = {
-  className: 'question_mark',
+  className: '',
   size: 22,
 }
 
 function Icon({ className, name, size, color, onClick }: Props) {
   return (
     <Container
-      className={`${className} material-icons`}
+      className={`${className} ${name} material-icons`}
       size={size}
       color={color}
       onClick={onClick}
