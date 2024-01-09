@@ -1,17 +1,17 @@
 import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import styled from '@emotion/styled'
 
 import Spin from './Spin'
+import getBordersStyles, { BorderTypes } from '../../utils/getBordersStyles'
 
-enum htmlType {
+enum HtmlType {
   button = 'button',
   submit = 'submit',
   reset = 'reset',
 }
 
-enum buttonType {
+enum ButtonType {
   primary = 'primary',
   success = 'success',
   error = 'error',
@@ -21,31 +21,30 @@ enum buttonType {
   link = 'link',
 }
 
-enum buttonSizes {
+enum ButtonSizes {
   small = 'small',
   medium = 'medium',
   large = 'large',
 }
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func,
-  htmlType: PropTypes.oneOf(Object.values(htmlType)),
-  type: PropTypes.oneOf(Object.values(buttonType)),
-  size: PropTypes.oneOf(Object.values(buttonSizes)),
-  disabled: PropTypes.bool,
-  outlined: PropTypes.bool,
-  loading: PropTypes.bool,
-  width: PropTypes.string,
-  margin: PropTypes.string,
+
+interface Props {
+  children: React.ReactNode
+  onClick?: () => void
+  htmlType?: HtmlType
+  type?: ButtonType
+  size?: ButtonSizes
+  disabled?: boolean
+  outlined?: boolean | BorderTypes
+  loading?: boolean
+  width?: string
+  margin?: string
 }
 
-type Props = InferProps<typeof propTypes>
-
-const defaultProps: Props = {
-  type: buttonType.primary,
-  size: buttonSizes.medium,
-  htmlType: htmlType.button,
+const defaultProps: Partial<Props> = {
+  type: ButtonType.primary,
+  size: ButtonSizes.medium,
+  htmlType: HtmlType.button,
   onClick() { },
   loading: false,
 }
@@ -61,7 +60,7 @@ function Button({
 }: Props) {
   return (
     <button {...restOfProps} type={htmlType} disabled={disabled || loading}>
-      {loading ? <Spin type={[buttonType.white, buttonType.link].includes(type) || outlined ? buttonType.primary : buttonType.white} size={20} /> : children}
+      {loading ? <Spin type={[ButtonType.white, ButtonType.link].includes(type) || outlined ? ButtonType.primary : ButtonType.white} size={20} /> : children}
     </button>
   )
 }
@@ -81,20 +80,21 @@ const WrapperButton = styled(Button)`
     ${({ width }) => width && `width: ${width};`}
 
     ${({ size }) => {
-    if (size === buttonSizes.small)
+    if (size === ButtonSizes.small)
       return `
         height: 35px;
         font-size: 12px;
+        border-radius: 7px;
       `
 
-    if (size === buttonSizes.medium)
+    if (size === ButtonSizes.medium)
       return `
         height: 44px;
         font-size: 14px;
         border-radius: 7px;
       `
 
-    if (size === buttonSizes.large)
+    if (size === ButtonSizes.large)
       return `
         height: 50px;
         font-size: 18px;
@@ -106,7 +106,7 @@ const WrapperButton = styled(Button)`
 
     let style: string = ''
 
-    if (type === buttonType.link) {
+    if (type === ButtonType.link) {
       style += `
           color: ${colors.MAIN.PRIMARY};
           background-color: ${colors.NEUTRAL.TRANSPARENT};
@@ -119,21 +119,22 @@ const WrapperButton = styled(Button)`
       return style
     }
 
-    if (type === buttonType.ghost) {
+    if (type === ButtonType.ghost) {
       style += `
-          background-color: ${colors.NEUTRAL.SELECTED};
-          color: ${colors.FONT.HELPER};
-        `
+        color: ${colors.FONT.HELPER};      
+        background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.SELECTED};
+        ${getBordersStyles(1, outlined, colors.NEUTRAL.SELECTED)}
+      `
 
       return style
     }
 
-    if (type === buttonType.white) {
+    if (type === ButtonType.white) {
       style += `
           background-color: ${colors.NEUTRAL.CARD};
           color: ${colors.FONT.TITLE};
           font-weight: 700;
-          border: 1px solid ${colors.NEUTRAL.SELECTED};
+          ${getBordersStyles(1, outlined, colors.NEUTRAL.SELECTED)}
         `
 
       return style
@@ -144,7 +145,7 @@ const WrapperButton = styled(Button)`
     style += `
         background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : mainColor};
         color: ${outlined ? mainColor : colors.NEUTRAL.BACKGROUND};
-        border: 1px solid ${mainColor};
+        ${getBordersStyles(1, outlined, mainColor)}
       `
 
     return style
@@ -153,10 +154,10 @@ const WrapperButton = styled(Button)`
     ${({ disabled, type, theme }) => {
     const { colors } = theme
 
-    if (disabled && type === buttonType.link) {
+    if (disabled && type === ButtonType.link) {
       return `
-          color: ${colors.darkGray};
-        `
+        color: ${colors.darkGray};
+      `
     }
 
     if (disabled) return `opacity: 0.85;`
@@ -164,9 +165,10 @@ const WrapperButton = styled(Button)`
   }
 `
 
-Button.propTypes = propTypes
 WrapperButton.defaultProps = defaultProps
 
-Button.htmlType = htmlType
+Button.htmlType = HtmlType
+Button.buttonType = ButtonType
+Button.buttonSizes = ButtonSizes
 
 export default WrapperButton
