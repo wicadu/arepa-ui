@@ -15,10 +15,10 @@ interface Props {
   minQuantity: number,
   maxQuantity: number,
   disabled?: boolean,
+  editable?: boolean
 }
 
-const defaultProps: Props = {
-  initialQuantity: 0,
+const defaultProps: Partial<Props> = {
   onChangeQuantity() { },
   minQuantity: 0,
   maxQuantity: 1,
@@ -31,6 +31,7 @@ function DraftOrderItemBottomActions({
   minQuantity,
   maxQuantity,
   disabled,
+  editable
 }: Props) {
   const [quantity, setQuantity] = useState<number>(initialQuantity)
 
@@ -61,9 +62,9 @@ function DraftOrderItemBottomActions({
 
   return (
     <Container>
-      <Icon name='remove' size={15} onClick={onSubtractQuantity} />
+      <Icon name={editable ? 'remove' : '_'} size={15} onClick={onSubtractQuantity} />
       <Typography type='description' size={13}>{quantity} unidades</Typography>
-      <Icon name='add' size={15} onClick={onAddQuantity} />
+      <Icon name={editable ? 'add' : '_'} size={15} onClick={onAddQuantity} />
     </Container>
   )
 }
