@@ -7,7 +7,7 @@ import Typography from '../atoms/Typography'
 import Icon from '../atoms/Icon'
 import hexToRGBA from '../../utils/hexToRGBA'
 
-enum AlertTypes {
+export enum AlertTypes {
   Success = 'SUCCESS',
   Error = 'ERROR',
   Info = 'INFO',
@@ -127,8 +127,6 @@ const Container = styled.div<Partial<Props>>`
           font-size: 14px;
         }
       `
-
-      console.log(style)
     }
 
     const mainColor = colors.MAIN?.[String(type).toUpperCase()]
