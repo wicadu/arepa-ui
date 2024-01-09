@@ -29,7 +29,7 @@ function RadioController ({ children, name, value: defaultValue, ...props }: Pro
       <Controller
         name={name}
         control={control}
-        render={({ onChange }) => {
+        render={({ field: { onChange } }) => {
           const handleOnChange = () => {
             if (props.disabled) return
             onChange(defaultValue)
@@ -37,7 +37,7 @@ function RadioController ({ children, name, value: defaultValue, ...props }: Pro
   
           return (
             <ItemWrapper onClick={handleOnChange}>
-              {React.cloneElement(children, { checked: formValue === defaultValue, ...props })}
+              {React.cloneElement(children, { checked: String(formValue) === String(defaultValue), ...props })}
             </ItemWrapper>
           )
         }}
