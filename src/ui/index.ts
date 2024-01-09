@@ -15,7 +15,11 @@ import Select from './atoms/Select'
 import Overlay from './atoms/Overlay'
 import Divider from './atoms/Divider'
 
+import Alert from './molecules/Alert'
+import Tabs from './molecules/Tabs'
 import Notice from './molecules/Notice/Notice'
+import InputFile from './molecules/InputFile/InputFile'
+
 import Popover from './molecules/Popover'
 import ItemSnippetInCard from './molecules/ItemSnippetInCard'
 import ItemSnippetInList from './molecules/ItemSnippetInList'
@@ -28,10 +32,7 @@ import Breadcrumbs from './molecules/Breadcrumbs'
 import Expand from './molecules/Expand'
 import AddOrSubtract from './molecules/AddOrSubtract'
 
-import Alert from './molecules/Alert/Alert'
-import Tabs from './molecules/Tabs'
-
-import ItemOverviewAsList from './organisms/ItemOverviewAsList/ItemOverviewAsList'
+import OrderItem from './organisms/OrderItem/OrderItem'
 import ListOfIOrderItems from './organisms/ListOfIOrderItems/ListOfIOrderItems'
 import DraftOrderItem from './organisms/DraftOrderItem/DraftOrderItem'
 
@@ -58,7 +59,6 @@ export {
   Box,
   Checkbox,
   Image,
-  Notice,
   Radio,
   Toggle,
   Textarea,
@@ -81,10 +81,12 @@ export {
   Alert,
   AddOrSubtract,
   Tabs,
+  Notice,
+  InputFile,
 
   // Organisms
   ListOfIOrderItems,
-  ItemOverviewAsList,
+  OrderItem,
   DraftOrderItem,
 
   SearchBar,
