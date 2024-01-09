@@ -8,7 +8,7 @@ import Icon from './Icon'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import Form from '../hocs/Form'
 import { InputSizesEnum } from '../ts/enums/InputSizesEnum'
-import { capitalize, hexToRGBA } from '../../utils'
+import { capitalize, getFormFieldsErrors, hexToRGBA } from '../../utils'
 
 const propTypes = {
   label: PropTypes.string,
@@ -48,7 +48,8 @@ function SelectComponent({
   const { register, formState: { errors }, setValue } = Form.useForm()
   const ref = useRef(null)
 
-  const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]?.message])
+  const fieldError = useMemo(() => getFormFieldsErrors(errors, name), [errors, name])
+  const hasError = useMemo(() => !!fieldError?.message, [fieldError])
 
   const handleShowOptions = useCallback(() => {
     if (disabled) return
@@ -83,7 +84,7 @@ function SelectComponent({
   )
 
   return (
-    <Container {...props} hasError={hasError} name={name}>
+    <Container {...props} errors={fieldError} hasError={hasError} name={name}>
       <Wrapper ref={ref}>
         <HiddenInput
           readOnly

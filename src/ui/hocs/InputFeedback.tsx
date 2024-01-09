@@ -3,8 +3,6 @@ import PropTypes, { InferProps } from 'prop-types'
 
 import styled from '@emotion/styled'
 
-import Form from './Form'
-
 const propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -15,16 +13,14 @@ const propTypes = {
 
 type Props = InferProps<typeof propTypes>
 
-function InputFeedback({ label, name, hasError, children, doNotShowErrors, ...props }: Props) {
-  const { formState: { errors } } = Form.useForm()
-
+function InputFeedback({ label, name, hasError, errors, children, doNotShowErrors, ...props }: Props) {
   return (
     <Wrapper {...props}>
       {label && <label htmlFor={name}>{label}</label>}
       {children}
 
       {!doNotShowErrors ? (
-        <ErrorMessage hasError={hasError}>{errors?.[name]?.message}</ErrorMessage>
+        <ErrorMessage hasError={hasError}>{errors?.message}</ErrorMessage>
       ) : null}
     </Wrapper>
   )

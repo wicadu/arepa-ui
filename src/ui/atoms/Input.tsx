@@ -6,6 +6,7 @@ import styled from '@emotion/styled'
 import InputFeedback, { Wrapper } from '../hocs/InputFeedback'
 import Form from '../hocs/Form'
 import { InputSizesEnum } from '../ts/enums/InputSizesEnum'
+import { getFormFieldsErrors } from '../../utils'
 
 const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
@@ -33,7 +34,8 @@ function InputComponent({
 }: Props) {
   const { formState: { errors }, register } = Form.useForm()
 
-  const hasError = useMemo(() => !!errors?.[name]?.message, [errors?.[name]])
+  const fieldError = useMemo(() => getFormFieldsErrors(errors, name), [errors, name])
+  const hasError = useMemo(() => !!fieldError?.message, [fieldError])
 
   const Container: React.FC<any> = useMemo(
     () => (doNotShowFeedback ? Wrapper : InputFeedback),
@@ -41,7 +43,12 @@ function InputComponent({
   )
 
   return (
-    <Container {...props} hasError={hasError} name={name}>
+    <Container
+      {...props}
+      errors={fieldError}
+      hasError={hasError}
+      name={name}
+    >
       <Input
         {...props}
         id={name}
@@ -60,6 +67,8 @@ const Input = styled.input<any>`
 
   background-color: ${({ theme }: any) => theme.colors.NEUTRAL.CARD};
   opacity: ${({ readOnly }: any) => (readOnly ? 0.65 : 1)};
+  
+  ${({ disabled }: any) => disabled && 'opacity: 0.7;'}
 
   border: 1px solid
     ${({ theme, withBorder }: any) =>
