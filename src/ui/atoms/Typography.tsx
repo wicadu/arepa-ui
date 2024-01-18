@@ -112,7 +112,7 @@ const Title = styled.h1`
 
 const Title2 = styled.h2`
   ${(props) => defaultStyles(props)}
-  font-size: ${({ size }: any) => size || 26}px;
+  font-size: ${({ size }: any) => size || 25}px;
 
   @media screen and (min-width: 768px) {
     font-size: 38px;
