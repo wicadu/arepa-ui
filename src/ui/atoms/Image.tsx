@@ -5,6 +5,7 @@ type ImageProps = {
   backgroundColor?: string
   width?: number
   height?: number
+  rounded?: boolean
 }
 
 const defaultProps = {
@@ -17,14 +18,16 @@ const Image = ({
   width,
   height,
   alt,
-  onClick,
+  rounded,
   backgroundColor,
+  onClick,
 }: ImageProps & React.ImgHTMLAttributes<HTMLImageElement>) => {
   return (
     <Img
       src={src}
       alt={alt}
       width={width}
+      rounded={rounded}
       height={height}
       onClick={onClick}
       backgroundColor={backgroundColor}
@@ -32,12 +35,13 @@ const Image = ({
   )
 }
 
-const PADDING_PERCENTAGE = 25
+const _PADDING_PERCENTAGE = 25
+const _DEFAULT_RADIUS = 7
 
 const Img = styled.img<ImageProps & React.ImgHTMLAttributes<HTMLImageElement>>`
-  ${({ backgroundColor, width, height, onClick }) => {
+  ${({ backgroundColor, width, height, rounded, onClick }) => {
     let styles: string = `
-      border-radius: 7px;
+      border-radius: ${rounded ? (width + height) / 2 : _DEFAULT_RADIUS}px;
       width: ${width}px;
       height: ${height}px;
       object-fit: cover;
@@ -46,7 +50,7 @@ const Img = styled.img<ImageProps & React.ImgHTMLAttributes<HTMLImageElement>>`
     if (backgroundColor?.length >= 1) {
       styles += `
         background-color: ${backgroundColor};
-        padding: ${(width * PADDING_PERCENTAGE) / 100}px;
+        padding: ${(width * _PADDING_PERCENTAGE) / 100}px;
       `
     }
 
