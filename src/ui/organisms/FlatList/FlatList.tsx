@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import InfiniteScroll from '../../hocs/InfiniteScroll'
-import ListOfIOrderItemsSkeleton from './Skeleton'
+import FlatListSkeleton from './Skeleton'
 
 type DataExtracted<ItemT> = (info: ItemT) => Partial<ItemT>
 
@@ -29,7 +29,7 @@ const defaultProps: Partial<Props<any>> = {
   keyExtracted: '',
 }
 
-function ListOfIOrderItems<ItemT>({
+function FlatList<ItemT>({
   data,
   hasMore,
   fetchNext,
@@ -68,7 +68,7 @@ export const ListWrapper = styled.ul`
   gap: 15px;
 `
 
-ListOfIOrderItems.defaultProps = defaultProps
-ListOfIOrderItems.Skeleton = ListOfIOrderItemsSkeleton
+FlatList.defaultProps = defaultProps
+FlatList.Skeleton = FlatListSkeleton
 
-export default ListOfIOrderItems
+export default FlatList
