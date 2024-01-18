@@ -19,6 +19,8 @@ import Alert from './molecules/Alert'
 import Tabs from './molecules/Tabs'
 import Notice from './molecules/Notice/Notice'
 import InputFile from './molecules/InputFile/InputFile'
+import UserCard from './molecules/UserCard/UserCard'
+import StatusChip from './molecules/StatusChip/StatusChip'
 
 import Popover from './molecules/Popover'
 import ItemSnippetInCard from './molecules/ItemSnippetInCard'
@@ -33,8 +35,10 @@ import Expand from './molecules/Expand'
 import AddOrSubtract from './molecules/AddOrSubtract'
 
 import OrderItem from './organisms/OrderItem/OrderItem'
-import ListOfIOrderItems from './organisms/ListOfIOrderItems/ListOfIOrderItems'
+import FlatList from './organisms/FlatList/FlatList'
 import DraftOrderItem from './organisms/DraftOrderItem/DraftOrderItem'
+import Order from './organisms/Order/Order'
+import OrderUserCard from './organisms/OrderUserCard/OrderUserCard'
 
 import SearchBar from './organisms/SearchBar'
 import ImageUploader from './organisms/ImageUploader'
@@ -47,6 +51,11 @@ import InfiniteScroll from './hocs/InfiniteScroll'
 import ThemeProvider from './hocs/ThemeProvider'
 
 import { useTheme } from '@emotion/react'
+
+import Column from './layout/Column'
+import Row from './layout/Row'
+import Spacer from './layout/Spacer'
+import Section from './layout/Section'
 
 export {
   // Atoms
@@ -83,15 +92,25 @@ export {
   Tabs,
   Notice,
   InputFile,
+  UserCard,
+  StatusChip,
 
   // Organisms
-  ListOfIOrderItems,
+  FlatList,
   OrderItem,
   DraftOrderItem,
+  Order,
+  OrderUserCard,
 
   SearchBar,
   ImageUploader,
   ImagesGallery,
+
+  // Layout
+  Section,
+  Column,
+  Row,
+  Spacer,
 
   // Hocs
   Form,
