@@ -91,7 +91,7 @@ const Uploader = styled.div<Partial<Props>>`
   gap: 10px;
   border-radius: 7px;
 
-  background:${({ theme }) => hexToRGBA(theme.colors.MAIN.PRIMARY, 0.1)};
+  background: ${({ theme }) => hexToRGBA(theme.colors.MAIN.PRIMARY, 0.1)};
   ${({ theme }) => getBordersStyles(1, BorderTypes.Dashed, theme.colors.MAIN.PRIMARY)}
 `
 

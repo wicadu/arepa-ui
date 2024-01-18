@@ -45,7 +45,6 @@ const Container = styled.div`
   height: 25px;
   padding-bottom: 5px;
   align-items: center;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.NEUTRAL.SELECTED};
   margin: 20px 0;
 `
 
