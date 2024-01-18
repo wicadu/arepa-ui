@@ -1,24 +1,29 @@
-const dateOptions: object = {
-  day: '2-digit',
-  month: 'short',
+const dateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
+  month: 'short',
+  day: 'numeric',
 }
 
-const hoursOptions: object = {
-  minute: '2-digit',
+const hoursOptions: Intl.DateTimeFormatOptions = {
+  hour: 'numeric',
+  minute: 'numeric',
   hour12: true,
-  hour: '2-digit',
 }
 
-export default (
+function dateFormat(
   currentDate: Date | string = new Date(),
-  language: string = 'es-CL',
+  language: string = 'en-US',
   withHours: boolean = false
-) => {
+): string {
   const standardizedDate = new Date(currentDate)
 
-  const formattedDate = standardizedDate.toLocaleDateString(language, dateOptions)
-  const formattedHours = standardizedDate.toLocaleDateString('en', hoursOptions)
+  const formattedDate = standardizedDate.toLocaleDateString(
+    language,
+    dateOptions
+  )
+  const formattedHours = standardizedDate.toLocaleString('en-US', hoursOptions)
 
-  return `${formattedDate} ${withHours ? `- ${formattedHours}` : ''}`
+  return `${formattedDate} ${withHours ? `${formattedHours}` : ''}`
 }
+
+export default dateFormat
