@@ -45,7 +45,7 @@ const Container = styled.div`
   height: 25px;
   padding-bottom: 5px;
   align-items: center;
-  margin: 00px 0;
+  margin: 10px 0;
 `
 
 const Content = styled.span`
