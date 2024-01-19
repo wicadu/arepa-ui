@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode
   align?: ItemsAlign
   gap: number
+  onClick?: () => void
 }
 
 const defaultProps: Props = {
@@ -14,9 +15,15 @@ const defaultProps: Props = {
   gap: 0
 }
 
-function Column({ children, align, gap }: Props) {
+function Column({ children, align, gap, onClick }: Props) {
   return (
-    <Container align={align} gap={gap}>{children}</Container>
+    <Container
+      align={align}
+      gap={gap}
+      onClick={onClick}
+    >
+      {children}
+    </Container>
   )
 }
 
