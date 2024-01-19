@@ -1,26 +1,40 @@
 import React from 'react'
 
-import styled from '@emotion/styled'
-
 import OrderHeader from './OrderHeader'
 import OrderItems from './OrderItems'
 import OrderBottom from './OrderBottom'
+import Column from '../../layout/Column'
 
 type Props = {
+  id?: number
+  items: any[]
+  totalPaid: {
+    key: string
+    value: number
+  }
+  date: string
+  status: string
+  docs: string[]
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
-function Order({ onClick }: Props) {
+function Order({
+  id,
+  items,
+  totalPaid,
+  date,
+  status,
+  docs,
+  onClick
+}: Props): JSX.Element {
+
   return (
-    <Wrapper onClick={onClick}>
-      <OrderHeader orderId={44} date="2023-12-28T14:59:23Z" />
-      <OrderItems />
-      <OrderBottom />
-    </Wrapper>
+    <Column gap={7} onClick={onClick}>
+      <OrderHeader orderId={id} status={status} date={date} />
+      <OrderItems items={items} />
+      <OrderBottom totalPaid={totalPaid} docs={docs} />
+    </Column>
   )
 }
-
-const Wrapper = styled.article``
-
 
 export default Order
