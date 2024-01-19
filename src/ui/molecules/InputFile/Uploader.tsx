@@ -1,23 +1,20 @@
-import React, { Fragment, useMemo, useRef } from 'react'
+import React, { Fragment, useRef } from 'react'
 
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
-import { getFormFieldsErrors, hexToRGBA } from '../../../utils'
+import { hexToRGBA } from '../../../utils'
 import getBordersStyles, { BorderTypes } from '../../../utils/getBordersStyles'
 import Form from '../../hocs/Form'
-import InputFeedback from '../../hocs/InputFeedback'
 import Typography from '../../atoms/Typography'
 import Icon from '../../atoms/Icon'
 
 interface Props {
   component: React.ReactNode,
-  name: string,
   disabled: boolean,
   onChange: (file: File) => void,
-  label: string,
   width: string,
-  doNotShowFeedback: boolean
+  accept: string
 }
 
 const defaultProps: Partial<Props> = {
@@ -26,20 +23,15 @@ const defaultProps: Partial<Props> = {
 }
 
 function InputFileUploader({
+  width,
+  accept,
   component,
-  name,
   disabled,
   onChange,
-  label,
-  width,
-  doNotShowFeedback
-}): JSX.Element {
+}: Props): JSX.Element {
   const { colors } = useTheme()
   const inputRef: React.MutableRefObject<any> = useRef()
   const { formState: { errors } } = Form.useForm()
-
-  const fieldError: any = useMemo(() => getFormFieldsErrors(errors, name), [errors, name])
-  const hasError = useMemo(() => !!fieldError?.message, [fieldError])
 
   const onLoadWindowToUploadPicture = () => {
     if (disabled) return
@@ -47,14 +39,10 @@ function InputFileUploader({
     inputRef?.current?.click()
   }
 
-  const Container = useMemo(() => doNotShowFeedback ? Fragment : InputFeedback, [
-    doNotShowFeedback
-  ])
-
   return (
-    <Container label={label} errors={fieldError} hasError={hasError} name={name}>
+    <Fragment>
       {component
-        ? React.cloneElement(component, { onClick: onLoadWindowToUploadPicture })
+        ? React.cloneElement(component as React.ReactElement, { onClick: onLoadWindowToUploadPicture })
         : (
           <Uploader width={width} onClick={onLoadWindowToUploadPicture}>
             <Icon name='upload' size={35} color={colors.MAIN.PRIMARY} />
@@ -68,14 +56,14 @@ function InputFileUploader({
       <HiddenInput
         ref={inputRef}
         type='file'
-        accept='image/*,pdf'
+        accept={accept}
         onChange={(event: any) => {
           if (event.target.files && event.target.files[0]) {
             onChange?.(event.target.files[0])
           }
         }}
       />
-    </Container>
+    </Fragment>
   )
 }
 
