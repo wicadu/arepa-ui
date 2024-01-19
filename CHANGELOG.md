@@ -1,9 +1,15 @@
 # 1.19.0
 
-- `Improvements` `Typography`, `Icon`, `Select` and `OrderItem`
-- Delete Notifications
-- Add `getErrorMessage` (utils)
-- Rename `ListOfIOrderItems`
+- Refactor: `Alert`, `dateFormat`, `Icon`
+- High Improvements: `Typography`, `Select`, `Button` and `OrderItem`
+- Low Improvements: `Input` and `Image`
+- Delete: `Notifications`
+- Add:
+  - Utils: `getErrorMessage`, `getBordersStyles` `getFileSize`
+  - Organisms: `DraftOrderItem`, `OrderUserCard` and `Order`.
+  - Molecules:`InputFile`, `StatusChip`, `UserCard`.
+  - Layout: `Column`, `Row`, `Section` and `Spacer`
+- Rename: `FlatList`, `OrderItem`
 
 # 1.18.2
 - `Tabs` component was updated to support custom height
