@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import ItemText from './ItemText/ItemText'
-import ImageContent from './ImageContent/ImageContent'
-import ItemSpec from './ItemSpec/ItemSpec'
-import ItemOverviewAsListSkeleton from './ItemOverviewAsList.Skeleton'
+import ItemText from './ItemText'
+import ImageContent from './ImageContent'
+import ItemSpec from './ItemSpec'
+import OrderItemSkeleton from './Skeleton'
 
 type ItemSpec = {
   key?: string
   value?: string | number
 }
 
-interface ItemOverviewAsListProps {
+interface Props {
   image?: string
   label?: string
   name: string
@@ -21,7 +21,7 @@ interface ItemOverviewAsListProps {
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
-const defaultProps: ItemOverviewAsListProps = {
+const defaultProps: Props = {
   image: '',
   name: '',
   description: '',
@@ -29,7 +29,7 @@ const defaultProps: ItemOverviewAsListProps = {
   spec: {},
 }
 
-function ItemOverviewAsList(props: ItemOverviewAsListProps) {
+function OrderItem(props: Props) {
   const { label, image, name, description, quantity, spec, onClick } = props
 
   return (
@@ -75,7 +75,7 @@ const SpecsWrapper = styled.div`
   align-items: end;
 `
 
-ItemOverviewAsList.defaultProps = defaultProps
-ItemOverviewAsList.Skeleton = ItemOverviewAsListSkeleton
+OrderItem.defaultProps = defaultProps
+OrderItem.Skeleton = OrderItemSkeleton
 
-export default ItemOverviewAsList
+export default OrderItem

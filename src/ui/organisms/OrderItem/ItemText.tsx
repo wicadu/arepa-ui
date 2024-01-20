@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Typography from '../../../atoms/Typography'
+import Typography from '../../atoms/Typography'
 
 type TypeOptions = 'label' | 'title' | 'description'
 

@@ -9,6 +9,10 @@ import debounce from './debounce'
 import capitalize from './capitalize'
 import formatCurrency from './formatCurrency'
 import dateFormat from './dateFormat'
+import getErrorMessage from './getErrorMessage'
+import getFormFieldsErrors from './getFormFieldsErrors'
+import getBordersStyles from './getBordersStyles'
+import getFileSize from './getFileSize'
 
 export {
   yupResolver,
@@ -21,5 +25,9 @@ export {
   debounce,
   capitalize,
   formatCurrency,
-  dateFormat
+  dateFormat,
+  getErrorMessage,
+  getFormFieldsErrors,
+  getBordersStyles,
+  getFileSize
 }

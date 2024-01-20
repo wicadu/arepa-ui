@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 import Skeleton from 'react-loading-skeleton'
 
-function ItemOverviewAsListSkeleton() {
+function OrderItemSkeleton() {
   return (
     <Container>
       <Skeleton height={8} width={120} />
@@ -48,4 +48,4 @@ const SpecsWrapper = styled.div`
   gap: 5px;
 `
 
-export default ItemOverviewAsListSkeleton
+export default OrderItemSkeleton

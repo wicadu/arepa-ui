@@ -2,9 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import InfiniteScroll from '../../hocs/InfiniteScroll'
-import ItemOverviewAsList from '../ItemOverviewAsList/ItemOverviewAsList'
-import Notice from '../../molecules/Notice/Notice'
-import ListOfItemOverviewsSkeleton from './ListOfItemOverviews.Skeleton'
+import FlatListSkeleton from './Skeleton'
 
 type DataExtracted<ItemT> = (info: ItemT) => Partial<ItemT>
 
@@ -14,32 +12,33 @@ interface Props<ItemT> {
   keyExtracted: string
   hasMore?: boolean
   fetchNext?: () => void
-  listWrapper: React.ReactElement | any
+  component: React.ReactElement
   itemWrapper: React.ReactElement | any
-  dataExtractor?: DataExtracted<ItemT> | null | undefined
+  dataExtractor: DataExtracted<ItemT> | null | undefined
   endMessage: React.ReactElement | null
 }
 
-const defaultProps: Props<any> = {
+const defaultProps: Partial<Props<any>> = {
   data: [],
-  listWrapper: 'div',
-  itemWrapper: 'div',
+  error: false,
+  hasMore: false,
+  fetchNext() { },
   dataExtractor: null,
+  itemWrapper: 'div',
+  endMessage: null,
   keyExtracted: '',
-  endMessage: null
 }
 
-function ListOfItemOverviews<ItemT>({
+function FlatList<ItemT>({
   data,
   hasMore,
   fetchNext,
+  component,
   itemWrapper: ItemWrapper,
   dataExtractor,
   keyExtracted,
   endMessage,
 }: Props<ItemT>) {
-  if (data?.length === 0) return <Notice.EmptySearch />
-
   return (
     <InfiniteScroll
       dataLength={data?.length}
@@ -55,7 +54,7 @@ function ListOfItemOverviews<ItemT>({
             value={String(item?.[keyExtracted])}
             name={String(item?.[keyExtracted])}
           >
-            <ItemOverviewAsList {...dataExtractor({ ...item })} />
+            {React.cloneElement(component, dataExtractor({ ...item }))}
           </ItemWrapper>
         ))}
       </ListWrapper>
@@ -69,7 +68,7 @@ export const ListWrapper = styled.ul`
   gap: 15px;
 `
 
-ListOfItemOverviews.defaultProps = defaultProps
-ListOfItemOverviews.Skeleton = ListOfItemOverviewsSkeleton
+FlatList.defaultProps = defaultProps
+FlatList.Skeleton = FlatListSkeleton
 
-export default ListOfItemOverviews
+export default FlatList

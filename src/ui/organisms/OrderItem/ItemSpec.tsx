@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-import Typography from '../../../atoms/Typography'
+import Typography from '../../atoms/Typography'
 
 interface ItemSpecProps {
   name?: string

@@ -8,8 +8,8 @@ const propTypes = {
 
 type Props = InferProps<typeof propTypes>
 
-function RadioGroup ({ children, name, ...props }: Props) {
-  return children.map(child => React.cloneElement(child, { name, ...props }))
+function RadioGroup({ children, name, ...props }: Props) {
+  return children.map(child => React.cloneElement(Array.isArray(child) ? child[0] : child, { name, ...props }))
 }
 
 RadioGroup.propTypes = propTypes

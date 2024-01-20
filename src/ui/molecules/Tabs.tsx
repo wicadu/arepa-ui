@@ -11,8 +11,9 @@ const propTypes = {
 type Props = PropTypes.InferProps<typeof propTypes>
 
 function Tabs({ headers, tabs, ...props }: Props) {
-  const { colors } = useTheme()
   const [selectedTab, setSelectedTab] = useState(0)
+
+  const { colors } = useTheme()
 
   return (
     <Container {...props}>
