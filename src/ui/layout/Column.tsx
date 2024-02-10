@@ -8,18 +8,26 @@ interface Props {
   align?: ItemsAlign
   gap: number
   onClick?: () => void
+  flex?: number
 }
 
-const defaultProps: Props = {
+const defaultProps: Partial<Props> = {
   children: 'div',
   gap: 0
 }
 
-function Column({ children, align, gap, onClick }: Props) {
+function Column({
+  children,
+  align,
+  gap,
+  flex,
+  onClick
+}: Props) {
   return (
     <Container
       align={align}
       gap={gap}
+      flex={flex}
       onClick={onClick}
     >
       {children}
@@ -33,6 +41,8 @@ const Container = styled.div<Partial<Props>>`
   justify-content: center;
 
   ${({ gap }) => gap ? `gap: ${gap}px;` : ''}
+
+  ${({ flex }) => flex ? `flex: ${flex};` : ''}
 
   ${({ align }) => {
     let styles: string = ''

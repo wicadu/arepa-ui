@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode
   align?: ItemsAlign
   gap: number
+  flex?: number
 }
 
 const defaultProps: Props = {
@@ -14,9 +15,15 @@ const defaultProps: Props = {
   gap: 0
 }
 
-function Row({ children, align, gap }: Props) {
+function Row({ children, align, gap, flex }: Props) {
   return (
-    <Container align={align} gap={gap}>{children}</Container>
+    <Container
+      align={align}
+      gap={gap}
+      flex={flex}
+    >
+      {children}
+    </Container>
   )
 }
 
@@ -25,6 +32,7 @@ const Container = styled.div<Partial<Props>>`
   align-items: center;
 
   ${({ gap }) => gap ? `gap: ${gap}px;` : ''}
+  ${({ flex }) => flex ? `flex: ${flex};` : ''}
 
   ${({ align }) => {
     let styles: string = ''
