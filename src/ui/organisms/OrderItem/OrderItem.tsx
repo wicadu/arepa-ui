@@ -1,6 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
+import Typography from '../../atoms/Typography'
+import Column from '../../layout/Column'
+import Row from '../../layout/Row'
+
 import ItemText from './ItemText'
 import ImageContent from './ImageContent'
 import ItemSpec from './ItemSpec'
@@ -16,8 +20,8 @@ interface Props {
   label?: string
   name: string
   description: string
-  quantity?: ItemSpec
-  spec?: ItemSpec
+  price?: string
+  specs?: ItemSpec[]
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
@@ -25,54 +29,54 @@ const defaultProps: Props = {
   image: '',
   name: '',
   description: '',
-  quantity: {},
-  spec: {},
+  specs: [],
 }
 
-function OrderItem(props: Props) {
-  const { label, image, name, description, quantity, spec, onClick } = props
-
+function OrderItem({
+  specs,
+  name,
+  label,
+  image,
+  price,
+  onClick,
+  description,
+}: Props) {
   return (
-    <Container onClick={onClick}>
-      <ItemText type="label" content={label} numberOfLines={1} />
+    <Column gap={5} onClick={onClick}>
+      <ItemText type='label' content={label} numberOfLines={1} />
+
       <Content>
         <ImageContent image={image} />
-        <ItemContent>
-          <ItemText type="title" content={name} numberOfLines={1} />
-          <ItemText type="description" content={description} numberOfLines={2} />
+        <Column align='space-between' flex={1}>
+          <Column>
+            <ItemText type='title' content={name} numberOfLines={1} />
+            <ItemText type='description' content={description} numberOfLines={2} />
+          </Column>
 
-          <SpecsWrapper>
-            <ItemSpec name={spec?.key} value={spec?.value} />
-            <ItemSpec name={quantity?.key} value={quantity?.value} />
-          </SpecsWrapper>
-        </ItemContent>
+          {price ? (
+            <Typography
+              type='helper'
+              weight={700}
+              size={16}
+            >
+              {price}
+            </Typography>
+          ) : (
+            <Row align='space-between'>
+              {specs.map(({ key, value }) => (
+                <ItemSpec key={`${key}-${value}`} name={key} value={value} />
+              ))}
+            </Row>
+          )}
+        </Column>
       </Content>
-    </Container>
+    </Column>
   )
 }
-
-const Container = styled.article`
-  flex-direction: column;
-  display: flex;
-  gap: 5px;
-`
 
 const Content = styled.div`
   display: flex;
   gap: 5px;
-`
-
-const ItemContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`
-
-const SpecsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex: 1;
-  align-items: end;
 `
 
 OrderItem.defaultProps = defaultProps
