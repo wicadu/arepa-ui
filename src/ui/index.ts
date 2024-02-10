@@ -37,7 +37,8 @@ import AddOrSubtract from './molecules/AddOrSubtract'
 import OrderItem from './organisms/OrderItem/OrderItem'
 import FlatList from './organisms/FlatList/FlatList'
 import DraftOrderItem from './organisms/DraftOrderItem/DraftOrderItem'
-import Order from './organisms/Order/Order'
+
+import OrderSnapshot from './organisms/OrderSnapshot/OrderSnapshot'
 import OrderUserCard from './organisms/OrderUserCard/OrderUserCard'
 
 import SearchBar from './organisms/SearchBar'
@@ -99,7 +100,7 @@ export {
   FlatList,
   OrderItem,
   DraftOrderItem,
-  Order,
+  OrderSnapshot,
   OrderUserCard,
 
   SearchBar,

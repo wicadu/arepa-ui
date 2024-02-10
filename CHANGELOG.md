@@ -1,3 +1,9 @@
+# 1.19.1
+
+- Refactor: `OrderSnapshot`.
+- Set margin *0px* into `Button` and background color to *NEUTRAL.SIDE* into `Icon`.
+- Add *flex* to `Column` and `Row`
+
 # 1.19.0
 
 - Refactor: `Alert`, `dateFormat`, `Icon`
