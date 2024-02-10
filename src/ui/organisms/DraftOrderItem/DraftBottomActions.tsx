@@ -25,7 +25,7 @@ const defaultProps: Partial<Props> = {
   disabled: false,
 }
 
-function DraftOrderItemBottomActions({
+function DraftBottomActions({
   initialQuantity,
   onChangeQuantity,
   minQuantity,
@@ -78,6 +78,6 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.NEUTRAL.SIDE};
 `
 
-DraftOrderItemBottomActions.defaultProps = defaultProps
+DraftBottomActions.defaultProps = defaultProps
 
-export default DraftOrderItemBottomActions
+export default DraftBottomActions
