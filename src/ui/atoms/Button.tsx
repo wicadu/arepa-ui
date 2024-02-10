@@ -76,7 +76,7 @@ const WrapperButton = styled(Button)`
     border: none;
     font-weight: bold;
 
-    margin: ${({ margin = '0 2px' }) => margin};
+    margin: ${({ margin = '0px' }) => margin};
     ${({ width }) => width && `width: ${width};`}
 
     ${({ size }) => {
