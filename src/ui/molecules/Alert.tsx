@@ -79,11 +79,11 @@ function Alert({
 
   return (
     <Container width={width} show={visible} type={type} size={size}>
-      <Icon name={_types?.[type]} size={28} color={color} />
+      <Icon name={_types?.[type?.toUpperCase()]} size={28} color={color} />
 
       <Content size={size}>
-        <Typography weight={700} size={14} color={color}>{title}</Typography>
-        <Typography size={12} color={color}>{description}</Typography>
+        <Typography weight={700} size={12} color={color}>{title}</Typography>
+        <Typography size={10} color={color}>{description}</Typography>
       </Content>
 
       {closeCallback ? (
