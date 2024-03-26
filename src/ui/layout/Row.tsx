@@ -8,6 +8,7 @@ interface Props {
   align?: ItemsAlign
   gap: number
   flex?: number
+  onClick?: () => void
 }
 
 const defaultProps: Props = {
@@ -15,12 +16,13 @@ const defaultProps: Props = {
   gap: 0
 }
 
-function Row({ children, align, gap, flex }: Props) {
+function Row({ children, align, gap, flex, onClick }: Props) {
   return (
     <Container
       align={align}
       gap={gap}
       flex={flex}
+      onClick={onClick}
     >
       {children}
     </Container>
