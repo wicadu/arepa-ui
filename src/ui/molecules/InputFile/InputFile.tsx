@@ -41,8 +41,7 @@ function InputFile({
 
   const { control, formState: { errors } } = Form.useForm()
 
-  const fieldError: any = useMemo(() => getFormFieldsErrors(errors, name), [errors, name])
-  const hasError = useMemo(() => !!fieldError?.message, [fieldError])
+  const fieldError = getFormFieldsErrors(errors, name)
 
   const Container = useMemo(() => doNotShowFeedback ? Fragment : InputFeedback, [
     doNotShowFeedback
@@ -53,7 +52,7 @@ function InputFile({
       name={name}
       control={control}
       render={({ field: { onChange } }) =>
-        <Container label={label} errors={fieldError} hasError={hasError} name={name}>
+        <Container label={label} errors={fieldError} hasError={Boolean(fieldError?.message)} name={name}>
           {loadedFile ? (
             <FilesSummary
               file={loadedFile}

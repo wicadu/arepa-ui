@@ -34,8 +34,7 @@ function InputComponent({
 }: Props) {
   const { formState: { errors }, register } = Form.useForm()
 
-  const fieldError = useMemo(() => getFormFieldsErrors(errors, name), [errors, name])
-  const hasError = useMemo(() => !!fieldError?.message, [fieldError])
+  const fieldError = getFormFieldsErrors(errors, name)
 
   const Container: React.FC<any> = useMemo(
     () => (doNotShowFeedback ? Wrapper : InputFeedback),
@@ -46,7 +45,7 @@ function InputComponent({
     <Container
       {...props}
       errors={fieldError}
-      hasError={hasError}
+      hasError={Boolean(fieldError?.message)}
       name={name}
     >
       <Input
@@ -54,7 +53,7 @@ function InputComponent({
         id={name}
         name={name}
         type={htmlType}
-        hasError={hasError}
+        hasError={Boolean(fieldError?.message)}
         {...register(name) as any}
       />
     </Container>
