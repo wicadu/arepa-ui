@@ -2,6 +2,7 @@ import React, { ReactNode, ReactElement } from 'react'
 
 import Typography from '../atoms/Typography'
 import Row from './Row'
+import { Button } from '..'
 
 interface Props {
   children: ReactNode | ReactElement | ReactElement[]
@@ -10,12 +11,7 @@ interface Props {
   rightChild?: string | ReactElement
 }
 
-function Section({
-  title,
-  description,
-  rightChild,
-  children
-}: Props): JSX.Element {
+function Section({ title, description, rightChild, children }: Props) {
   return (
     <section>
       <Row align='space-between'>
@@ -28,5 +24,19 @@ function Section({
     </section>
   )
 }
+
+interface RightChildAsButtonProps {
+  onClick: () => void
+  text: string
+  hide?: boolean
+}
+
+function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
+  if (hide) return
+
+  return <Button type='link' onClick={onClick}>{text}</Button>
+}
+
+Section.RightChildAsButton = RightChildAsButton
 
 export default Section

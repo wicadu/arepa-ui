@@ -48,8 +48,7 @@ function SelectComponent({
   const { register, formState: { errors }, setValue } = Form.useForm()
   const ref = useRef(null)
 
-  const fieldError = useMemo(() => getFormFieldsErrors(errors, name), [errors, name])
-  const hasError = useMemo(() => !!fieldError?.message, [fieldError])
+  const fieldError = getFormFieldsErrors(errors, name)
 
   const handleShowOptions = useCallback(() => {
     if (disabled) return
@@ -84,7 +83,7 @@ function SelectComponent({
   )
 
   return (
-    <Container {...props} errors={fieldError} hasError={hasError} name={name}>
+    <Container {...props} errors={fieldError} hasError={Boolean(fieldError?.message)} name={name}>
       <Wrapper ref={ref}>
         <HiddenInput
           readOnly
@@ -96,7 +95,7 @@ function SelectComponent({
         <SelectedValueRendering
           {...props}
           disabled={disabled}
-          hasError={hasError}
+          hasError={Boolean(fieldError?.message)}
           onClick={handleShowOptions}
         >
           <p>{capitalize(label || placeholder)}</p>

@@ -1,46 +1,49 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 
-import { formatCurrency } from '../../../utils'
-
 import OrderItem from '../OrderItem/OrderItem'
-import DraftOrderItemBottomActions from './BottomActions'
+import DraftBottomActions from './DraftBottomActions'
+
+interface Item {
+  label: string
+  image: string | null
+  name: string
+  description: string
+  price: string
+  quantity: number
+  specs: any
+}
 
 interface Props {
-  item: {
-    label: string
-    image: string | null
-    name: string
-    description: string
-    quantity: number
-    price: number
-    spec: any
-  },
+  item: Item,
+  minQuantity?: number
   maxQuantity?: number
-  onChangeQuantity?: () => void
   disabled?: boolean
   editable?: boolean
+  onChange?: () => void,
+  onClose?: () => void
   onClick?: () => void
 }
 
 const defaultProps: Partial<Props> = {
+  minQuantity: 0,
   maxQuantity: Infinity,
   editable: false,
   disabled: false,
-  onChangeQuantity: null,
+  onChange: null,
+  onClose: null,
   onClick: null
 }
 
 function DraftOrderItem({
   item,
-  maxQuantity,
+  onClick,
   editable,
   disabled,
-  onClick,
-  onChangeQuantity
+  minQuantity,
+  maxQuantity,
+  onChange,
 }: Props) {
-  const totalPrice = useMemo(() => item?.quantity * item?.price, [item?.quantity, item?.price])
-
   return (
     <Container onClick={onClick}>
       <OrderItem
@@ -48,18 +51,17 @@ function DraftOrderItem({
         image={item?.image}
         name={item?.name}
         description={item?.description}
-        spec={item?.spec}
-        quantity={typeof item?.price === 'number' ? {
-          value: `${formatCurrency(item?.price)} • ${formatCurrency(totalPrice)}`
-        } : {}}
+        price={item.price}
+        specs={item?.specs}
       />
-      <DraftOrderItemBottomActions
+
+      <DraftBottomActions
         disabled={disabled || !editable}
         editable={editable}
         initialQuantity={item?.quantity}
-        minQuantity={0}
+        minQuantity={minQuantity}
         maxQuantity={maxQuantity}
-        onChangeQuantity={onChangeQuantity}
+        onChangeQuantity={onChange}
       />
     </Container>
   )

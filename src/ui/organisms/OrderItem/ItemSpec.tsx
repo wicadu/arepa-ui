@@ -13,10 +13,10 @@ function ItemSpec({ name, value }: ItemSpecProps): JSX.Element {
 
   return (
     <Wrapper>
-      <Typography type="helper" weight={700} size={16}>
+      <Typography type="helper" weight={700} size={14}>
         {value}
       </Typography>
-      <Typography type="helper" size={16}>
+      <Typography type="helper" size={14}>
         {name}
       </Typography>
     </Wrapper>
@@ -25,7 +25,7 @@ function ItemSpec({ name, value }: ItemSpecProps): JSX.Element {
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 5px;
+  gap: 1px;
 `
 
 export default ItemSpec

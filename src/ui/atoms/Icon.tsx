@@ -58,7 +58,7 @@ const Container = styled.span<Partial<Props>>`
         align-items: center;
         justify-content: center;
         font-size: ${size - (size * _SUBTRACTED_SIZE_PERCENTAGE)}px;
-        background-color: ${colors.NEUTRAL.SELECTED};
+        background-color: ${colors.NEUTRAL.SIDE};
       `
     }
 

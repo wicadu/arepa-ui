@@ -19,7 +19,7 @@ const propTypes = {
 
 type Props = InferProps<typeof propTypes>
 
-function CheckboxController ({
+function CheckboxController({
   children,
   name,
   index,
@@ -40,10 +40,7 @@ function CheckboxController ({
     <Controller
       name={`${name}[${index}].checked`}
       control={control}
-      render={({
-        onChange,
-        value
-      }) => {
+      render={({ field: { onChange, value } }) => {
         const handleOnChange = () => {
           if (props.disabled) return
 

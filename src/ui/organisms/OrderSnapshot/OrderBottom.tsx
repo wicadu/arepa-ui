@@ -6,22 +6,22 @@ import Column from '../../layout/Column'
 import { formatCurrency } from '../../../utils'
 
 type Props = {
-  docs: string[]
-  totalPaid: {
-    key: string
-    value: number
+  docs: {
+    total: number
+    names: string[]
+  }
+  price: {
+    currency: string
+    amount: number
   }
 }
 
-function OrderBottom({ totalPaid, docs }: Props) {
-  const thereAreNotDocs = useMemo(() => !docs?.length, [docs])
-  const docsParsed = useMemo(() => String(docs).toLocaleLowerCase(), [docs])
-
-  if (thereAreNotDocs) {
+function OrderBottom({ docs, price }: Props) {
+  if (!docs?.total) {
     return (
       <Column gap={0}>
         <Typography type='helper' align='right' weight={700}>Total</Typography>
-        <Typography align='right'>{formatCurrency(totalPaid?.value)}</Typography>
+        <Typography weight='bold' align='right'>{formatCurrency(price?.amount)}</Typography>
       </Column>
     )
   }
@@ -30,14 +30,14 @@ function OrderBottom({ totalPaid, docs }: Props) {
     <Column gap={0}>
       <Row align='space-between'>
         <Typography type='helper' weight={700}>
-          Documentos adicionales ({docs?.length})
+          Documentos adicionales ({docs?.total})
         </Typography>
         <Typography type='helper' weight={700}>Total</Typography>
       </Row>
 
-      <Row align='space-between' gap={10}>
-        <Typography numberOfLines={1}>{docsParsed}</Typography>
-        <Typography>{formatCurrency(totalPaid?.value)}</Typography>
+      <Row align='space-between' gap={15}>
+        <Typography numberOfLines={1}>{docs?.names}</Typography>
+        <Typography weight='bold'>{formatCurrency(price?.amount)}</Typography>
       </Row>
     </Column>
   )

@@ -21,6 +21,7 @@ import Notice from './molecules/Notice/Notice'
 import InputFile from './molecules/InputFile/InputFile'
 import UserCard from './molecules/UserCard/UserCard'
 import StatusChip from './molecules/StatusChip/StatusChip'
+import Collapsable from './molecules/Collapsable'
 
 import Popover from './molecules/Popover'
 import ItemSnippetInCard from './molecules/ItemSnippetInCard'
@@ -37,7 +38,8 @@ import AddOrSubtract from './molecules/AddOrSubtract'
 import OrderItem from './organisms/OrderItem/OrderItem'
 import FlatList from './organisms/FlatList/FlatList'
 import DraftOrderItem from './organisms/DraftOrderItem/DraftOrderItem'
-import Order from './organisms/Order/Order'
+
+import OrderSnapshot from './organisms/OrderSnapshot/OrderSnapshot'
 import OrderUserCard from './organisms/OrderUserCard/OrderUserCard'
 
 import SearchBar from './organisms/SearchBar'
@@ -94,12 +96,13 @@ export {
   InputFile,
   UserCard,
   StatusChip,
+  Collapsable,
 
   // Organisms
   FlatList,
   OrderItem,
   DraftOrderItem,
-  Order,
+  OrderSnapshot,
   OrderUserCard,
 
   SearchBar,
