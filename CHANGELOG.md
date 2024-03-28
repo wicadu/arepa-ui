@@ -1,3 +1,7 @@
+# 1.19.2
+
+- Add `Collapsable`
+
 # 1.19.1
 
 - Refactor: `OrderSnapshot`.

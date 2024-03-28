@@ -21,6 +21,7 @@ import Notice from './molecules/Notice/Notice'
 import InputFile from './molecules/InputFile/InputFile'
 import UserCard from './molecules/UserCard/UserCard'
 import StatusChip from './molecules/StatusChip/StatusChip'
+import Collapsable from './molecules/Collapsable'
 
 import Popover from './molecules/Popover'
 import ItemSnippetInCard from './molecules/ItemSnippetInCard'
@@ -95,6 +96,7 @@ export {
   InputFile,
   UserCard,
   StatusChip,
+  Collapsable,
 
   // Organisms
   FlatList,
