@@ -113,7 +113,17 @@ const Container = styled.div<Partial<Props>>`
 
     const { colors } = theme
 
-    let style: string = ''
+    let style: string = `
+      @media screen and (min-width: 768px) {
+        .material-icons {
+          font-size: 36px;
+        }
+
+        p {
+          line-height: normal;
+        }
+      }
+    `
 
     if (size === AlertSize.Small) {
       style += `
@@ -125,6 +135,16 @@ const Container = styled.div<Partial<Props>>`
 
         .close {
           font-size: 14px;
+        }
+
+        @media screen and (min-width: 768px) {
+          p {
+            font-size: 16px;
+          }
+          
+          .material-icons {
+            font-size: 20px;
+          }
         }
       `
     }

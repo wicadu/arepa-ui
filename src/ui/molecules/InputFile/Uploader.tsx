@@ -19,7 +19,7 @@ interface Props {
 
 const defaultProps: Partial<Props> = {
   disabled: false,
-  width: '220px'
+  width: '100%'
 }
 
 function InputFileUploader({
