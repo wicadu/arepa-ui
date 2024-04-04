@@ -85,6 +85,10 @@ const WrapperButton = styled(Button)`
         height: 35px;
         font-size: 12px;
         border-radius: 7px;
+
+        @media screen and (min-width: 768px) {
+          font-size: 14px;
+        }
       `
 
     if (size === ButtonSizes.medium)
@@ -92,12 +96,20 @@ const WrapperButton = styled(Button)`
         height: 44px;
         font-size: 14px;
         border-radius: 7px;
+
+        @media screen and (min-width: 768px) {
+          font-size: 16px;
+        }
       `
 
     if (size === ButtonSizes.large)
       return `
         height: 50px;
         font-size: 18px;
+
+        @media screen and (min-width: 768px) {
+          font-size: 20px;
+        }
       `
   }}
 
