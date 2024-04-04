@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 type ItemsAlign = 'left' | 'center' | 'right' | 'space-between'
 
@@ -8,20 +9,23 @@ interface Props {
   align?: ItemsAlign
   gap: number
   flex?: number
+  styles: string | SerializedStyles
   onClick?: () => void
 }
 
 const defaultProps: Props = {
   children: 'div',
-  gap: 0
+  gap: 0,
+  styles: ''
 }
 
-function Row({ children, align, gap, flex, onClick }: Props) {
+function Row({ children, align, gap, flex, styles, onClick }: Props) {
   return (
     <Container
       align={align}
       gap={gap}
       flex={flex}
+      styles={styles}
       onClick={onClick}
     >
       {children}
@@ -48,6 +52,8 @@ const Container = styled.div<Partial<Props>>`
 
     return styles
   }}
+
+  ${({ styles }) => styles}
 `
 
 
