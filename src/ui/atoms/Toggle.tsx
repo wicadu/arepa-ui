@@ -29,7 +29,11 @@ function Toggle ({ defaultValue, disabled, onClick, controlled, loading }: Props
 
   const { colors } = useTheme()
 
-  const value: boolean = useMemo(() => controlled ? defaultValue : active, [active, defaultValue, controlled])
+  const value: boolean = useMemo(() => controlled ? defaultValue : active, [
+    active,
+    defaultValue,
+    controlled
+  ])
 
   const handleToggle = useCallback(() => {
     if (disabled) return

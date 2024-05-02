@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-type ImageProps = {
+interface Props extends Partial<React.ImgHTMLAttributes<HTMLImageElement>> {
   backgroundColor?: string
   width?: number
   height?: number
   rounded?: boolean
+  fit: 'contain' | 'cover'
 }
 
 const defaultProps = {
   width: 100,
   height: 100,
+  fit: 'cover'
 }
 
 const Image = ({
@@ -20,8 +22,9 @@ const Image = ({
   alt,
   rounded,
   backgroundColor,
+  fit,
   onClick,
-}: ImageProps & React.ImgHTMLAttributes<HTMLImageElement>) => {
+}: Props) => {
   return (
     <Img
       src={src}
@@ -29,6 +32,7 @@ const Image = ({
       width={width}
       rounded={rounded}
       height={height}
+      fit={fit}
       onClick={onClick}
       backgroundColor={backgroundColor}
     />
@@ -38,13 +42,13 @@ const Image = ({
 const _PADDING_PERCENTAGE = 25
 const _DEFAULT_RADIUS = 7
 
-const Img = styled.img<ImageProps & React.ImgHTMLAttributes<HTMLImageElement>>`
-  ${({ backgroundColor, width, height, rounded, onClick }) => {
+const Img = styled.img<Props>`
+  ${({ backgroundColor, width, height, rounded, onClick, fit }) => {
     let styles: string = `
       border-radius: ${rounded ? (width + height) / 2 : _DEFAULT_RADIUS}px;
       width: ${width}px;
       height: ${height}px;
-      object-fit: cover;
+      object-fit: ${fit};
     `
 
     if (backgroundColor?.length >= 1) {

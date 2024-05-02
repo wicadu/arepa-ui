@@ -17,7 +17,7 @@ function Section({ title, description, rightChild, children }: Props) {
     <section>
       <Row align='space-between' styles={sectionTitleStyles}>
         {typeof title === 'string' ?
-          <Typography type='title-3' size={16}>{title}</Typography>
+          <Typography type='title-3' size={20}>{title}</Typography>
           : title}
         <div>{rightChild}</div>
       </Row>
