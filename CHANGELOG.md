@@ -1,3 +1,13 @@
+# 1.19.3
+
+- Add `styles` prop to `Row` and `Column.
+- Add `title` prop as a Component for `Section`.
+- Add `media queries` for `Alert` and fix `Uploader` default size`.
+- Add `media queries` breakouts for `font-size` into `Button`.
+- Refactor `Badged`
+- Fix `Checkbox`'s icon, `Image`'s props, `Section`'s title
+- Add `dateFormat`
+
 # 1.19.2
 
 - Add `Collapsable`
