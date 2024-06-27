@@ -39,7 +39,7 @@ const ErrorMessage = styled.small<any>`
   color: ${({ theme }: any) => theme.colors.MAIN.ERROR};
   text-align: end;
   padding: 0 5px;
-  height: 25px;
+  height: 15px;
 
   ${({ hasError }) => !hasError && 'opacity: 0;'}
 `

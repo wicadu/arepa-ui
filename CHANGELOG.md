@@ -1,3 +1,7 @@
+# 1.19.4
+
+- Reduce Input/ErrorMessage spacing.
+
 # 1.19.3
 
 - Add `styles` prop to `Row` and `Column.
