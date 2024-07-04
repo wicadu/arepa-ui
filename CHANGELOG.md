@@ -1,3 +1,7 @@
+# 1.19.6
+
+- Fix build process
+
 # 1.19.5
 
 - Add `Urbanist` font
