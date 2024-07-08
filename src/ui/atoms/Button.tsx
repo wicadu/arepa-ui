@@ -58,9 +58,16 @@ function Button({
   loading,
   ...restOfProps
 }: Props) {
+
   return (
     <button {...restOfProps} type={htmlType} disabled={disabled || loading}>
-      {loading ? <Spin type={[ButtonType.white, ButtonType.link].includes(type) || outlined ? ButtonType.primary : ButtonType.white} size={20} /> : children}
+      {loading ? (
+        <Spin
+          type={[ButtonType.white, ButtonType.link].includes(type) || outlined ? type : ButtonType.white}
+          size={20}
+        />
+      )
+        : children}
     </button>
   )
 }
