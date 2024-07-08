@@ -22,6 +22,7 @@ import UserCard from './molecules/UserCard/UserCard'
 import StatusChip from './molecules/StatusChip/StatusChip'
 import Collapsable from './molecules/Collapsable'
 import Pricing from './molecules/Pricing'
+import Toast from './molecules/Toast'
 
 import Stepper from './molecules/Stepper'
 import Breadcrumbs from './molecules/Breadcrumbs'
@@ -78,6 +79,7 @@ export {
   StatusChip,
   Collapsable,
   Pricing,
+  Toast,
 
   // Organisms
   FlatList,
