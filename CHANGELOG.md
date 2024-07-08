@@ -1,3 +1,7 @@
+# 1.20.0
+
+- Add `h5` and `h6` to `Typography`
+
 # 1.19.6
 
 - Fix build process
