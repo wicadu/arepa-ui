@@ -1,3 +1,7 @@
+# 1.20.1
+
+- Add `Catamaran` font
+
 # 1.20.0
 
 - Add `h5` and `h6` to `Typography`
