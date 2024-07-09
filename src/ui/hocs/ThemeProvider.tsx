@@ -32,6 +32,7 @@ function WrapperThemeProvider ({ children, colors, mode }) {
           @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,700;1,400;1,700&display=swap');
           @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
           @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,700;1,700&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Catamaran&display=swap');
 
           html,
           body {
