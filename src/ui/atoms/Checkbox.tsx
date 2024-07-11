@@ -40,7 +40,7 @@ function Checkbox(props: Props) {
     <Container {...props}>
       {checked && (
         <Icon
-          name="fas fa-check"
+          name="check"
           size={size - 8}
           color={colors.FONT.CONTRAST}
         />

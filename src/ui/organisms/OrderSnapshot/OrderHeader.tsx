@@ -37,7 +37,9 @@ function OrderHeader({ orderId, status, showStatusChip, date }: Props) {
         <Typography weight={700} size={16}>{String(orderId)}</Typography>
       )}
 
-      <Typography type='description' size={14}>{dateFormat(date, 'es-CL', true)}</Typography>
+      <Typography type='description' size={14}>
+        {dateFormat(date, { language: 'es-CL', withHours: true })}
+      </Typography>
     </Row>
   )
 }

@@ -12,6 +12,8 @@ function Spacer({
   horizontalSpace,
   topSpace,
   bottomSpace,
+  leftSpace,
+  rightSpace,
   ...props
 }: Props) {
   return (
@@ -21,6 +23,8 @@ function Spacer({
       horizontalSpace={horizontalSpace}
       topSpace={topSpace}
       bottomSpace={bottomSpace}
+      leftSpace={leftSpace}
+      rightSpace={rightSpace}
       {...props}
     >
       {children}
@@ -32,12 +36,22 @@ interface ContainerProps {
   spaceType: 'margin' | 'padding'
   topSpace?: number
   bottomSpace?: number
+  leftSpace?: number
+  rightSpace?: number
   verticalSpace?: number
   horizontalSpace?: number
 }
 
 const Container = styled.div<ContainerProps>`
-  ${({ spaceType, verticalSpace, horizontalSpace, topSpace, bottomSpace }) => {
+  ${({
+    spaceType,
+    verticalSpace,
+    horizontalSpace,
+    topSpace,
+    bottomSpace,
+    leftSpace,
+    rightSpace,
+  }) => {
     let styles: string = ''
 
     if (verticalSpace) {
@@ -63,6 +77,18 @@ const Container = styled.div<ContainerProps>`
     if (bottomSpace) {
       styles += `
         ${spaceType}-bottom: ${bottomSpace}px;
+      `
+    }
+
+    if (leftSpace) {
+      styles += `
+        ${spaceType}-left: ${leftSpace}px;
+      `
+    }
+
+    if (rightSpace) {
+      styles += `
+        ${spaceType}-right: ${rightSpace}px;
       `
     }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
@@ -7,93 +7,47 @@ import Typography from '../atoms/Typography'
 import Icon from '../atoms/Icon'
 import hexToRGBA from '../../utils/hexToRGBA'
 
-export enum AlertTypes {
-  Success = 'SUCCESS',
-  Error = 'ERROR',
-  Info = 'INFO',
-  Warning = 'WARNING'
-}
-
-enum AlertSize {
-  Small = 'SMALL',
-  Medium = 'MEDIUM',
-}
+import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
+import { UIElementStatusEnum } from '../ts/enums/UIElementStatusEnum'
 
 const _types = {
-  [AlertTypes.Success]: 'check_circle',
-  [AlertTypes.Error]: 'cancel',
-  [AlertTypes.Info]: 'watch_later',
-  [AlertTypes.Warning]: 'watch_later',
+  [UIElementStatusEnum.Success]: 'check_circle',
+  [UIElementStatusEnum.Error]: 'cancel',
+  [UIElementStatusEnum.Info]: 'watch_later',
+  [UIElementStatusEnum.Warning]: 'watch_later',
 }
 
 interface Props {
   title: string
   description: string
-  type: AlertTypes
+  type: UIElementStatusEnum
   show: boolean
-  closeCallback?: () => void
   width: string
-  autoClose: number | null
-  size?: AlertSize
+  size?: UIElementSizesEnum
 }
 
 const defaultProps: Partial<Props> = {
   title: '',
   description: '',
-  type: AlertTypes.Info,
+  type: UIElementStatusEnum.Info,
   show: true,
-  closeCallback: null,
   width: '100%',
-  autoClose: null,
-  size: AlertSize.Medium
+  size: UIElementSizesEnum.Medium
 }
 
-function Alert({
-  title,
-  description,
-  type,
-  show,
-  closeCallback,
-  width,
-  autoClose,
-  size
-}: Props) {
-  const [visible, setVisibility] = useState(false)
-
+function Alert({ title, description, type, show, width, size }: Props) {
   const { colors } = useTheme()
 
   const color = useMemo(() => colors.MAIN[String(type).toUpperCase()], [type])
 
-  const handleClose = () => {
-    setVisibility(false)
-    closeCallback?.()
-  }
-
-  useEffect(() => {
-    setVisibility(show)
-
-    if (autoClose && show) {
-      setTimeout(() => handleClose(), autoClose)
-    }
-  }, [show, autoClose])
-
   return (
-    <Container width={width} show={visible} type={type} size={size}>
-      <Icon name={_types?.[type?.toUpperCase()]} size={28} color={color} />
+    <Container width={width} show={show} type={type} size={size}>
+      <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
         <Typography weight={700} size={12} color={color}>{title}</Typography>
         <Typography size={10} color={color}>{description}</Typography>
       </Content>
-
-      {closeCallback ? (
-        <Icon
-          name='close'
-          size={closeCallback ? 20 : 0}
-          color={color}
-          onClick={handleClose}
-        />
-      ) : null}
 
       <OpacityCanceler color={color} />
     </Container>
@@ -113,9 +67,19 @@ const Container = styled.div<Partial<Props>>`
 
     const { colors } = theme
 
-    let style: string = ''
+    let style: string = `
+      @media screen and (min-width: 768px) {
+        .material-icons {
+          font-size: 36px;
+        }
 
-    if (size === AlertSize.Small) {
+        p {
+          line-height: normal;
+        }
+      }
+    `
+
+    if (size === UIElementSizesEnum.Small) {
       style += `
         padding: 6px;
 
@@ -125,6 +89,16 @@ const Container = styled.div<Partial<Props>>`
 
         .close {
           font-size: 14px;
+        }
+
+        @media screen and (min-width: 768px) {
+          p {
+            font-size: 16px;
+          }
+          
+          .material-icons {
+            font-size: 20px;
+          }
         }
       `
     }
@@ -144,11 +118,12 @@ const Container = styled.div<Partial<Props>>`
 
 const Content = styled.span<Partial<Props>>`
   flex: 1;
+  z-index: 2;
 
   ${({ size }) => {
     let style: string = ''
 
-    if (size === AlertSize.Small) {
+    if (size === UIElementSizesEnum.Small) {
       style += `
         display: flex;
         justify-content: space-between;
@@ -168,6 +143,7 @@ const OpacityCanceler = styled.div<Partial<Props>>`
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 1;
 `
 
 Alert.defaultProps = defaultProps

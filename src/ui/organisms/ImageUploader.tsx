@@ -1,38 +1,51 @@
 import React, { useCallback, useState, useRef, useMemo, useEffect } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+
 import styled from '@emotion/styled'
+import { useTheme } from '@emotion/react'
+
 import Image from '../atoms/Image'
 import Icon from '../atoms/Icon'
+import Spin from '../atoms/Spin'
 import Button from '../atoms/Button'
 import Typography from '../atoms/Typography'
 import Form from '../hocs/Form'
 import Alert from '../molecules/Alert'
-import { Spin } from '..'
+import Column from '../layout/Column'
+import Spacer from '../layout/Spacer'
+import { UIElementStatusEnum } from '../ts/enums/UIElementStatusEnum'
+import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
-const { useForm } = Form
-
-const propTypes = {
-  name: PropTypes.string.isRequired,
-  imageWidth: PropTypes.number,
-  imageHeight: PropTypes.number,
-  defaultIcon: PropTypes.string,
-  defaultImage: PropTypes.string,
-  onLoadSubmit: PropTypes.func,
-  loadingLoadSubmit: PropTypes.bool,
-  onDelete: PropTypes.func,
-  loadingDelete: PropTypes.bool,
-  helperText: PropTypes.string,
-  hidden: PropTypes.bool,
+interface Props {
+  name: string
+  imageWidth?: number
+  imageHeight?: number
+  defaultImage?: string
+  onLoadSubmit?: () => void
+  loadingLoadSubmit?: boolean
+  onDelete?: () => void
+  loadingDelete?: boolean
+  helperText?: string
+  hidden?: boolean
 }
 
-type Props = InferProps<typeof propTypes>
+const defaultProps: Partial<Props> = {
+  name: '',
+  imageHeight: 225,
+  imageWidth: 225,
+  defaultImage: '',
+  onLoadSubmit(){},
+  loadingLoadSubmit: false,
+  onDelete(){},
+  loadingDelete: false,
+  helperText: '',
+  hidden: false
+}
 
-function ImageUploader ({
+function ImageUploader({
   name,
   defaultImage,
   imageWidth,
   imageHeight,
-  defaultIcon,
   onLoadSubmit,
   loadingLoadSubmit,
   onDelete,
@@ -43,20 +56,20 @@ function ImageUploader ({
   const [image, setImage] = useState(defaultImage)
   const [editing, setEditing] = useState(false)
 
-  const { register, getValues, formState: { errors }, reset } = useForm()
-  const hiddenInputFilePickerRef = useRef<HTMLInputElement>(null)
+  const { colors } = useTheme()
+  const { getValues, formState: { errors }, setValue, reset } = Form.useForm()
+  const hiddenInputRef = useRef<HTMLInputElement | null>(null)
 
-  const isNewStoreImageLoaded = useMemo(() =>
-    getValues(name)?.length > 0, [
-      getValues(name)?.length,
-    ]
-  )
+  const isNewImageLoadedToForm = useMemo(() => getValues(name)?.length > 0, [
+    getValues(name)?.length
+  ])
 
   useEffect(() => {
     if (!hidden) {
       setEditing(false)
       reset()
       setImage(defaultImage)
+      if (hiddenInputRef?.current) hiddenInputRef.current.value = '';
     }
   }, [hidden])
 
@@ -64,10 +77,9 @@ function ImageUploader ({
     setImage(defaultImage)
   }, [defaultImage])
 
-  const loading = useMemo(() =>
-    loadingLoadSubmit || loadingDelete, [
-      loadingLoadSubmit,
-      loadingDelete,
+  const loading = useMemo(() => loadingLoadSubmit || loadingDelete, [
+    loadingLoadSubmit,
+    loadingDelete,
   ])
 
   const handleStartEditing = useCallback(() => {
@@ -77,15 +89,17 @@ function ImageUploader ({
   const handleOnDelete = useCallback(() => {
     if (loading) return
 
-    if (isNewStoreImageLoaded) {
+    if (isNewImageLoadedToForm) {
       setImage(defaultImage)
       reset()
+
+      if (hiddenInputRef?.current) hiddenInputRef.current.value = '';
     } else {
       onDelete?.()
     }
   }, [
     loading,
-    isNewStoreImageLoaded,
+    isNewImageLoadedToForm,
     setImage,
     defaultImage,
     reset,
@@ -95,29 +109,36 @@ function ImageUploader ({
   const handleOnLoad = useCallback(() => {
     if (loading) return
 
-    if (isNewStoreImageLoaded)
+    if (isNewImageLoadedToForm)
       onLoadSubmit()
     else
-      hiddenInputFilePickerRef?.current?.click()
+      hiddenInputRef?.current?.click()
   }, [
     loading,
-    isNewStoreImageLoaded,
+    isNewImageLoadedToForm,
     onLoadSubmit,
-    hiddenInputFilePickerRef,
+    hiddenInputRef,
   ])
 
   const handleOnChangeImage = useCallback((event) => {
     const { files } = event?.target || {}
 
-    if (files?.[0]) setImage(URL.createObjectURL(files?.[0]))
-  }, [setImage])
+    if (files?.[0]) {
+      setImage(URL.createObjectURL(files?.[0]))
+      setValue(name, files)
+    }
+  }, [
+    setImage,
+    setValue,
+    name
+  ])
 
   const hasError = useMemo(() => errors?.[name]?.message, [errors?.[name]])
 
   return (
     <Container>
       <ContainerImage>
-        {Boolean(image && (!editing || isNewStoreImageLoaded)) && (
+        {Boolean(image && (!editing || isNewImageLoadedToForm)) && (
           <DeleteIconContainer onClick={handleOnDelete}>
             {loadingDelete ?
               <Spin size={10} type='white' /> :
@@ -126,12 +147,27 @@ function ImageUploader ({
           </DeleteIconContainer>
         )}
 
-        <Image
-          src={image}
-          width={imageWidth}
-          height={imageHeight}
-          noPictureIcon={defaultIcon}
-        />
+        {Boolean(image?.length) ? (
+          <Image
+            src={image}
+            width={imageWidth}
+            height={imageHeight}
+            fit='contain'
+          />
+        ) : (
+          <Spacer
+            spaceType='padding'
+            verticalSpace={(imageHeight / 2) - 30}
+            horizontalSpace={(imageWidth / 2) - 30}
+            children={
+              <Icon
+                name='insert_photo'
+                size={30}
+                color={colors.FONT.CONTRAST}
+              />
+            }
+          />
+        )}
 
         {Boolean(!editing && !loadingDelete) && (
           <EditIconContainer onClick={handleStartEditing}>
@@ -141,40 +177,38 @@ function ImageUploader ({
       </ContainerImage>
 
       {editing && (
-        <>
+        <Column gap={20}>
           <Button
             type='white'
             outlined
-            size='medium'
+            size={UIElementSizesEnum.Medium}
             onClick={handleOnLoad}
             loading={loadingLoadSubmit}
-          >
-            {isNewStoreImageLoaded ? 'Confirmar': 'Seleccionar imagen'}
-          </Button>
+            children={isNewImageLoadedToForm ? 'Confirmar' : 'Seleccionar imagen'}
+          />
 
-          {helperText && <TextHelper type='helper' color='white'>{helperText}</TextHelper>}
-        </>
+          <Typography
+            type='helper'
+            color='white'
+            align='center'
+            children={helperText}
+          />
+        </Column>
       )}
 
-      {
-        Boolean(editing && hasError) && (
-        <StyledAlert
-            noClose
-            show
-            type='ERROR'
-            title={errors?.[name].type}
-            message={errors?.[name].message}
-          />
-        )
-      }
+      <Alert
+        show={Boolean(editing && hasError)}
+        type={UIElementStatusEnum.Error}
+        title={errors?.[name]?.type as string}
+        description={errors?.[name]?.message as string}
+      />
 
       <HiddenInputFilePicker
         type='file'
         name={name}
         accept='image/*'
         onChange={handleOnChangeImage}
-        {...register(name) as any}
-        ref={hiddenInputFilePickerRef}
+        ref={hiddenInputRef}
       />
     </Container>
   )
@@ -195,15 +229,6 @@ const ContainerImage = styled.div`
       width: 400px;
       height: 400px;
     }
-  }
-
-`
-
-const TextHelper = styled(Typography)`
-  margin-top: 50px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 16px;
   }
 `
 
@@ -240,14 +265,6 @@ const HiddenInputFilePicker = styled.input`
   display: none;
 `
 
-const StyledAlert = styled(Alert)`
-  margin-top: 62px;
-
-  @media screen and (min-width: 768px) {
-    margin-top: 80px;
-  }
-`
-
-ImageUploader.propTypes = propTypes
+ImageUploader.defaultProps = defaultProps
 
 export default ImageUploader

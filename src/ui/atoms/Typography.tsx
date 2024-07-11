@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import styled from '@emotion/styled'
 
@@ -16,26 +15,25 @@ enum htmlType {
   link = 'link',
 }
 
-const propTypes = {
-  type: PropTypes.oneOf(Object.values(htmlType)).isRequired,
-  align: PropTypes.oneOf(['left', 'center', 'right']),
-  weight: PropTypes.oneOf([100, 300, 400, 600, 700, 'bold']),
-  size: PropTypes.number,
-  color: PropTypes.string,
-  numberOfLines: PropTypes.number,
-  children: PropTypes.node,
-  dangerouslySetInnerHTML: PropTypes.shape({
-    __html: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }),
-  afterStyles: PropTypes.exact({
-    content: PropTypes.string,
-    size: PropTypes.number,
-    weight: PropTypes.number,
-    color: PropTypes.string,
-  }),
+interface Props {
+  type: htmlType
+  align?: 'left' | 'center' | 'right'
+  weight?: 100 | 300 | 400 | 600 | 700 | 'bold'
+  size?: number
+  color?: string
+  numberOfLines?: number
+  children?: React.ReactNode | string | number
+  dangerouslySetInnerHTML?: {
+    __html: string | number
+  }
+  afterStyles?: {
+    content: string
+    size: number
+    weight: number
+    color?: string
+  }
+  decoration: string
 }
-
-type Props = InferProps<typeof propTypes>
 
 const defaultProps: Partial<Props> = {
   type: htmlType.default,
@@ -179,14 +177,15 @@ const Small = styled.p`
   font-size: ${({ size }: any) => size || 13}px;
 `
 
-const Link = styled.a<any>`
+const Link = styled.a<Partial<Props>>`
   ${(props) => defaultStyles({ weight: 400, ...props })}
   font-size: ${({ size }: any) => size || 16}px;
 
   ${({ decoration }) => (decoration ? `text-decoration: ${decoration};` : '')}
 `
 
-Typography.propTypes = propTypes
 Typography.defaultProps = defaultProps
+
+export { Props as TypographyProps }
 
 export default Typography

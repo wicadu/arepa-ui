@@ -7,8 +7,8 @@ import InputFeedback from '../hocs/InputFeedback'
 import Icon from './Icon'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import Form from '../hocs/Form'
-import { InputSizesEnum } from '../ts/enums/InputSizesEnum'
 import { capitalize, getFormFieldsErrors, hexToRGBA } from '../../utils'
+import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
 const propTypes = {
   label: PropTypes.string,
@@ -16,7 +16,7 @@ const propTypes = {
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
-  size: PropTypes.oneOf<InputSizesEnum>(Object.values(InputSizesEnum)),
+  size: PropTypes.oneOf<UIElementSizesEnum>(Object.values(UIElementSizesEnum)),
   withBorder: PropTypes.bool,
   options: PropTypes.array,
   doNotShowFeedback: PropTypes.bool,
@@ -25,7 +25,7 @@ const propTypes = {
 type Props = InferProps<typeof propTypes>
 
 const defaultProps = {
-  size: InputSizesEnum.large,
+  size: UIElementSizesEnum.Large,
 }
 
 type Option = {
@@ -167,11 +167,11 @@ const SelectedValueRendering = styled.div<Partial<Props & any>>`
   }
 
   ${({ size }) => {
-    if (size === InputSizesEnum.small) return 'height: 35px;'
+    if (size === UIElementSizesEnum.Small) return 'height: 35px;'
 
-    if (size === InputSizesEnum.medium) return 'height: 42px;'
+    if (size === UIElementSizesEnum.Medium) return 'height: 42px;'
 
-    if (size === InputSizesEnum.large) return 'height: 50px;'
+    if (size === UIElementSizesEnum.Large) return 'height: 50px;'
   }}
 `
 

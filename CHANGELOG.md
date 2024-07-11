@@ -1,3 +1,12 @@
+# 1.21.0
+
+- Delete components: `UserSnippet`, `OrderSnippet`, `PreviewItemsList`, `SearchBar`, `ItemSnippetInCard`, `ItemSnippetInList`, `AddOrSubtract`, `PaymentSnippet`, `OrderItemSnippet`, `SearchBar`, `SearchBar` and `Expand`
+- Add components: `Pricing` and `Toast`
+- Refactor: `InputFeedback`, `formatCurrency`, `Alert`, `ImagesGallery` and `ImageUploader`
+- Add interfaces: `UIElementSizesEnum` and `UIElementStatusEnum`
+- Remove interfaces: `InputSizesEnum` and `IconProps`
+- Synchronize versions
+
 # 1.20.2
 
 - Set `Catamaran` font to `Input` font

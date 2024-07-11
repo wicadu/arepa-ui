@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 type ItemsAlign = 'top' | 'center' | 'bottom' | 'space-between'
 
@@ -9,6 +10,7 @@ interface Props {
   gap: number
   onClick?: () => void
   flex?: number
+  styles: string | SerializedStyles
 }
 
 const defaultProps: Partial<Props> = {
@@ -21,6 +23,7 @@ function Column({
   align,
   gap,
   flex,
+  styles,
   onClick
 }: Props) {
   return (
@@ -29,6 +32,7 @@ function Column({
       gap={gap}
       flex={flex}
       onClick={onClick}
+      styles={styles}
     >
       {children}
     </Container>
@@ -56,6 +60,8 @@ const Container = styled.div<Partial<Props>>`
 
     return styles
   }}
+
+  ${({ styles }) => styles}
 `
 
 

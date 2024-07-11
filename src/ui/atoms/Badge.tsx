@@ -1,39 +1,59 @@
 import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
-enum badgeType {
-  primary = 'primary',
-  success = 'success',
-  error = 'error',
-  warning = 'warning',
+enum BadgeType {
+  Primary = 'primary',
+  Success = 'success',
+  Error = 'error',
+  Warning = 'warning',
 }
 
-const propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
-  inverse: PropTypes.bool,
-  type: PropTypes.oneOf(Object.values(badgeType)),
-  color: PropTypes.string,
+interface Props extends Partial<React.HTMLAttributes<HTMLDivElement>> {
+  children: string | number
+  inverse?: boolean
+  type: BadgeType
+  color: string
+  styles: string | SerializedStyles
+  width?: number | string | 'fit-content'
+  margin?: string | number
+  padding?: string | number
 }
 
-const defaultProps = {
-  children: null,
-  type: badgeType.primary,
+const defaultProps: Partial<Props> = {
+  children: '',
+  type: BadgeType.Primary,
   inverse: false,
   color: '',
+  width: 'fit-content'
 }
 
-type Props = InferProps<typeof propTypes>
-
-function Badge({ children, ...props }: Props) {
-  return <Container {...props}>{children}</Container>
+function Badge({
+  children,
+  styles,
+  width,
+  margin,
+  padding,
+  type,
+  inverse
+}: Props) {
+  return (
+    <Container
+      styles={styles}
+      width={width}
+      margin={margin}
+      padding={padding}
+      type={type}
+      inverse={inverse}
+    >
+      {children}
+    </Container>
+  )
 }
 
-const Container = styled.div`
+const Container = styled.div<Partial<Props>>`
   border-radius: 5px;
-
   width: ${({ width }) => width || 'fit-content'};
   margin: ${({ margin }) => margin || 0};
   padding: ${({ padding }) => padding || '3px 5px'};
@@ -50,12 +70,13 @@ const Container = styled.div`
 
       font-size: 14px;
       text-align: center;
-      ${inverse && `font-weight: 700;`}
+      ${inverse ? `font-weight: 700;` : ''}
     `
   }}
+
+  ${({ styles }) => styles}
 `
 
-Badge.propTypes = propTypes
 Badge.defaultProps = defaultProps
 
 export default Badge

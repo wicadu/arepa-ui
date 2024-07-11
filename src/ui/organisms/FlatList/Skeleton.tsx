@@ -9,11 +9,11 @@ interface Props {
 function FlatListSkeleton({ skeleton: Skeleton }: Props): JSX.Element {
   return (
     <Column gap={10}>
-      {/* <Skeleton />
       <Skeleton />
       <Skeleton />
       <Skeleton />
-      <Skeleton /> */}
+      <Skeleton />
+      <Skeleton />
     </Column>
   )
 }

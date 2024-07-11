@@ -30,7 +30,9 @@ function OrderUserCard({ createdAt, user, status, onClick }: Props): JSX.Element
     <Column gap={5}>
       <Row align='space-between'>
         <StatusChip type={status.type} text={status.text} />
-        <Typography type='description' size={14}>{dateFormat(createdAt, 'es-CL', true)}</Typography>
+        <Typography type='description' size={14}>
+          {dateFormat(createdAt, { language: 'es-CL', withHours: true })}
+        </Typography>
       </Row>
 
       <UserCard

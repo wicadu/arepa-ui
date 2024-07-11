@@ -14,11 +14,10 @@ function Overlay({ backgroundColor, zIndex }: Props): React.ReactElement {
 
 const Wrapper = styled.div<Props>`
   position: fixed;
-  height: 100vh;
-  width: 100vh;
   top: 0;
   left: 0;
   bottom: 0;
+  right: 0;
   z-index: ${({ zIndex }) => zIndex};
 
   background-color: ${({ backgroundColor }) =>

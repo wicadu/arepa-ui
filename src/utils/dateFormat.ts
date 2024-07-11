@@ -1,6 +1,12 @@
-const dateOptions: Intl.DateTimeFormatOptions = {
+const dateOptionsShort: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'short',
+  day: 'numeric',
+}
+
+const dateOptionsLong: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
   day: 'numeric',
 }
 
@@ -10,13 +16,27 @@ const hoursOptions: Intl.DateTimeFormatOptions = {
   hour12: true,
 }
 
-function dateFormat(
-  currentDate: Date | string = new Date(),
-  language: string = 'en-US',
-  withHours: boolean = false
-): string {
-  const standardizedDate = new Date(currentDate)
+interface DateFormatOptions {
+  language: 'en-US' | 'es-CL'
+  longFormat: boolean
+  withHours: boolean
+}
 
+const defaultOptions: DateFormatOptions = {
+  language: 'en-US',
+  withHours: false,
+  longFormat: false,
+}
+
+function dateFormat(
+  date: Date | string,
+  options: Partial<DateFormatOptions> = defaultOptions
+): string {
+  const standardizedDate = new Date(date || new Date())
+
+  const { language, withHours, longFormat } = options
+
+  const dateOptions = longFormat ? dateOptionsLong : dateOptionsShort
   const formattedDate = standardizedDate.toLocaleDateString(
     language,
     dateOptions
