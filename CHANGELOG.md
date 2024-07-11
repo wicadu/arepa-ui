@@ -1,3 +1,7 @@
+# 1.21.1
+
+- Add `props` to `Divider`
+
 # 1.21.0
 
 - Delete components: `UserSnippet`, `OrderSnippet`, `PreviewItemsList`, `SearchBar`, `ItemSnippetInCard`, `ItemSnippetInList`, `AddOrSubtract`, `PaymentSnippet`, `OrderItemSnippet`, `SearchBar`, `SearchBar` and `Expand`

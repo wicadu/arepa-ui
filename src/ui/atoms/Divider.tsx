@@ -13,6 +13,7 @@ function Divider({
   thickness = 1,
   color,
   verticalMargin = 15,
+  ...props
 }: Props): React.ReactElement {
   return (
     <Container
@@ -20,6 +21,7 @@ function Divider({
       thickness={thickness}
       color={color}
       verticalMargin={verticalMargin}
+      {...props}
     />
   )
 }
