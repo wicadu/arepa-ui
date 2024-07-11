@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect, useCallback } from 'react'
 
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
 import Icon from '../atoms/Icon'
 import Image from '../atoms/Image'
+import Column from '../layout/Column'
 
 type Image = {
   value: string
@@ -13,58 +14,59 @@ type Image = {
 
 type Props = {
   images: Image[]
-  icons: string[]
+  defaultImage: Image
   isItOnOverlay?: boolean
-  onClickMainImage?: (event?: React.MouseEvent<HTMLElement>) => void
+  mainImageWidth?: number | string
+  mainImageHeight?: number | string
+  onExpandImage?: (event?: React.MouseEvent<HTMLElement>) => void
   onChangeImage?: (data: Image) => void
-  onPressIcon?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
 function ImagesGallery({
   images,
-  icons,
+  defaultImage,
+  mainImageWidth,
+  mainImageHeight,
   isItOnOverlay,
-  onClickMainImage,
+  onExpandImage,
   onChangeImage,
-  onPressIcon,
 }: Props) {
-  const [currentImage, setCurrentImage] = useState<string>(images?.[0]?.value)
+  const [currentImage, setCurrentImage] = useState<Image>()
 
   const { colors } = useTheme()
 
-  const thereAreNoImages = useMemo(() => images?.length === 0, [images])
   const color = useMemo(
     () => (isItOnOverlay ? colors.NEUTRAL.BACKGROUND : colors.FONT.DESCRIPTION),
     [isItOnOverlay, colors]
   )
 
-  const _handleChangeImage = ({ target }) => {
-    const imageSrc: string = target.getAttribute('src')
+  const onChange = useCallback((image: Image) => {
+    setCurrentImage(image)
+    onChangeImage?.(image)
+  }, [onChangeImage])
 
-    setCurrentImage(imageSrc)
+  useEffect(() => {
+    setCurrentImage(defaultImage)
+  }, [defaultImage])
 
-    if (onChangeImage) {
-      const chosenImage: Image = images?.find(({ value }) => value === imageSrc)
 
-      onChangeImage(chosenImage)
-    }
-  }
-
-  if (thereAreNoImages) {
+  if (!Boolean(images?.length)) {
     return (
-      <NoImageContainer>
-        <Icon name="image" size={30} color={color} />
+      <NoImageContainer onClick={onExpandImage} data-id='UPLOAD_IMAGE'>
+        <Icon name="insert_photo" size={40} color={color} />
       </NoImageContainer>
     )
   }
 
   return (
-    <Wrapper>
+    <Column gap={25} align='center'>
       <Image
-        src={currentImage}
-        width={175}
-        height={175}
-        onClick={onClickMainImage}
+        src={currentImage?.value}
+        width={mainImageWidth}
+        height={mainImageHeight}
+        onClick={onExpandImage}
+        fit='contain'
+        data-id={currentImage?.id}
       />
 
       <Carousel>
@@ -74,34 +76,19 @@ function ImagesGallery({
             height={30}
             src={value}
             key={id}
-            onClick={_handleChangeImage}
+            fit='contain'
+            onClick={() => onChange({ value, id })}
             backgroundColor={
-              currentImage === value
+              currentImage?.value === value
                 ? colors.NEUTRAL.SELECTED
                 : colors.NEUTRAL.TRANSPARENT
             }
           />
         ))}
-        {icons?.map((value: string) => (
-          <Icon
-            key={value}
-            name={value}
-            size={24}
-            color={color}
-            onClick={onPressIcon}
-          />
-        ))}
       </Carousel>
-    </Wrapper>
+    </Column>
   )
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  gap: 25px;
-  flex-direction: column;
-  align-items: center;
-`
 
 const NoImageContainer = styled.div`
   width: 100%;
@@ -116,6 +103,7 @@ const Carousel = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+  justify-content: center;
 `
 
 export default ImagesGallery
