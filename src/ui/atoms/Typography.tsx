@@ -8,6 +8,8 @@ enum htmlType {
   'title-2' = 'title-2',
   'title-3' = 'title-3',
   'title-4' = 'title-4',
+  'title-5' = 'title-5',
+  'title-6' = 'title-6',
   description = 'description',
   helper = 'helper',
   link = 'link',
@@ -50,6 +52,8 @@ function Typography({ children, type, ...props }: Props) {
     if (type === htmlType['title-2']) return Title2
     if (type === htmlType['title-3']) return Title3
     if (type === htmlType['title-4']) return Title4
+    if (type === htmlType['title-5']) return Title5
+    if (type === htmlType['title-6']) return Title6
     if (type === htmlType.helper) return Small
     if (type === htmlType.link) return Link
 
@@ -124,6 +128,16 @@ const Title3 = styled.h3`
 `
 
 const Title4 = styled.h4`
+  ${(props) => defaultStyles(props)}
+  font-size: ${({ size }: any) => size || 18}px;
+`
+
+const Title5 = styled.h5`
+  ${(props) => defaultStyles(props)}
+  font-size: ${({ size }: any) => size || 18}px;
+`
+
+const Title6 = styled.h6`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 18}px;
 `

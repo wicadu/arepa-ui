@@ -63,10 +63,14 @@ function InputComponent({
 const Input = styled.input<any>`
   border-radius: 10px;
   padding: 0 15px;
+  font-family: "Catamaran", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
 
   background-color: ${({ theme }: any) => theme.colors.NEUTRAL.CARD};
   opacity: ${({ readOnly }: any) => (readOnly ? 0.65 : 1)};
-  
+
   ${({ disabled }: any) => disabled && 'opacity: 0.7;'}
 
   border: 1px solid

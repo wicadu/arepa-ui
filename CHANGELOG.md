@@ -1,24 +1,22 @@
+# 1.20.2
+
+- Set `Catamaran` font to `Input` font
+
 # 1.20.1
 
-- Delete components: `UserSnippet`, `OrderSnippet`, `PreviewItemsList`, `SearchBar`, `ItemSnippetInCard`, `ItemSnippetInList`, `AddOrSubtract`, `PaymentSnippet`, `OrderItemSnippet`, `SearchBar`, `SearchBar` and `Expand`
-- Add components: `Pricing` and `Toast`
-- Refactor: `InputFeedback`, `formatCurrency`, `Alert`, `ImagesGallery` and `ImageUploader`
-- Add interfaces: `UIElementSizesEnum` and `UIElementStatusEnum`
-- Remove interfaces: `InputSizesEnum` and `IconProps`
+- Add `Catamaran` font
 
-# 1.19.4
+# 1.20.0
 
-- Reduce Input/ErrorMessage spacing.
+- Add `h5` and `h6` to `Typography`
 
-# 1.19.3
+# 1.19.6
 
-- Add `styles` prop to `Row` and `Column.
-- Add `title` prop as a Component for `Section`.
-- Add `media queries` for `Alert` and fix `Uploader` default size`.
-- Add `media queries` breakouts for `font-size` into `Button`.
-- Refactor `Badged`
-- Fix `Checkbox`'s icon, `Image`'s props, `Section`'s title
-- Add `dateFormat`
+- Fix build process
+
+# 1.19.5
+
+- Add `Urbanist` font
 
 # 1.19.2
 
