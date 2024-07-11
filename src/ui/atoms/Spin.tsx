@@ -62,7 +62,9 @@ const Spin = styled.div<Props>`
     left: 0;
 
     background-color: ${({ type, theme }) => {
-      if ([spinType.ghost, spinType.white].includes(type)) return theme.colors.NEUTRAL.SELECTED
+      if (type === spinType.ghost) return theme.colors.NEUTRAL.SELECTED
+      if (type === spinType.white) return theme.colors.FONT.TITLE
+      if (type === spinType.link) return theme.colors.MAIN.PRIMARY
 
       return theme.colors.MAIN?.[String(type).toUpperCase()]
     }};
