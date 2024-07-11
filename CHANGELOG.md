@@ -1,3 +1,11 @@
+# 1.20.1
+
+- Delete components: `UserSnippet`, `OrderSnippet`, `PreviewItemsList`, `SearchBar`, `ItemSnippetInCard`, `ItemSnippetInList`, `AddOrSubtract`, `PaymentSnippet`, `OrderItemSnippet`, `SearchBar`, `SearchBar` and `Expand`
+- Add components: `Pricing` and `Toast`
+- Refactor: `InputFeedback`, `formatCurrency`, `Alert`, `ImagesGallery` and `ImageUploader`
+- Add interfaces: `UIElementSizesEnum` and `UIElementStatusEnum`
+- Remove interfaces: `InputSizesEnum` and `IconProps`
+
 # 1.19.4
 
 - Reduce Input/ErrorMessage spacing.
