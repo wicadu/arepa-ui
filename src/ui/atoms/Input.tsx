@@ -5,15 +5,15 @@ import styled from '@emotion/styled'
 
 import InputFeedback, { Wrapper } from '../hocs/InputFeedback'
 import Form from '../hocs/Form'
-import { InputSizesEnum } from '../ts/enums/InputSizesEnum'
 import { getFormFieldsErrors } from '../../utils'
+import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
 const propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   htmlType: PropTypes.string,
   name: PropTypes.string.isRequired,
   doNotShowFeedback: PropTypes.bool,
-  size: PropTypes.oneOf<InputSizesEnum>(Object.values(InputSizesEnum)),
+  size: PropTypes.oneOf<UIElementSizesEnum>(Object.values(UIElementSizesEnum)),
   withBorder: PropTypes.bool,
 }
 
@@ -21,7 +21,7 @@ type Props = InferProps<typeof propTypes>
 
 const defaultProps: Props = {
   htmlType: 'text',
-  size: InputSizesEnum.large,
+  size: UIElementSizesEnum.Large,
   doNotShowFeedback: false,
   withBorder: true
 }
@@ -88,11 +88,11 @@ const Input = styled.input<any>`
   }
 
   ${({ size }: any) => {
-    if (size === InputSizesEnum.small) return 'height: 35px;'
+    if (size === UIElementSizesEnum.Small) return 'height: 35px;'
 
-    if (size === InputSizesEnum.medium) return 'height: 42px;'
+    if (size === UIElementSizesEnum.Medium) return 'height: 42px;'
 
-    if (size === InputSizesEnum.large) return 'height: 50px;'
+    if (size === UIElementSizesEnum.Large) return 'height: 50px;'
   }}
 `
 

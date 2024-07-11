@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import Spin from './Spin'
 import getBordersStyles, { BorderTypes } from '../../utils/getBordersStyles'
+import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
 enum HtmlType {
   button = 'button',
@@ -21,19 +22,13 @@ enum ButtonType {
   link = 'link',
 }
 
-enum ButtonSizes {
-  small = 'small',
-  medium = 'medium',
-  large = 'large',
-}
-
 
 interface Props {
   children: React.ReactNode
   onClick?: () => void
   htmlType?: HtmlType
   type?: ButtonType
-  size?: ButtonSizes
+  size?: UIElementSizesEnum
   disabled?: boolean
   outlined?: boolean | BorderTypes
   loading?: boolean
@@ -43,7 +38,7 @@ interface Props {
 
 const defaultProps: Partial<Props> = {
   type: ButtonType.primary,
-  size: ButtonSizes.medium,
+  size: UIElementSizesEnum.Medium,
   htmlType: HtmlType.button,
   onClick() { },
   loading: false,
@@ -63,7 +58,7 @@ function Button({
     <button {...restOfProps} type={htmlType} disabled={disabled || loading}>
       {loading ? (
         <Spin
-          type={[ButtonType.white, ButtonType.link].includes(type) || outlined ? type : ButtonType.white}
+          type={outlined ? type : ButtonType.ghost}
           size={20}
         />
       )
@@ -87,7 +82,7 @@ const WrapperButton = styled(Button)`
     ${({ width }) => width && `width: ${width};`}
 
     ${({ size }) => {
-    if (size === ButtonSizes.small)
+    if (size === UIElementSizesEnum.Small)
       return `
         height: 35px;
         font-size: 12px;
@@ -98,7 +93,7 @@ const WrapperButton = styled(Button)`
         }
       `
 
-    if (size === ButtonSizes.medium)
+    if (size === UIElementSizesEnum.Medium)
       return `
         height: 44px;
         font-size: 14px;
@@ -109,7 +104,7 @@ const WrapperButton = styled(Button)`
         }
       `
 
-    if (size === ButtonSizes.large)
+    if (size === UIElementSizesEnum.Large)
       return `
         height: 50px;
         font-size: 18px;
@@ -185,9 +180,5 @@ const WrapperButton = styled(Button)`
 `
 
 WrapperButton.defaultProps = defaultProps
-
-Button.htmlType = HtmlType
-Button.buttonType = ButtonType
-Button.buttonSizes = ButtonSizes
 
 export default WrapperButton
