@@ -130,6 +130,14 @@ const Wrapper = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  p, li {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 15px;
+  }
 `
 
 const HiddenInput = styled.input`
