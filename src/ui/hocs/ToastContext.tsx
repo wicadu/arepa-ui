@@ -11,7 +11,6 @@ export interface ToastData {
   time?: number
 }
 
-
 interface ToastContextProps {
   toasts: ToastData[]
   addToast: (options: ToastData) => void
@@ -23,11 +22,22 @@ export const useToast = (): ToastContextProps => {
   return useContext(ToastContext)
 }
 
-interface Props {
-  children: ReactNode
+export type ToastOptions = {
+  firstToastSpace: number
+  direction: 'bottom' | 'top' // TODO: It has to be done.
 }
 
-function ToastProvider({ children }: Props) {
+interface Props {
+  children: ReactNode
+  options: ToastOptions
+}
+
+const defaultOptions: ToastOptions = {
+  firstToastSpace: 15,
+  direction: 'top'
+}
+
+function ToastProvider({ children, options }: Props) {
   const [toasts, setToasts] = useState<ToastData[]>([])
 
   const addToast = useCallback((options: ToastData) => {
@@ -45,7 +55,7 @@ function ToastProvider({ children }: Props) {
     <ToastContext.Provider value={{ toasts, addToast }}>
       {children}
 
-      <Toast toasts={toasts} />
+      <Toast toasts={toasts} options={{ ...defaultOptions, ...options }} />
     </ToastContext.Provider>
   )
 }
