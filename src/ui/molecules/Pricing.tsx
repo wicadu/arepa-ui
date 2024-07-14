@@ -25,6 +25,7 @@ function Pricing({
   weight,
   currencySize,
   currencyWeight,
+  ...props
 }: Props) {
   const formattedAmount = useMemo(() => formatCurrency(amount, { currency: currencyCode }), [
     currencyCode,
@@ -34,7 +35,7 @@ function Pricing({
   const [, currencySign, value] = formattedAmount?.match(/^(\D*)(\d.*)$/) || []
 
   return (
-    <Typography
+    <Typography {...props}
       color={color}
       size={size}
       weight={weight}
