@@ -15,6 +15,7 @@ const propTypes = {
   doNotShowFeedback: PropTypes.bool,
   size: PropTypes.oneOf<UIElementSizesEnum>(Object.values(UIElementSizesEnum)),
   withBorder: PropTypes.bool,
+  styles: PropTypes.string
 }
 
 type Props = InferProps<typeof propTypes>
@@ -23,13 +24,15 @@ const defaultProps: Props = {
   htmlType: 'text',
   size: UIElementSizesEnum.Large,
   doNotShowFeedback: false,
-  withBorder: true
+  withBorder: true,
+  styles: ''
 }
 
 function InputComponent({
   name,
   htmlType,
   doNotShowFeedback,
+  styles,
   ...props
 }: Props) {
   const { formState: { errors }, register } = Form.useForm()
@@ -54,6 +57,7 @@ function InputComponent({
         name={name}
         type={htmlType}
         hasError={Boolean(fieldError?.message)}
+        styles={styles}
         {...register(name) as any}
       />
     </Container>
