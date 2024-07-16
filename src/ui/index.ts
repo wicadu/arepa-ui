@@ -40,8 +40,8 @@ import ImagesGallery from './organisms/ImagesGallery'
 import { Controller } from 'react-hook-form'
 import Form from './hocs/Form'
 import InfiniteScroll from './hocs/InfiniteScroll'
-
 import ThemeProvider from './hocs/ThemeProvider'
+import RefForwarding from './hocs/RefForwarding'
 
 import { useTheme } from '@emotion/react'
 
@@ -102,6 +102,7 @@ export {
   ThemeProvider,
   Controller,
   InfiniteScroll,
+  RefForwarding,
 
   // Hooks
   useTheme,

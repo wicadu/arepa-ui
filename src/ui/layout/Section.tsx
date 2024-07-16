@@ -49,7 +49,14 @@ interface RightChildAsButtonProps {
 function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
   if (hide) return
 
-  return <Button type='link' onClick={onClick}>{text}</Button>
+  return (
+    <Button
+      type='link'
+      onClick={onClick}
+      highlight={false}
+      children={text}
+    />
+  )
 }
 
 Section.RightChildAsButton = RightChildAsButton

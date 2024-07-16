@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import styled from '@emotion/styled'
 
 import Alert from './Alert'
-import ToastProvider, { ToastData, useToast } from '../hocs/ToastContext'
+import ToastProvider, { ToastData, ToastOptions, useToast } from '../hocs/ToastContext'
 import { UIElementStatusEnum } from '../ts/enums/UIElementStatusEnum'
 
 function useNotify() {
@@ -43,13 +43,14 @@ function useNotify() {
 
 interface Props {
   toasts: ToastData[]
+  options: ToastOptions
 }
 
-function Toast({ toasts }: Props) {
+function Toast({ toasts, options }: Props) {
   if (!toasts?.length) return null
 
   return toasts?.slice(0, 10)?.map(({ id, title, description, type }: ToastData, index) => (
-    <Container key={id} index={index}>
+    <Container key={id} index={index} options={options}>
       <Alert show type={type} title={title} description={description} />
     </Container>
   ))
@@ -57,12 +58,15 @@ function Toast({ toasts }: Props) {
 
 const _ALERT_HEIGHT = 50
 
-const Container = styled.div<{ index: number }>`
+const Container = styled.div<{
+  index: number,
+  options: ToastOptions
+}>`
   position: fixed;
   left: 15px;
   right: 15px;
   z-index: 100;
-  top: ${({ index }) => index * (_ALERT_HEIGHT + 15) + 15}px;
+  top: ${({ index, options }) => index * (_ALERT_HEIGHT + 15) + options?.firstToastSpace}px;
 `
 
 Toast.Provider = ToastProvider

@@ -1,3 +1,10 @@
+# 1.21.3
+
+- Limit `Select` default value and options to one line.
+- Add options to configure params of how to display `Toast`
+- Add highlight and styles props to `Button`
+- Add `RefForwarding` hoc
+
 # 1.21.2
 
 - Add `props` to `Pricing`

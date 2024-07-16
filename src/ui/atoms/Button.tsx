@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import Spin from './Spin'
 import getBordersStyles, { BorderTypes } from '../../utils/getBordersStyles'
 import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
+import { SerializedStyles } from '@emotion/react'
 
 enum HtmlType {
   button = 'button',
@@ -34,6 +35,8 @@ interface Props {
   loading?: boolean
   width?: string
   margin?: string
+  highlight?: boolean
+  styles: string | SerializedStyles
 }
 
 const defaultProps: Partial<Props> = {
@@ -115,10 +118,12 @@ const WrapperButton = styled(Button)`
       `
   }}
 
-    ${({ type, outlined, theme, margin = '5px 0' }) => {
+    ${({ type, outlined, theme, margin = '5px 0', highlight }) => {
     const { colors } = theme
 
-    let style: string = ''
+    let style: string = `
+      ${!highlight ? '-webkit-tap-highlight-color: transparent;' : ''}
+    `
 
     if (type === ButtonType.link) {
       style += `
@@ -176,6 +181,8 @@ const WrapperButton = styled(Button)`
 
     if (disabled) return `opacity: 0.85;`
   }}
+
+  ${({ styles }) => styles}
   }
 `
 
