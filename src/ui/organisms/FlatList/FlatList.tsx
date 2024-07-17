@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 
 import InfiniteScroll from '../../hocs/InfiniteScroll'
 import FlatListSkeleton from './Skeleton'
+import { SerializedStyles } from '@emotion/react'
 
 type DataExtracted<ItemT> = (info: ItemT) => Partial<ItemT>
 
@@ -16,6 +17,7 @@ interface Props<ItemT> {
   itemWrapper: React.ReactElement | any
   dataExtractor: DataExtracted<ItemT> | null | undefined
   endMessage: React.ReactElement | null
+  styles: string | SerializedStyles
 }
 
 const defaultProps: Partial<Props<any>> = {
@@ -38,6 +40,7 @@ function FlatList<ItemT>({
   dataExtractor,
   keyExtracted,
   endMessage,
+  styles
 }: Props<ItemT>) {
   return (
     <InfiniteScroll
@@ -46,7 +49,7 @@ function FlatList<ItemT>({
       next={fetchNext}
       endMessage={endMessage}
     >
-      <ListWrapper>
+      <ListWrapper styles={styles}>
         {data?.map((item, index) => (
           <ItemWrapper
             key={item?.[keyExtracted]}
@@ -62,10 +65,12 @@ function FlatList<ItemT>({
   )
 }
 
-export const ListWrapper = styled.ul`
+export const ListWrapper = styled.ul<Partial<Props<unknown>>>`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+  ${({ styles }) => styles}
 `
 
 FlatList.defaultProps = defaultProps

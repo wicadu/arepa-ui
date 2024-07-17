@@ -45,8 +45,8 @@ function Alert({ title, description, type, show, width, size }: Props) {
       <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
-        <Typography weight={700} size={12} color={color}>{title}</Typography>
-        <Typography size={10} color={color}>{description}</Typography>
+        <Typography weight={700} size={10} color={color}>{title}</Typography>
+        <Typography size={8} color={color}>{description}</Typography>
       </Content>
 
       <OpacityCanceler color={color} />
@@ -81,14 +81,14 @@ const Container = styled.div<Partial<Props>>`
 
     if (size === UIElementSizesEnum.Small) {
       style += `
-        padding: 6px;
-
-        .${_types?.[type]} {
-          font-size: 20px;
+        & {
+          border-radius: 6px;
         }
 
-        .close {
-          font-size: 14px;
+        padding: 6px 6px;
+
+        .${_types?.[type]} {
+          font-size: 12px;
         }
 
         @media screen and (min-width: 768px) {
