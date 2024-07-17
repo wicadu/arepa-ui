@@ -1,3 +1,7 @@
+# 1.22.0
+
+- Label was added to `CheckboxGroup`
+
 # 1.21.7
 
 - Font sizes for `Input` and `InputFeedback` were updated
