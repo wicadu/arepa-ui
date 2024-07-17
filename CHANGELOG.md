@@ -1,3 +1,7 @@
+# 1.21.6
+
+- Design was updated for `Toggle`
+
 # 1.21.5
 
 - Border radius set `7px` for `Input`

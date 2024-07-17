@@ -60,30 +60,30 @@ type StylesTypes = {
 
 const Container = styled.div`
   & {
-    height: 22px;
+    height: 20px;
     width: 40px;
-    border-radius: 15px;
+    border-radius: 20px;
     align-content: center;
     display: flex;
     cursor: pointer;
     opacity: ${({ disabled }: StylesTypes) => disabled ? 0.65 : 1};
+    padding: 0 5px;
 
     ${({ theme, active }: StylesTypes) => active ? `
       justify-content: flex-end;
       background-color: ${theme.colors.MAIN.PRIMARY};
     ` : `
       justify-content: flex-start;
-      background-color: ${theme.colors.NEUTRAL.SELECTED};
+      background-color: ${theme.colors.FONT.DESCRIPTION};
     `}
   }
 `
 const Circle = styled.div`
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   background-color: white;
-  border-radius: 50px;
+  border-radius: 12px;
   align-self: center;
-  margin: 0 2px;
 `
 
 Toggle.propTypes = propTypes
