@@ -1,3 +1,8 @@
+# 1.21.4
+
+- Adjust `AlertStyles` for `Alert.Small`
+- Add `styles` prop to `FlatList`
+
 # 1.21.3
 
 - Limit `Select` default value and options to one line.
