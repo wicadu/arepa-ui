@@ -65,7 +65,7 @@ function InputComponent({
 }
 
 const Input = styled.input<any>`
-  border-radius: 10px;
+  border-radius: 7px;
   padding: 0 15px;
   font-family: "Catamaran", sans-serif;
   font-optical-sizing: auto;

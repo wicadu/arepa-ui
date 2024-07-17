@@ -1,3 +1,7 @@
+# 1.21.5
+
+- Border radius set `7px` for `Input`
+
 # 1.21.4
 
 - Adjust `AlertStyles` for `Alert.Small`
