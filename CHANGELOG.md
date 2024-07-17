@@ -1,3 +1,7 @@
+# 1.22.1
+
+- Font sizes for medium size `Button` were updated
+
 # 1.22.0
 
 - Label was added to `CheckboxGroup`
