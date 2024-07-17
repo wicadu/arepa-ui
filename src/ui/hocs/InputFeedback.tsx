@@ -19,7 +19,7 @@ const defaultProps: Partial<Props> = {
   hasError: false,
   children: null,
   doNotShowErrors: false,
-  labelSize: 12,
+  labelSize: 10,
   errors: null
 }
 
@@ -48,8 +48,8 @@ export const Wrapper = styled.div<{ labelSize?: number }>`
   display: grid;
 
   label {
-    font-weight: 700;
-    ${({ labelSize }: any) => `font-size: ${labelSize || 12}px;`}
+    font-weight: bold;
+    ${({ labelSize }: any) => `font-size: ${labelSize}px;`}
   }
 `
 

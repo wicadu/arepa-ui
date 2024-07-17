@@ -1,3 +1,7 @@
+# 1.21.7
+
+- Font sizes for `Input` and `InputFeedback` were updated
+
 # 1.21.6
 
 - Design was updated for `Toggle`
