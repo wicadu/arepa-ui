@@ -1,3 +1,7 @@
+# 1.23.0
+
+- Bug unregister virtual field of `CheckboxController` was fixed
+
 # 1.22.1
 
 - Font sizes for medium size `Button` were updated

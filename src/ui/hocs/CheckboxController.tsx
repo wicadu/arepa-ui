@@ -28,12 +28,17 @@ function CheckboxController({
   const {
     control,
     register,
+    unregister,
     setValue,
   } = useForm()
 
   useEffect(() => {
     register(`${name}[${index}].value`)
     setValue(`${name}[${index}].value`, props.value)
+
+    return () => {
+      unregister(`${name}[${index}].value`)
+    }
   }, [])
 
   return (
