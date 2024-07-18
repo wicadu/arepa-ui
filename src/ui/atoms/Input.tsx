@@ -58,7 +58,7 @@ function InputComponent({
         type={htmlType}
         hasError={Boolean(fieldError?.message)}
         styles={styles}
-        {...register(name) as any}
+        {...register(name) as const}
       />
     </Container>
   )
