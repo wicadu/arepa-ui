@@ -1,3 +1,7 @@
+# 1.23.1
+
+- `InputFeedback` was added to `CheckboxGroup`
+
 # 1.23.0
 
 - Bug unregister virtual field of `CheckboxController` was fixed
