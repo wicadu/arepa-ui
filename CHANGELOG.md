@@ -1,3 +1,7 @@
+# 1.25.0
+
+- `VirtualInputs` was added
+
 # 1.24.0
 
 - `react-hook-form` was updated to `7.52.1`
