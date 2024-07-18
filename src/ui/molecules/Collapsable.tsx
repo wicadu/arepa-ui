@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { useTheme } from '@emotion/react'
+import { SerializedStyles, useTheme } from '@emotion/react'
 
 import Icon from '../atoms/Icon'
 import Column from '../layout/Column'
@@ -10,13 +10,14 @@ interface Props {
   value?: boolean
   header: React.ReactElement | React.ReactElement[] | undefined
   children: React.ReactElement | React.ReactElement[] | undefined
+  containerStyles?: string | SerializedStyles
 }
 
 const defaultProps: Partial<Props> = {
   value: false
 }
 
-function Collapsable({ value, header, children }: Props) {
+function Collapsable({ value, header, children, containerStyles }: Props) {
   const [isItCollapsed, setIsItCollapsed] = useState<boolean>(value)
 
   const { colors } = useTheme()
@@ -28,7 +29,7 @@ function Collapsable({ value, header, children }: Props) {
   }, [value])
 
   return (
-    <Column align='center' gap={15}>
+    <Column align='center' gap={10} styles={containerStyles}>
       <Row onClick={toggleIsItCollapsed}>
         <Icon
           name={isItCollapsed ? 'arrow_drop_down' : 'arrow_right'}
