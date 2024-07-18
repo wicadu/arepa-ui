@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes, { InferProps } from 'prop-types'
 
 import { Controller } from 'react-hook-form'
 import styled from '@emotion/styled'
 
 import Form from './Form'
+import VirtualInputs from '../atoms/VirtualInputs'
 
 const { useForm } = Form
 
@@ -25,43 +26,39 @@ function CheckboxController({
   index,
   ...props
 }: Props) {
-  const {
-    control,
-    register,
-    unregister,
-    setValue,
-  } = useForm()
-
-  useEffect(() => {
-    register(`${name}[${index}].value`)
-    setValue(`${name}[${index}].value`, props.value)
-
-    return () => {
-      unregister(`${name}[${index}].value`)
-    }
-  }, [])
+  const { control } = useForm()
 
   return (
-    <Controller
-      name={`${name}[${index}].checked`}
-      control={control}
-      render={({ field: { onChange, value } }) => {
-        const handleOnChange = () => {
-          if (props.disabled) return
-
-          onChange(!value)
+    <Container>
+      <VirtualInputs fields={[
+        {
+          name: `${name}.${index}.value`,
+          defaultValue: props.value,
         }
+      ]} />
+      <Controller
+        name={`${name}.${index}.checked`}
+        control={control}
+        render={({ field: { onChange, value } }) => {
+          const handleOnChange = () => {
+            if (props.disabled) return
 
-        return (
-          <ItemWrapper onClick={handleOnChange}>
-            {React.cloneElement(children, { checked: value, ...props })}
-          </ItemWrapper>
-        )
-      }}
-      defaultValue={props.checked}
-    />
+            onChange(!value)
+          }
+
+          return (
+            <ItemWrapper onClick={handleOnChange}>
+              {React.cloneElement(children, { checked: value, ...props })}
+            </ItemWrapper>
+          )
+        }}
+        defaultValue={props.checked}
+      />
+    </Container>
   )
 }
+
+const Container = styled.div``
 
 const ItemWrapper = styled.div`
   width: 100%

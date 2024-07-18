@@ -1,3 +1,7 @@
+# 1.25.1
+
+- `CheckboxController`'s virtual input was updated with `VirtualInputs`
+
 # 1.25.0
 
 - `VirtualInputs` was added
