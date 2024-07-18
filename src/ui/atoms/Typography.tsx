@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 enum htmlType {
   default = 'default',
@@ -33,6 +34,8 @@ interface Props {
     color?: string
   }
   decoration: string
+  bold?: boolean
+  styles?: string | SerializedStyles
 }
 
 const defaultProps: Partial<Props> = {
@@ -107,12 +110,14 @@ const defaultStyles = ({
   ${addAfterStyles(afterStyles)}
 `
 
-const Title = styled.h1`
+const Title = styled.h1<Partial<Props>>`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 30}px;
+
+  ${({ styles }) => styles}
 `
 
-const Title2 = styled.h2`
+const Title2 = styled.h2<Partial<Props>>`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 25}px;
 
@@ -120,29 +125,39 @@ const Title2 = styled.h2`
     font-size: 38px;
     line-height: 40px;
   }
+
+  ${({ styles }) => styles}
 `
 
-const Title3 = styled.h3`
+const Title3 = styled.h3<Partial<Props>>`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 20}px;
+
+  ${({ styles }) => styles}
 `
 
-const Title4 = styled.h4`
+const Title4 = styled.h4<Partial<Props>>`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 18}px;
+
+  ${({ styles }) => styles}
 `
 
-const Title5 = styled.h5`
+const Title5 = styled.h5<Partial<Props>>`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 18}px;
+
+  ${({ styles }) => styles}
 `
 
-const Title6 = styled.h6`
+const Title6 = styled.h6<Partial<Props>>`
   ${(props) => defaultStyles(props)}
   font-size: ${({ size }: any) => size || 18}px;
+
+  ${({ styles }) => styles}
 `
 
-const Default = styled.p<any>`
+const Default = styled.p<Partial<Props>>`
   ${(props) =>
     defaultStyles({
       weight: 400,
@@ -165,9 +180,11 @@ const Default = styled.p<any>`
     font-size: 20px;
     line-height: 30px;
   }
+
+  ${({ styles }) => styles}
 `
 
-const Small = styled.p`
+const Small = styled.p<Partial<Props>>`
   ${(props) =>
     defaultStyles({
       weight: 400,
@@ -175,6 +192,8 @@ const Small = styled.p`
       ...props,
     })}
   font-size: ${({ size }: any) => size || 13}px;
+
+  ${({ styles }) => styles}
 `
 
 const Link = styled.a<Partial<Props>>`
@@ -182,6 +201,7 @@ const Link = styled.a<Partial<Props>>`
   font-size: ${({ size }: any) => size || 16}px;
 
   ${({ decoration }) => (decoration ? `text-decoration: ${decoration};` : '')}
+  ${({ styles }) => styles}
 `
 
 Typography.defaultProps = defaultProps
