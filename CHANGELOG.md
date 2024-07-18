@@ -1,3 +1,7 @@
+# 1.24.0
+
+- `react-hook-form` was updated to `7.52.1`
+
 # 1.23.1
 
 - `InputFeedback` was added to `CheckboxGroup`
