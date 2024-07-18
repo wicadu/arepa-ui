@@ -1,3 +1,8 @@
+# 1.21.5
+
+- Add `styles` prop to `Typography`, `Spacer` and `Collapsable`.
+- Add *Tablet* media styles for `Alert`
+
 # 1.21.4
 
 - Adjust `AlertStyles` for `Alert.Small`
