@@ -10,10 +10,10 @@ import Icon from '../../atoms/Icon'
 import { hexToRGBA } from '../../../utils'
 
 export enum Types {
-  Success = 'SUCCESS',
-  Error = 'ERROR',
-  Info = 'INFO',
-  Warning = 'WARNING'
+  Success = 'success',
+  Error = 'error',
+  Info = 'info',
+  Warning = 'warning'
 }
 
 const _types = {
@@ -28,19 +28,21 @@ interface Props {
   text?: string
   textColor?: string
   textSize?: number
+  iconSize?: number
 }
 
 const defaultProps: Partial<Props> = {
   type: Types.Info,
-  textSize: 14
+  textSize: 14,
+  iconSize: 18
 }
 
-function StatusChip({ type, text, textColor, textSize }: Props) {
+function StatusChip({ type, text, textColor, textSize, iconSize }: Props) {
   const { colors } = useTheme()
 
   return (
     <Row gap={5}>
-      <CheckIcon name={_types?.[type]} type={type} size={18} />
+      <CheckIcon name={_types?.[type?.toLowerCase()]} type={type} size={iconSize} />
       <Typography
         color={textColor || colors.MAIN?.[String(type).toUpperCase()]}
         weight={700}
