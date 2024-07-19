@@ -45,7 +45,7 @@ function OrderSnapshot({
   return (
     <Column gap={10} onClick={onClick}>
       <Alert
-        size='SMALL'
+        size='small'
         type={alert?.type}
         title={alert?.title}
         description={alert?.description}
