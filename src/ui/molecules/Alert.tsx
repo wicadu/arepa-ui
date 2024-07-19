@@ -45,8 +45,8 @@ function Alert({ title, description, type, show, width, size }: Props) {
       <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
-        <Typography weight={700} size={10} color={color}>{title}</Typography>
-        <Typography size={8} color={color}>{description}</Typography>
+        <Typography weight={700} color={color}>{title}</Typography>
+        <Typography color={color}>{description}</Typography>
       </Content>
 
       <OpacityCanceler color={color} />
@@ -81,10 +81,8 @@ const Container = styled.div<Partial<Props>>`
 
     if (size === UIElementSizesEnum.Small) {
       style += `
-        & {
-          border-radius: 6px;
-        }
-
+        border-radius: 6px;
+        height: 25px;
         padding: 6px 6px;
 
         .${_types?.[type]} {
@@ -92,13 +90,13 @@ const Container = styled.div<Partial<Props>>`
         }
 
         @media screen and (min-width: 768px) {
-          p {
+          height: 38px;
+          border-radius: 10px;
+          padding: 10px 15px;
+
+          .${_types?.[type]} {
             font-size: 16px;
-          }
-          
-          .material-icons {
-            font-size: 20px;
-          }
+          }     
         }
       `
     }
@@ -128,6 +126,24 @@ const Content = styled.span<Partial<Props>>`
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        p:first-of-type {
+          font-size: 10px;
+        }
+
+        p:last-of-type {
+          font-size: 8px;
+        }
+
+        @media screen and (min-width: 768px) {
+          p:first-of-type {
+            font-size: 14px;
+          }
+            
+          p:last-of-type {
+            font-size: 12px;
+          }
+        }
       `
     }
 

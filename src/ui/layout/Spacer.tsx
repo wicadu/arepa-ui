@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 interface Props extends ContainerProps {
   children: React.ReactNode
@@ -14,6 +15,7 @@ function Spacer({
   bottomSpace,
   leftSpace,
   rightSpace,
+  styles,
   ...props
 }: Props) {
   return (
@@ -25,6 +27,7 @@ function Spacer({
       bottomSpace={bottomSpace}
       leftSpace={leftSpace}
       rightSpace={rightSpace}
+      styles={styles}
       {...props}
     >
       {children}
@@ -40,6 +43,7 @@ interface ContainerProps {
   rightSpace?: number
   verticalSpace?: number
   horizontalSpace?: number
+  styles?: string | SerializedStyles
 }
 
 const Container = styled.div<ContainerProps>`
@@ -94,6 +98,8 @@ const Container = styled.div<ContainerProps>`
 
     return styles
   }}
+
+  ${({ styles }) => styles}
 `
 
 export default Spacer
