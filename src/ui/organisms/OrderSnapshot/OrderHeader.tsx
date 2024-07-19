@@ -8,11 +8,11 @@ import Typography from '../../atoms/Typography'
 import StatusChip from '../../molecules/StatusChip/StatusChip'
 
 const statusAsTypes = {
-  PREPARED: 'INFO',
-  PICKED: 'SUCCESS',
-  DELIVERED: 'SUCCESS',
-  CANCELED: 'ERROR',
-  DRAFTING: 'INFO',
+  PREPARED: 'info',
+  PICKED: 'success',
+  DELIVERED: 'success',
+  CANCELED: 'error',
+  DRAFTING: 'info',
 }
 
 type Props = {

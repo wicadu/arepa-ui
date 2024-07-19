@@ -27,6 +27,7 @@ function Spacer({
       bottomSpace={bottomSpace}
       leftSpace={leftSpace}
       rightSpace={rightSpace}
+      styles={styles}
       {...props}
     >
       {children}

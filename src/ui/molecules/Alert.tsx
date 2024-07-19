@@ -127,20 +127,20 @@ const Content = styled.span<Partial<Props>>`
         justify-content: space-between;
         align-items: center;
 
-        p:first-child {
+        p:first-of-type {
           font-size: 10px;
         }
 
-        p:last-child {
+        p:last-of-type {
           font-size: 8px;
         }
 
         @media screen and (min-width: 768px) {
-          p:first-child {
+          p:first-of-type {
             font-size: 14px;
           }
             
-          p:last-child {
+          p:last-of-type {
             font-size: 12px;
           }
         }
