@@ -99,11 +99,11 @@ const WrapperButton = styled(Button)`
     if (size === UIElementSizesEnum.Medium)
       return `
         height: 44px;
-        font-size: 14px;
+        font-size: 12px;
         border-radius: 7px;
 
         @media screen and (min-width: 768px) {
-          font-size: 16px;
+          font-size: 14px;
         }
       `
 

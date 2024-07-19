@@ -11,6 +11,7 @@ interface Props {
   errors?: {
     message: string
   }
+  className?: string
 }
 
 const defaultProps: Partial<Props> = {
@@ -19,7 +20,7 @@ const defaultProps: Partial<Props> = {
   hasError: false,
   children: null,
   doNotShowErrors: false,
-  labelSize: 12,
+  labelSize: 10,
   errors: null
 }
 
@@ -31,10 +32,11 @@ function InputFeedback({
   children,
   doNotShowErrors,
   labelSize,
+  className,
 }: Props) {
   return (
-    <Wrapper labelSize={labelSize}>
-      {label && <label htmlFor={name}>{label}</label>}
+    <Wrapper labelSize={labelSize} className={className}>
+      {label && <Label htmlFor={name}>{label}</Label>}
       {children}
 
       {!doNotShowErrors ? (
@@ -48,16 +50,19 @@ export const Wrapper = styled.div<{ labelSize?: number }>`
   display: grid;
 
   label {
-    font-weight: 700;
-    ${({ labelSize }: any) => `font-size: ${labelSize || 12}px;`}
+    font-weight: bold;
+    ${({ labelSize }: any) => `font-size: ${labelSize}px;`}
   }
 `
 
-const ErrorMessage = styled.small<Partial<Props>>`
+const Label = styled.label``
+
+const ErrorMessage = styled.span<Partial<Props>>`
   color: ${({ theme }: any) => theme.colors.MAIN.ERROR};
   text-align: end;
   padding: 0 5px;
   height: 15px;
+  font-size: 10px;
 
   ${({ hasError }) => !hasError && 'opacity: 0;'}
 `

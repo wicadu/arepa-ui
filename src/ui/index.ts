@@ -1,5 +1,6 @@
 import Button from './atoms/Button'
 import Input from './atoms/Input'
+import VirtualInputs from './atoms/VirtualInputs'
 import Spin from './atoms/Spin'
 import Typography from './atoms/Typography'
 import Icon from './atoms/Icon'
@@ -54,6 +55,7 @@ export {
   // Atoms
   Button,
   Input,
+  VirtualInputs,
   Spin,
   Typography,
   Icon,

@@ -1,13 +1,41 @@
+# 1.25.1
+
+- `CheckboxController`'s virtual input was updated with `VirtualInputs`
+
+# 1.25.0
+
+- `VirtualInputs` component was added
+
+# 1.24.0
+
+- `react-hook-form` was updated to `7.52.1`
+
+# 1.23.0
+
+- Bug unregister virtual field of `CheckboxController` was fixed
+- `InputFeedback` was added to `CheckboxGroup`
+
+# 1.22.0
+
+- Label was added to `CheckboxGroup`
+- Font sizes for medium size `Button` were updated
+
+# 1.21.7
+
+- Font sizes for `Input` and `InputFeedback` were updated
+
 # 1.21.6
 
 - Add styles prop into `Spacer`
 - Fix first-child and last-child to *of-type* warning for css into `Alert`
 - Add *iconProp* into `StatusChip` and update its Enum
+- Design was updated for `Toggle`
 
 # 1.21.5
 
 - Add `styles` prop to `Typography`, `Spacer` and `Collapsable`.
 - Add *Tablet* media styles for `Alert`
+- Border radius set `7px` for `Input`
 
 # 1.21.4
 
