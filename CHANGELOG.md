@@ -1,3 +1,7 @@
+# 1.25.2
+
+- `.wicaduEmail(value)` custom method for yup was added
+
 # 1.25.1
 
 - `CheckboxController`'s virtual input was updated with `VirtualInputs`

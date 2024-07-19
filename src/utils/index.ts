@@ -14,6 +14,16 @@ import getFormFieldsErrors from './getFormFieldsErrors'
 import getBordersStyles from './getBordersStyles'
 import getFileSize from './getFileSize'
 
+yup.addMethod(yup.string, 'wicaduEmail', function validateEmail(message) {
+  return this
+    .matches(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`, {
+      message,
+      name: 'wicaduEmail',
+      excludeEmptyString: true,
+    })
+    .transform(email => `${email}`.toLowerCase())
+})
+
 export {
   yupResolver,
   yup,
