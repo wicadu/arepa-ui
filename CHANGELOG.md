@@ -1,3 +1,9 @@
+# 1.21.6
+
+- Add styles prop into `Spacer`
+- Fix first-child and last-child to *of-type* warning for css into `Alert`
+- Add *iconProp* into `StatusChip` and update its Enum
+
 # 1.21.5
 
 - Add `styles` prop to `Typography`, `Spacer` and `Collapsable`.
