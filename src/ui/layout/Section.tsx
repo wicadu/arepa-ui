@@ -5,6 +5,8 @@ import Typography from '../atoms/Typography'
 import Button from '../atoms/Button'
 import Row from './Row'
 
+import styled from '@emotion/styled'
+
 interface Props {
   children: ReactNode | ReactElement | ReactElement[]
   title: string | ReactElement
@@ -50,7 +52,7 @@ function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
   if (hide) return
 
   return (
-    <Button
+    <RightChildButton
       type='link'
       onClick={onClick}
       highlight={false}
@@ -58,6 +60,12 @@ function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
     />
   )
 }
+
+const RightChildButton = styled(Button)`
+  @media screen and (min-width: 768px) {
+    font-size: 12px !important;
+  }
+`
 
 Section.RightChildAsButton = RightChildAsButton
 

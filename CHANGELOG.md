@@ -1,3 +1,7 @@
+# 1.25.3
+
+- `Section.RightChildAsButton` font size was set as 14px for tablet screens
+
 # 1.25.2
 
 - `.wicaduEmail(value)` custom method for yup was added
