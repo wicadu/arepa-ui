@@ -1,3 +1,7 @@
+# 1.25.3
+
+- Upgrade *defaultAfterStyles* prop for `Typography`
+
 # 1.25.2
 
 - `.wicaduEmail(value)` custom method for yup was added
