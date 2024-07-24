@@ -1,6 +1,7 @@
 # 1.25.3
 
 - `Section.RightChildAsButton` font size was set as 14px for tablet screens
+- `Header` was added to `Section` with a margin-bottom
 
 # 1.25.2
 
