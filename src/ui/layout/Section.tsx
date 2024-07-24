@@ -12,11 +12,12 @@ interface Props {
   title: string | ReactElement
   description?: string
   rightChild?: string | ReactElement
+  className?: string
 }
 
-function Section({ title, description, rightChild, children }: Props) {
+function Section({ title, description, rightChild, children, className }: Props) {
   return (
-    <Container>
+    <Container className={className}>
       <Header>
         <Row align='space-between' styles={sectionTitleStyles}>
           {typeof title === 'string' ?
