@@ -38,15 +38,17 @@ interface Props {
   styles?: string | SerializedStyles
 }
 
+const defaultAfterStyles: Props['afterStyles'] = {
+  content: '',
+  size: 12,
+  weight: 300,
+  color: '',
+}
+
 const defaultProps: Partial<Props> = {
   type: htmlType.default,
   align: 'left',
-  afterStyles: {
-    content: '',
-    size: 12,
-    weight: 300,
-    color: '',
-  },
+  afterStyles: defaultAfterStyles
 }
 
 function Typography({ children, type, ...props }: Props) {
@@ -96,18 +98,17 @@ const defaultStyles = ({
   color: ${color || theme.colors.FONT.TITLE};
   ${lineHeight ? `line-height: ${lineHeight}px;` : ''}
 
-  ${
-    numberOfLines
-      ? `
+  ${numberOfLines
+    ? `
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: ${numberOfLines};
         -webkit-box-orient: vertical;
       `
-      : ''
+    : ''
   }
 
-  ${addAfterStyles(afterStyles)}
+  ${addAfterStyles({ ...defaultAfterStyles, ...afterStyles})}
 `
 
 const Title = styled.h1<Partial<Props>>`
@@ -202,6 +203,7 @@ const Link = styled.a<Partial<Props>>`
 
   ${({ decoration }) => (decoration ? `text-decoration: ${decoration};` : '')}
   ${({ styles }) => styles}
+
 `
 
 Typography.defaultProps = defaultProps
