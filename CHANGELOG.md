@@ -1,3 +1,9 @@
+# 1.25.5
+
+- Update `VirtualInputs` typescript props and *index* as *key*
+- Change props from *prop-types* to *interface* into `Input`
+- Add tablet styles support for `Section`, `Alert` and `StatusChip`
+
 # 1.25.4
 
 - `Section.RightChildAsButton` font size was set as 14px for tablet screens
