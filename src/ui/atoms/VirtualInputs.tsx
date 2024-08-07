@@ -6,19 +6,23 @@ import styled from '@emotion/styled'
 
 const { useForm } = Form
 
-interface Props {
-  fields: {
-    name: string;
-    defaultValue?: any;
-  }[];
+type Field = {
+  name: string
+  defaultValue?: any
 }
 
-function VirtualInputs ({ fields }: Props) {
+interface Props {
+  fields: Field[]
+}
+
+function VirtualInputs({ fields }: Props) {
   const { register } = useForm()
 
   return (
     <Container disabled>
-      {fields.map(({ name, defaultValue }) => <input defaultValue={defaultValue} {...register(name) as const} />)}
+      {fields.map(({ name, defaultValue }, index) => (
+        <input key={`${name}-${index}`} defaultValue={defaultValue} {...register(name)} />
+      ))}
     </Container>
   )
 }

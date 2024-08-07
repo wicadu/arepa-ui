@@ -18,15 +18,20 @@ interface Props {
 function Section({ title, description, rightChild, children, className }: Props) {
   return (
     <Container className={className}>
-      <Header>
+      <div>
         <Row align='space-between' styles={sectionTitleStyles}>
           {typeof title === 'string' ?
-            <Typography type='title-3' size={16}>{title}</Typography>
+            <Typography
+              type='title-3'
+              lineHeight={30}
+              size={20}
+              children={title}
+            />
             : title}
           <div>{rightChild}</div>
         </Row>
         <Typography type='description'>{description}</Typography>
-      </Header>
+      </div>
 
       {children}
     </Container>
@@ -36,8 +41,8 @@ function Section({ title, description, rightChild, children, className }: Props)
 const sectionTitleStyles = css`
   @media screen and (min-width: 768px) {
     h3 {
-      font-size: 22px;
-      line-height: 34px;
+      font-size: 30px;
+      line-height: 40px;
     }
 
     button {
@@ -46,10 +51,14 @@ const sectionTitleStyles = css`
   }
 `
 
-const Container = styled.section``
+const Container = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-const Header = styled.div`
-  margin-bottom: 10px;
+  @media screen and (min-width: 768px) {
+    gap: 15px;
+  }
 `
 
 interface RightChildAsButtonProps {

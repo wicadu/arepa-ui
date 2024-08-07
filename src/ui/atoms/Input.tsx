@@ -1,28 +1,26 @@
 import React, { useMemo } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 import InputFeedback, { Wrapper } from '../hocs/InputFeedback'
 import Form from '../hocs/Form'
 import { getFormFieldsErrors } from '../../utils'
 import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
-const propTypes = {
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  htmlType: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  doNotShowFeedback: PropTypes.bool,
-  size: PropTypes.oneOf<UIElementSizesEnum>(Object.values(UIElementSizesEnum)),
-  withBorder: PropTypes.bool,
-  styles: PropTypes.string
+interface Props {
+  label?: string | JSX.Element
+  htmlType?: string
+  name: string
+  doNotShowFeedback?: boolean
+  size?: UIElementSizesEnum
+  withBorder?: boolean
+  styles?: SerializedStyles | string
 }
 
-type Props = InferProps<typeof propTypes>
-
-const defaultProps: Props = {
+const defaultProps: Partial<Props> = {
   htmlType: 'text',
-  size: UIElementSizesEnum.Large,
+  size: UIElementSizesEnum.Medium,
   doNotShowFeedback: false,
   withBorder: true,
   styles: ''
@@ -37,7 +35,7 @@ function InputComponent({
 }: Props) {
   const { formState: { errors }, register } = Form.useForm()
 
-  const fieldError = getFormFieldsErrors(errors, name)
+  const fieldError: any = getFormFieldsErrors(errors, name)
 
   const Container: React.FC<any> = useMemo(
     () => (doNotShowFeedback ? Wrapper : InputFeedback),
@@ -97,15 +95,16 @@ const Input = styled.input<any>`
   }
 
   ${({ size }: any) => {
-    if (size === UIElementSizesEnum.Small) return 'height: 35px;'
+    if (size === UIElementSizesEnum.Small) return 'height: 40px;'
 
-    if (size === UIElementSizesEnum.Medium) return 'height: 42px;'
+    if (size === UIElementSizesEnum.Medium) return 'height: 45px;'
 
     if (size === UIElementSizesEnum.Large) return 'height: 50px;'
   }}
+
+  ${({ styles }) => styles}
 `
 
-InputComponent.propTypes = propTypes
 InputComponent.defaultProps = defaultProps
 
 export default InputComponent
