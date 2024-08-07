@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-import { useTheme } from '@emotion/react'
+import { SerializedStyles, useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 
 import Row from '../../layout/Row'
@@ -29,24 +29,36 @@ interface Props {
   textColor?: string
   textSize?: number
   iconSize?: number
+  textStyles?: SerializedStyles | string
+  containerStyles?: SerializedStyles | string
 }
 
 const defaultProps: Partial<Props> = {
   type: Types.Info,
   textSize: 14,
-  iconSize: 18
+  iconSize: 18,
+  textStyles: ''
 }
 
-function StatusChip({ type, text, textColor, textSize, iconSize }: Props) {
+function StatusChip({
+  containerStyles,
+  type,
+  text,
+  textColor,
+  textSize,
+  iconSize,
+  textStyles
+}: Props) {
   const { colors } = useTheme()
 
   return (
-    <Row gap={5}>
+    <Row gap={5} styles={containerStyles}>
       <CheckIcon name={_types?.[type?.toLowerCase()]} type={type} size={iconSize} />
       <Typography
         color={textColor || colors.MAIN?.[String(type).toUpperCase()]}
         weight={700}
         size={textSize}
+        styles={textStyles}
       >
         {text}
       </Typography>

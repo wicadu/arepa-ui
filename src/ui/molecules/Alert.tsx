@@ -83,7 +83,7 @@ const Container = styled.div<Partial<Props>>`
       style += `
         border-radius: 6px;
         height: 25px;
-        padding: 6px 6px;
+        padding: 6px;
 
         .${_types?.[type]} {
           font-size: 12px;
@@ -93,6 +93,7 @@ const Container = styled.div<Partial<Props>>`
           height: 38px;
           border-radius: 10px;
           padding: 10px 15px;
+          gap: 12px;
 
           .${_types?.[type]} {
             font-size: 16px;
