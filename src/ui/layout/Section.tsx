@@ -1,5 +1,5 @@
 import React, { ReactNode, ReactElement } from 'react'
-import { css } from '@emotion/react'
+import { SerializedStyles, css } from '@emotion/react'
 
 import Typography from '../atoms/Typography'
 import Button from '../atoms/Button'
@@ -13,13 +13,21 @@ interface Props {
   description?: string
   rightChild?: string | ReactElement
   className?: string
+  styles?: SerializedStyles | string
 }
 
-function Section({ title, description, rightChild, children, className }: Props) {
+function Section({
+  title,
+  description,
+  rightChild,
+  children,
+  className,
+  styles,
+}: Props) {
   return (
-    <Container className={className}>
+    <Container className={className} styles={styles}>
       <div>
-        <Row align='space-between' styles={sectionTitleStyles}>
+        <Row align='space-between' styles={cssTitleStyles}>
           {typeof title === 'string' ?
             <Typography
               type='title-3'
@@ -30,7 +38,13 @@ function Section({ title, description, rightChild, children, className }: Props)
             : title}
           <div>{rightChild}</div>
         </Row>
-        <Typography type='description'>{description}</Typography>
+        <Typography
+          type='description'
+          styles={cssDescriptionStyles}
+          lineHeight={25}
+        >
+          {description}
+        </Typography>
       </div>
 
       {children}
@@ -38,7 +52,19 @@ function Section({ title, description, rightChild, children, className }: Props)
   )
 }
 
-const sectionTitleStyles = css`
+const Container = styled.section<Partial<Props>>`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media screen and (min-width: 768px) {
+    gap: 15px;
+  }
+
+  ${({ styles }) => styles}
+`
+
+const cssTitleStyles = css`
   @media screen and (min-width: 768px) {
     h3 {
       font-size: 30px;
@@ -51,13 +77,10 @@ const sectionTitleStyles = css`
   }
 `
 
-const Container = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
+const cssDescriptionStyles = css`
   @media screen and (min-width: 768px) {
-    gap: 15px;
+    font-size: 20px;
+    line-height: 30px;
   }
 `
 
@@ -67,7 +90,7 @@ interface RightChildAsButtonProps {
   hide?: boolean
 }
 
-function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
+export function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
   if (hide) return
 
   return (
@@ -81,8 +104,10 @@ function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
 }
 
 const RightChildButton = styled(Button)`
+  font-size: 12px !important;
+
   @media screen and (min-width: 768px) {
-    font-size: 12px !important;
+    font-size: 16px !important;
   }
 `
 
