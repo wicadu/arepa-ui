@@ -8,6 +8,7 @@ interface Props {
   children: React.ReactElement | React.ReactElement[]
   doNotShowErrors?: boolean
   labelSize?: number
+  width?: string
   errors?: {
     message: string
   }
@@ -32,10 +33,11 @@ function InputFeedback({
   children,
   doNotShowErrors,
   labelSize,
+  width,
   className,
 }: Props) {
   return (
-    <Wrapper labelSize={labelSize} className={className}>
+    <Wrapper labelSize={labelSize} className={className} width={width}>
       {label && <Label htmlFor={name}>{label}</Label>}
       {children}
 
@@ -46,8 +48,10 @@ function InputFeedback({
   )
 }
 
-export const Wrapper = styled.div<{ labelSize?: number }>`
+export const Wrapper = styled.div<{ labelSize?: number, width: string }>`
   display: grid;
+  width: ${({ width }) => width};
+
 
   label {
     font-weight: bold;

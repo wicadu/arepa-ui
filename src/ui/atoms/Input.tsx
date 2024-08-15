@@ -15,6 +15,7 @@ interface Props {
   doNotShowFeedback?: boolean
   size?: UIElementSizesEnum
   withBorder?: boolean
+  width: string
   styles?: SerializedStyles | string
 }
 
@@ -23,7 +24,8 @@ const defaultProps: Partial<Props> = {
   size: UIElementSizesEnum.Medium,
   doNotShowFeedback: false,
   withBorder: true,
-  styles: ''
+  styles: '',
+  width: '100%',
 }
 
 function InputComponent({
@@ -62,7 +64,7 @@ function InputComponent({
   )
 }
 
-const Input = styled.input<any>`
+const Input = styled.input<Partial<Props> & { hasError: boolean }>`
   border-radius: 7px;
   padding: 0 15px;
   font-family: "Catamaran", sans-serif;

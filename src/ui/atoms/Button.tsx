@@ -45,6 +45,7 @@ const defaultProps: Partial<Props> = {
   htmlType: HtmlType.button,
   onClick() { },
   loading: false,
+  width: '100%'
 }
 
 function Button({
