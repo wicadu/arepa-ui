@@ -50,6 +50,7 @@ import Column from './layout/Column'
 import Row from './layout/Row'
 import Spacer from './layout/Spacer'
 import Section from './layout/Section'
+import Article from './layout/Article'
 
 export {
   // Atoms
@@ -98,6 +99,7 @@ export {
   Column,
   Row,
   Spacer,
+  Article,
 
   // Hocs
   Form,

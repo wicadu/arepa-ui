@@ -1,5 +1,7 @@
-function getFormFieldsErrors(errors = {}, name = '') {
-  const keys = name.split('.').map((key) => {
+import { FieldErrors, FieldValues } from 'react-hook-form'
+
+function getFormFieldsErrors(errors: FieldErrors<FieldValues>, name: string): FieldErrors<FieldValues> {
+  const keys: string[] = name?.split('.').map((key) => {
     if (key.includes('[')) {
       const [name] = key.split(/\[|\]/).filter(Boolean)
       return name
@@ -8,7 +10,7 @@ function getFormFieldsErrors(errors = {}, name = '') {
     }
   })
 
-  let value = errors
+  let value = errors ?? {}
 
   for (const key of keys) {
     if (typeof key === 'string') {

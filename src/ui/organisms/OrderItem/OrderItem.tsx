@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 
 import Typography from '../../atoms/Typography'
 import Column from '../../layout/Column'
 import Row from '../../layout/Row'
+import Icon from '../../atoms/Icon'
+import Image from '../../atoms/Image'
 
-import ItemText from './ItemText'
-import ImageContent from './ImageContent'
-import ItemSpec from './ItemSpec'
 import OrderItemSkeleton from './Skeleton'
 
-type ItemSpec = {
+type Spec = {
   key?: string
   value?: string | number
 }
@@ -20,8 +20,8 @@ interface Props {
   label?: string
   name: string
   description: string
-  price?: string
-  specs?: ItemSpec[]
+  customSpecComponent?: React.ReactElement
+  specs?: Spec[]
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
@@ -37,46 +37,128 @@ function OrderItem({
   name,
   label,
   image,
-  price,
+  customSpecComponent,
   onClick,
   description,
 }: Props) {
   return (
-    <Column gap={5} onClick={onClick}>
-      <ItemText type='label' content={label} numberOfLines={1} />
+    <Column gap={5} onClick={onClick} styles={cssContainerStyles}>
+      <Typography
+        type='helper'
+        numberOfLines={1}
+        weight={700}
+        size={10}
+        children={label}
+        styles={cssLabelStyles}
+      />
 
       <Content>
-        <ImageContent image={image} />
+        <ImageContainer>
+          {!image
+            ? <Icon name='image' size={35} />
+            : <Image src={image} fit='contain' width={70} height={70} />
+          }
+        </ImageContainer>
+
         <Column align='space-between' flex={1}>
           <Column>
-            <ItemText type='title' content={name} numberOfLines={1} />
-            <ItemText type='description' content={description} numberOfLines={2} />
-          </Column>
-
-          {price ? (
             <Typography
-              type='helper'
+              type='title-4'
+              numberOfLines={1}
               weight={700}
               size={16}
-            >
-              {price}
-            </Typography>
-          ) : (
-            <Row align='space-between'>
-              {specs.map(({ key, value }) => (
-                <ItemSpec key={`${key}-${value}`} name={key} value={value} />
-              ))}
-            </Row>
-          )}
+              children={name}
+              styles={cssTitleStyles}
+            />
+            <Typography
+              type='description'
+              numberOfLines={2}
+              size={12}
+              children={description}
+              styles={cssDescriptionStyles}
+            />
+          </Column>
+
+          {customSpecComponent
+            ? React.cloneElement(customSpecComponent)
+            : (
+              <Row align='space-between'>
+                {specs?.map(({ key, value }) => (
+                  <Typography
+                    key={`${key}-${value}`}
+                    type='description'
+                    children={value}
+                    weight={700}
+                    size={14}
+                    styles={cssSpecsStyles}
+                    afterStyles={{
+                      content: ` ${key ?? ''}`,
+                      size: 10,
+                      weight: 300,
+                    }}
+                  />
+                ))}
+              </Row>
+            )}
         </Column>
       </Content>
     </Column>
   )
 }
 
+const cssContainerStyles = css`
+  cursor: pointer;
+`
+
 const Content = styled.div`
   display: flex;
   gap: 5px;
+`
+
+const cssLabelStyles = css`
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+`
+
+const cssTitleStyles = css`
+  @media screen and (min-width: 768px) {
+    font-size: 22px;
+  }
+`
+
+const cssDescriptionStyles = css`
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+    -webkit-line-clamp: 1;
+    line-height: normal;
+  }
+`
+
+const cssSpecsStyles = css`
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+    line-height: 22px;
+
+     &::after {
+      font-size: 16px;
+    }
+  }
+`
+
+const ImageContainer = styled.figure`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background-color: ${({ theme }) => theme.colors.NEUTRAL.SIDE};
+  border-radius: 10px;
+
+  @media screen and (min-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
 `
 
 OrderItem.defaultProps = defaultProps

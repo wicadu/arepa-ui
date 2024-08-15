@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
+import { SerializedStyles, useTheme } from '@emotion/react'
 
 import Icon from '../atoms/Icon'
 import Image from '../atoms/Image'
@@ -18,8 +18,19 @@ type Props = {
   isItOnOverlay?: boolean
   mainImageWidth?: number | string
   mainImageHeight?: number | string
+  slideImageSize?: number
+  containerStyles?: SerializedStyles | string
   onExpandImage?: (event?: React.MouseEvent<HTMLElement>) => void
   onChangeImage?: (data: Image) => void
+}
+
+const defaultProps: Partial<Props> = {
+  images: [],
+  isItOnOverlay: false,
+  slideImageSize: 30,
+  containerStyles: '',
+  onExpandImage() {},
+  onChangeImage() {},
 }
 
 function ImagesGallery({
@@ -27,7 +38,9 @@ function ImagesGallery({
   defaultImage,
   mainImageWidth,
   mainImageHeight,
+  slideImageSize,
   isItOnOverlay,
+  containerStyles,
   onExpandImage,
   onChangeImage,
 }: Props) {
@@ -52,14 +65,14 @@ function ImagesGallery({
 
   if (!Boolean(images?.length)) {
     return (
-      <NoImageContainer onClick={onExpandImage} data-id='UPLOAD_IMAGE'>
+      <NoImageContainer onClick={onExpandImage} height={mainImageHeight}>
         <Icon name="insert_photo" size={40} color={color} />
       </NoImageContainer>
     )
   }
 
   return (
-    <Column gap={25} align='center'>
+    <Column gap={15} align='center' styles={containerStyles}>
       <Image
         src={currentImage?.value}
         width={mainImageWidth}
@@ -72,8 +85,8 @@ function ImagesGallery({
       <Carousel>
         {images?.map(({ value, id }: Image) => (
           <Image
-            width={30}
-            height={30}
+            width={slideImageSize}
+            height={slideImageSize}
             src={value}
             key={id}
             fit='contain'
@@ -90,9 +103,9 @@ function ImagesGallery({
   )
 }
 
-const NoImageContainer = styled.div`
+const NoImageContainer = styled.div<{ height: number | string }>`
   width: 100%;
-  height: 175px;
+  height: ${({ height }) => typeof height ==='number' ? `${height}px`: height};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,9 +114,11 @@ const NoImageContainer = styled.div`
 
 const Carousel = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
   justify-content: center;
 `
+
+ImagesGallery.defaultProps = defaultProps
 
 export default ImagesGallery
