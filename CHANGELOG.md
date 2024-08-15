@@ -1,3 +1,12 @@
+# 1.26.0
+
+- Refactor `Select` to use `Controller` from react-hook-form
+- Add *width: 100%* as default for `Button`, `Input` and `InputFeedback`
+- Refactor `OrderItem` and `OrderItem.Skeleton`
+- Add `Article`
+- Add extra props to custom `ImagesGallery`
+- Tablet styles for `Section`
+
 # 1.25.5
 
 - Update `VirtualInputs` typescript props and *index* as *key*
