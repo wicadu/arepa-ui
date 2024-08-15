@@ -1,51 +1,36 @@
 import React from 'react'
-import styled from '@emotion/styled'
 
 import Skeleton from 'react-loading-skeleton'
 
+import { css } from '@emotion/react'
+import Column from '../../layout/Column'
+import Row from '../../layout/Row'
+
+
 function OrderItemSkeleton() {
   return (
-    <Container>
+    <Column>
       <Skeleton height={8} width={120} />
 
-      <Content>
-        <Skeleton height={54} width={54} />
+      <Row gap={10}>
+        <Skeleton height={54} width={54}  />
 
-        <ItemContent>
+        <Column styles={cssContentStyles}>
           <Skeleton height={15} width={200} />
-          <Skeleton height={12} count={2} />
+          <Skeleton height={12} count={2}  />
 
-          <SpecsWrapper>
+          <Row gap={5}>
             <Skeleton height={15} width={20} />
             <Skeleton height={15} width={40} />
-          </SpecsWrapper>
-        </ItemContent>
-      </Content>
-    </Container>
+          </Row>
+        </Column>
+      </Row>
+    </Column>
   )
 }
 
-const Container = styled.article`
-  flex-direction: column;
-  display: flex;
-  gap: 5px;
-`
-
-const Content = styled.div`
-  display: flex;
-  gap: 5px;
-`
-
-const ItemContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`
-
-const SpecsWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  gap: 5px;
+const cssContentStyles = css`
+  width: 100%;
 `
 
 export default OrderItemSkeleton
