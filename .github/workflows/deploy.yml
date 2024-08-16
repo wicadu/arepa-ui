@@ -31,28 +31,27 @@ jobs:
     needs: release-package
     runs-on: ubuntu-latest
     steps:
-      steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
-        run: |
-          docker build --target builder -t $IMAGE_TAG .
+    - name: Build Docker image
+      run: |
+        docker build --target builder -t $IMAGE_TAG .
 
-      - name: Copy dist folder
-        run: |
-          docker cp $(docker create --name builder $IMAGE_TAG):/root/code/dist .
+    - name: Copy dist folder
+      run: |
+        docker cp $(docker create --name builder $IMAGE_TAG):/root/code/dist .
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm publish --provenance --access public
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        registry-url: 'https://registry.npmjs.org'
+    - run: npm publish --provenance --access public
+      env:
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
