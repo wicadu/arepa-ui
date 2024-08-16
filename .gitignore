@@ -83,5 +83,4 @@ typings/
 dist/
 
 # private files
-.npmrc
 .yarnrc
