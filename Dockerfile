@@ -7,8 +7,8 @@ WORKDIR /root/code
 COPY ["package.json", "yarn.lock", "./"]
 RUN yarn --frozen-lockfile
 
-COPY ["./.babelrc", "./.babelrc"]
 COPY ["./tsconfig.json", "./tsconfig.json"]
+COPY ["./.babelrc", "./.babelrc"]
 COPY ["./src", "./src"]
 
 FROM base AS builder
@@ -21,6 +21,7 @@ FROM node:18.12.1-alpine AS exporter
 
 WORKDIR /root/code
 
-COPY ["package.json", "yarn.lock", "./"]
+COPY --from=builder ["/root/code/package.json", "./package.json"]
 COPY ["./.npmrc", "./.npmrc"]
+COPY ["./.npmignore", "./.npmignore"]
 COPY --from=builder ["/root/code/dist", "./dist"]
