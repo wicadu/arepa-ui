@@ -3,15 +3,6 @@ name: Deploy
 on:
   push:
     branches: [ "matrix" ]
-    paths:
-      - 'package.json'
-      - 'yarn.lock'
-      - '.npmrc'
-      - '.npmignore'
-      - 'tsconfig.json'
-      - '.babelrc'
-      - 'src/**'
-      - 'tests/**'
 
 env:
   PROJECT_NAME: ${{ github.repository }}
