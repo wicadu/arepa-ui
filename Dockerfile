@@ -21,4 +21,6 @@ FROM node:18.12.1-alpine AS exporter
 
 WORKDIR /root/code
 
+COPY ["package.json", "yarn.lock", "./"]
+COPY ["./.npmrc", "./.npmrc"]
 COPY --from=builder ["/root/code/dist", "./dist"]
