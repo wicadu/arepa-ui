@@ -1,0 +1,46 @@
+name: Check PR
+
+on:
+  pull_request:
+    branches: [ "matrix" ]
+    paths:
+      - 'package.json'
+      - 'yarn.lock'
+      - '.npmrc'
+      - '.npmignore'
+      - 'tsconfig.json'
+      - '.babelrc'
+      - 'src/**'
+      - 'tests/**'
+
+env:
+  IMAGE_TAG: ${{ github.repository }}:${{ github.sha }}
+
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lint Code
+        run: echo 'Not found'
+    continue-on-error: true
+
+  test-units:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build --target base -t $IMAGE_TAG .
+
+      - name: Run Unit Tests
+        run: |
+          docker run $IMAGE_TAG yarn test --ci --detectOpenHandles
+    continue-on-error: true
