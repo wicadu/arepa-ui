@@ -3,15 +3,6 @@ name: Deploy
 on:
   push:
     branches: [ "matrix" ]
-    paths:
-        - 'package.json'
-        - 'yarn.lock'
-        - '.npmrc'
-        - '.npmignore'
-        - 'tsconfig.json'
-        - '.babelrc'
-        - 'src/**'
-        - 'tests/**'
 
 env:
   PROJECT_NAME: ${{ github.repository }}
@@ -54,7 +45,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
-        registry-url: 'registry.npmjs.org'
+        registry-url: 'https://registry.npmjs.org'
 
     - name: Publish package
       env:
