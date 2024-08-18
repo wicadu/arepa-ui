@@ -67,5 +67,4 @@ jobs:
         docker build --target exporter -t $IMAGE_TAG .
 
     - name: Publish package
-      env:
       run: docker run -e NPM_TOKEN=$NPM_TOKEN $IMAGE_TAG npm publish --provenance --access public
