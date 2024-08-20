@@ -1,3 +1,12 @@
+# 1.27.0
+
+- Delete `DraftBottomActions`, `DraftOrderItem` and `OrderUserCard`
+- Add *styles* prop for `InputFeedback`, `RadioController`, `Alert`, `InputFile` and `OrderItem`
+- Update *component* prop into `FlatList` to accept different React.ElementTypes
+- Add *afterStyles* prop for `Article` and `Section`
+- Update *defaultProps* and *defaultStyles* for `Column`, `Row`, `Collapsable` and `StatusChip`
+- Add `OrderItemBottom` as sub component for `OrderItem`
+
 # 1.26.0
 
 - Refactor `Select` to use `Controller` from react-hook-form
