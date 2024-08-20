@@ -1,0 +1,72 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "matrix" ]
+    paths:
+        - 'package.json'
+        - 'yarn.lock'
+        - '.npmrc'
+        - '.npmignore'
+        - 'tsconfig.json'
+        - '.babelrc'
+        - 'src/**'
+
+env:
+  IMAGE_TAG: ${{ github.repository }}:${{ github.sha }}
+
+jobs:
+  deploy-to-github:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image
+      run: |
+        docker build --target exporter -t $IMAGE_TAG .
+
+    - name: Publish package
+      env:
+        NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: docker run -e NPM_TOKEN=$NPM_TOKEN $IMAGE_TAG npm publish --provenance --access public
+
+  deploy-to-npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Re-create npmrc
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        rm .npmrc
+        echo //registry.npmjs.org/:_authToken=$NPM_TOKEN > .npmrc
+        echo registry=https://registry.npmjs.org/ >> .npmrc
+        echo always-auth=true >> .npmrc
+
+    - name: Build Docker image
+      run: |
+        docker build --target exporter -t $IMAGE_TAG .
+
+    - name: Publish package
+      run: docker run -e NPM_TOKEN=$NPM_TOKEN $IMAGE_TAG npm publish --provenance --access public
