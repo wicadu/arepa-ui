@@ -14,7 +14,7 @@ interface Props {
 }
 
 const defaultProps: Partial<Props> = {
-  children: 'div',
+  children: null,
   gap: 0
 }
 

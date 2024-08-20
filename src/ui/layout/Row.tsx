@@ -14,7 +14,7 @@ interface Props {
 }
 
 const defaultProps: Props = {
-  children: 'div',
+  children: '',
   gap: 0,
   styles: ''
 }

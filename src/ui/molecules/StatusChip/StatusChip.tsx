@@ -68,7 +68,8 @@ function StatusChip({
 
 const CheckIcon = styled(Icon)`
   ${({ theme, type }) => {
-    const mainColor = theme.colors.MAIN?.[String(type).toUpperCase()]
+    const mainColor =
+      theme.colors.MAIN?.[String(type).toUpperCase()] || theme?.colors.MAIN.PRIMARY
 
     return `
       border-radius: 25px;
