@@ -7,10 +7,19 @@ import Row from './Row'
 
 import styled from '@emotion/styled'
 
+type AfterStyles = {
+  content: string
+  size: number
+  weight: number
+  color?: string
+}
+
 interface Props {
   children: ReactNode | ReactElement | ReactElement[]
   title: string | ReactElement
+  titleAfterStyles?: AfterStyles
   description?: string
+  descriptionAfterStyles?: AfterStyles
   rightChild?: string | ReactElement
   className?: string
   styles?: SerializedStyles | string
@@ -18,7 +27,9 @@ interface Props {
 
 function Section({
   title,
+  titleAfterStyles,
   description,
+  descriptionAfterStyles,
   rightChild,
   children,
   className,
@@ -34,6 +45,7 @@ function Section({
               lineHeight={30}
               size={20}
               children={title}
+              afterStyles={titleAfterStyles}
             />
             : title}
           <div>{rightChild}</div>
@@ -42,6 +54,7 @@ function Section({
           type='description'
           styles={cssDescriptionStyles}
           lineHeight={25}
+          afterStyles={descriptionAfterStyles}
         >
           {description}
         </Typography>

@@ -7,10 +7,19 @@ import Row from './Row'
 import styled from '@emotion/styled'
 import { RightChildAsButton } from './Section'
 
+type AfterStyles = {
+  content: string
+  size: number
+  weight: number
+  color?: string
+}
+
 interface Props {
   children: ReactNode | ReactElement | ReactElement[]
+  titleAfterStyles?: AfterStyles
   title: string | ReactElement
   description?: string
+  descriptionAfterStyles?: AfterStyles
   rightChild?: string | ReactElement
   className?: string
   styles?: SerializedStyles | string
@@ -18,7 +27,9 @@ interface Props {
 
 function Article({
   title,
+  titleAfterStyles,
   description,
+  descriptionAfterStyles,
   rightChild,
   children,
   className,
@@ -34,11 +45,16 @@ function Article({
               lineHeight={30}
               size={16}
               children={title}
+              afterStyles={titleAfterStyles}
             />
             : title}
           <div>{rightChild}</div>
         </Row>
-        <Typography type='description'>{description}</Typography>
+        <Typography
+          type='description'
+          afterStyles={descriptionAfterStyles}
+          children={description}
+        />
       </div>
 
       {children}

@@ -35,7 +35,7 @@ function FlatList<ItemT>({
   data,
   hasMore,
   fetchNext,
-  component,
+  component: Component,
   itemWrapper: ItemWrapper,
   dataExtractor,
   keyExtracted,
@@ -57,7 +57,10 @@ function FlatList<ItemT>({
             value={String(item?.[keyExtracted])}
             name={String(item?.[keyExtracted])}
           >
-            {React.cloneElement(component, dataExtractor({ ...item }))}
+            { React.isValidElement(Component)
+              ? React.cloneElement(Component, dataExtractor({ ...item }))
+              : <Component {...dataExtractor({ ...item })} />
+            }
           </ItemWrapper>
         ))}
       </ListWrapper>

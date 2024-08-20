@@ -30,10 +30,8 @@ import Breadcrumbs from './molecules/Breadcrumbs'
 
 import OrderItem from './organisms/OrderItem/OrderItem'
 import FlatList from './organisms/FlatList/FlatList'
-import DraftOrderItem from './organisms/DraftOrderItem/DraftOrderItem'
 
 import OrderSnapshot from './organisms/OrderSnapshot/OrderSnapshot'
-import OrderUserCard from './organisms/OrderUserCard/OrderUserCard'
 
 import ImageUploader from './organisms/ImageUploader'
 import ImagesGallery from './organisms/ImagesGallery'
@@ -87,9 +85,7 @@ export {
   // Organisms
   FlatList,
   OrderItem,
-  DraftOrderItem,
   OrderSnapshot,
-  OrderUserCard,
 
   ImageUploader,
   ImagesGallery,

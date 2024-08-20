@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 interface Props {
   name: string
@@ -13,6 +14,7 @@ interface Props {
     message: string
   }
   className?: string
+  styles?: SerializedStyles | string
 }
 
 const defaultProps: Partial<Props> = {
@@ -35,9 +37,10 @@ function InputFeedback({
   labelSize,
   width,
   className,
+  styles,
 }: Props) {
   return (
-    <Wrapper labelSize={labelSize} className={className} width={width}>
+    <Wrapper labelSize={labelSize} className={className} width={width} styles={styles}>
       {label && <Label htmlFor={name}>{label}</Label>}
       {children}
 
@@ -48,7 +51,11 @@ function InputFeedback({
   )
 }
 
-export const Wrapper = styled.div<{ labelSize?: number, width: string }>`
+export const Wrapper = styled.div<{
+  labelSize?: number,
+  width: string,
+  styles?: SerializedStyles | string
+}>`
   display: grid;
   width: ${({ width }) => width};
 

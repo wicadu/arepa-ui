@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { SerializedStyles, useTheme } from '@emotion/react'
+import { css, SerializedStyles, useTheme } from '@emotion/react'
 
 import Icon from '../atoms/Icon'
 import Column from '../layout/Column'
@@ -30,7 +30,7 @@ function Collapsable({ value, header, children, containerStyles }: Props) {
 
   return (
     <Column align='center' gap={10} styles={containerStyles}>
-      <Row onClick={toggleIsItCollapsed}>
+      <Row onClick={toggleIsItCollapsed} styles={cssHeaderContainerStyles}>
         <Icon
           name={isItCollapsed ? 'arrow_drop_down' : 'arrow_right'}
           size={25}
@@ -43,6 +43,10 @@ function Collapsable({ value, header, children, containerStyles }: Props) {
     </Column>
   )
 }
+
+const cssHeaderContainerStyles = css`
+  cursor: pointer;
+`
 
 Collapsable.defaultProps = defaultProps
 
