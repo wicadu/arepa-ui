@@ -1,9 +1,9 @@
 import React, { Fragment, useMemo, useState } from 'react'
 
 import { Controller } from 'react-hook-form'
+import { SerializedStyles } from '@emotion/react'
 
 import { getFormFieldsErrors } from '../../../utils'
-
 import Form from '../../hocs/Form'
 import InputFileUploader from './Uploader'
 import FilesSummary from './FilesSummary'
@@ -18,12 +18,14 @@ interface Props {
   label?: string
   width?: string
   accept: string
+  containerStyles?: SerializedStyles | string
+  uploaderStyles?: SerializedStyles | string
 }
 
 const defaultProps: Partial<Props> = {
   defaultValue: '',
   disabled: false,
-  width: '220px',
+  width: '100%',
   accept: '.jpg, .jpeg, .png, .svg, .webp, application/pdf'
 }
 
@@ -35,8 +37,11 @@ function InputFile({
   disabled,
   component,
   defaultValue,
-  doNotShowFeedback
-}): JSX.Element {
+  doNotShowFeedback,
+  doNotShowErrors,
+  containerStyles,
+  uploaderStyles
+}) {
   const [loadedFile, setLoadedFile] = useState<File | File[]>(null)
 
   const { control, formState: { errors } } = Form.useForm()
@@ -52,7 +57,14 @@ function InputFile({
       name={name}
       control={control}
       render={({ field: { onChange } }) =>
-        <Container label={label} errors={fieldError} hasError={Boolean(fieldError?.message)} name={name}>
+        <Container
+          label={label}
+          errors={fieldError}
+          hasError={Boolean(fieldError?.message)}
+          name={name}
+          doNotShowErrors={doNotShowErrors}
+          styles={containerStyles}
+        >
           {loadedFile ? (
             <FilesSummary
               file={loadedFile}
@@ -71,6 +83,7 @@ function InputFile({
                 onChange?.(file)
                 setLoadedFile(file)
               }}
+              styles={uploaderStyles}
             />
           )}
         </Container>

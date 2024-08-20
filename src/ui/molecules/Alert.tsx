@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
+import { SerializedStyles, useTheme } from '@emotion/react'
 
 import Typography from '../atoms/Typography'
 import Icon from '../atoms/Icon'
@@ -24,6 +24,7 @@ interface Props {
   show: boolean
   width: string
   size?: UIElementSizesEnum
+  styles?: SerializedStyles | string
 }
 
 const defaultProps: Partial<Props> = {
@@ -32,16 +33,17 @@ const defaultProps: Partial<Props> = {
   type: UIElementStatusEnum.Info,
   show: true,
   width: '100%',
-  size: UIElementSizesEnum.Medium
+  size: UIElementSizesEnum.Medium,
+  styles: '',
 }
 
-function Alert({ title, description, type, show, width, size }: Props) {
+function Alert({ title, description, type, show, width, size, styles }: Props) {
   const { colors } = useTheme()
 
   const color = useMemo(() => colors.MAIN[String(type).toUpperCase()], [type])
 
   return (
-    <Container width={width} show={show} type={type} size={size}>
+    <Container width={width} show={show} type={type} size={size} styles={styles}>
       <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
@@ -113,6 +115,8 @@ const Container = styled.div<Partial<Props>>`
 
     return style
   }}
+
+  ${({ styles }) => styles}
 `
 
 const Content = styled.span<Partial<Props>>`

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { css } from '@emotion/react'
+import { css, SerializedStyles } from '@emotion/react'
 
 import Typography from '../../atoms/Typography'
 import Column from '../../layout/Column'
@@ -9,6 +9,7 @@ import Icon from '../../atoms/Icon'
 import Image from '../../atoms/Image'
 
 import OrderItemSkeleton from './Skeleton'
+import OrderItemBottom from './OrderItemBottom'
 
 type Spec = {
   key?: string
@@ -22,6 +23,7 @@ interface Props {
   description: string
   customSpecComponent?: React.ReactElement
   specs?: Spec[]
+  containerStyles?: SerializedStyles | string
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
 
@@ -40,9 +42,10 @@ function OrderItem({
   customSpecComponent,
   onClick,
   description,
+  containerStyles
 }: Props) {
   return (
-    <Column gap={5} onClick={onClick} styles={cssContainerStyles}>
+    <Column gap={5} onClick={onClick} styles={cssContainerStyles(containerStyles)}>
       <Typography
         type='helper'
         numberOfLines={1}
@@ -106,8 +109,9 @@ function OrderItem({
   )
 }
 
-const cssContainerStyles = css`
+const cssContainerStyles = (extraStyles?: SerializedStyles | string) => css`
   cursor: pointer;
+  ${extraStyles}
 `
 
 const Content = styled.div`
@@ -162,6 +166,8 @@ const ImageContainer = styled.figure`
 `
 
 OrderItem.defaultProps = defaultProps
+
+OrderItem.OrderItemBottom = OrderItemBottom
 OrderItem.Skeleton = OrderItemSkeleton
 
 export default OrderItem
