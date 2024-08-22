@@ -7,7 +7,7 @@ import ToastProvider, { ToastData, ToastOptions, useToast } from '../hocs/ToastC
 import { UIElementStatusEnum } from '../ts/enums/UIElementStatusEnum'
 
 function useNotify() {
-  const { addToast } = useToast()
+  const { addToast, removeToast } = useToast()
 
   const convertKeysToLowerCase = useCallback((obj: ToastData) => {
     return Object.fromEntries(
@@ -36,6 +36,9 @@ function useNotify() {
       const { title, description, time } = convertKeysToLowerCase(data)
       addToast({ type: UIElementStatusEnum.Info, title, description, time })
     },
+    remove: (id?: string | number ) => {
+      removeToast(id)
+    }
   }
 
   return notify

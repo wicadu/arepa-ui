@@ -14,6 +14,7 @@ export interface ToastData {
 interface ToastContextProps {
   toasts: ToastData[]
   addToast: (options: ToastData) => void
+  removeToast: (id?: string | number) => void
 }
 
 const ToastContext = createContext<ToastContextProps | undefined>(undefined)
@@ -40,19 +41,28 @@ const defaultOptions: ToastOptions = {
 function ToastProvider({ children, options }: Props) {
   const [toasts, setToasts] = useState<ToastData[]>([])
 
+  const removeToast = useCallback((id?: number | string) => {
+    if (!Boolean(id)) setToasts([])
+
+    setToasts((prevToasts: ToastData[]) =>
+      prevToasts.filter((toast) => toast.id !== id)
+    )
+  }, [
+    toasts
+  ])
+
   const addToast = useCallback((options: ToastData) => {
     const { title, type, description, time } = options || {}
-    const id = Date.now()
+    const id = options?.id ?? Date.now()
 
     setToasts((prevToasts) => [...prevToasts, { id, title, type, description }])
 
-    setTimeout(() => {
-      setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id))
-    }, time || 3000)
+    setTimeout(() => removeToast(id), time || 3000)
   }, [])
 
+
   return (
-    <ToastContext.Provider value={{ toasts, addToast }}>
+    <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
       {children}
 
       <Toast toasts={toasts} options={{ ...defaultOptions, ...options }} />

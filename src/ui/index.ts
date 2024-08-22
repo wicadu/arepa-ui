@@ -30,9 +30,7 @@ import Breadcrumbs from './molecules/Breadcrumbs'
 
 import OrderItem from './organisms/OrderItem/OrderItem'
 import FlatList from './organisms/FlatList/FlatList'
-
-import OrderSnapshot from './organisms/OrderSnapshot/OrderSnapshot'
-
+import OrderSnapshot from './organisms/OrderSnapshot'
 import ImageUploader from './organisms/ImageUploader'
 import ImagesGallery from './organisms/ImagesGallery'
 

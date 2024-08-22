@@ -87,7 +87,7 @@ const Container = styled.div<Partial<Props>>`
         height: 25px;
         padding: 6px;
 
-        .${_types?.[type]} {
+        .${_types?.[String(type)?.toLowerCase()]} {
           font-size: 12px;
         }
 
@@ -97,7 +97,7 @@ const Container = styled.div<Partial<Props>>`
           padding: 10px 15px;
           gap: 12px;
 
-          .${_types?.[type]} {
+          .${_types?.[String(type)?.toLowerCase()]} {
             font-size: 16px;
           }     
         }

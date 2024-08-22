@@ -1,3 +1,10 @@
+# 1.28.0
+
+- Refactor `OrderSnapshot`
+- Add *removeToast* for `Toast`
+- Add *revertQuantity* method for `OrderItem.OrderItemBottom`
+- Fix *type* prop for `Alert`
+
 # 1.27.0
 
 - Delete `DraftBottomActions`, `DraftOrderItem` and `OrderUserCard`
