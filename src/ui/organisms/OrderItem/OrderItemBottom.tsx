@@ -12,7 +12,11 @@ enum ActionType {
 
 interface Props {
   initialQuantity: number,
-  onChangeQuantity: (type: ActionType, onChangeQuantity: number) => void,
+  onChangeQuantity: (
+    type: ActionType,
+    quantity: number,
+    onRevertQuantity: () => void
+  ) => void,
   minQuantity: number,
   maxQuantity: number,
   disabled?: boolean,
@@ -37,19 +41,24 @@ function OrderItemBottom({
   loading
 }: Props) {
   const [quantity, setQuantity] = useState<number>(initialQuantity)
+  const [revertingQuantity, setRevertingQuantity] = useState<boolean>(false)
 
-  const onChange = useCallback(
-    (type: ActionType) => {
-      let newQuantity: number = quantity
+  const onRevertQuantity = useCallback(() => setRevertingQuantity(true), [])
 
-      if (type === ActionType.ADD) newQuantity += 1
-      else newQuantity -= 1
+  const onChange = useCallback((type: ActionType) => {
+    let newQuantity: number = quantity
 
-      setQuantity(newQuantity)
-      onChangeQuantity?.(type, newQuantity)
-    },
-    [quantity, setQuantity, onChangeQuantity]
-  )
+    if (type === ActionType.ADD) newQuantity += 1
+    else newQuantity -= 1
+
+    setQuantity(newQuantity)
+    onChangeQuantity?.(type, newQuantity, onRevertQuantity)
+  }, [
+    quantity,
+    setQuantity,
+    onChangeQuantity,
+    onRevertQuantity
+  ])
 
   const onAddQuantity = useCallback(() => {
     if (quantity >= maxQuantity || disabled || loading) return
@@ -72,11 +81,13 @@ function OrderItemBottom({
   ])
 
   useEffect(() => {
-    if (initialQuantity !== quantity) {
+    if (initialQuantity !== quantity && revertingQuantity) {
       setQuantity(initialQuantity)
+      setRevertingQuantity(false)
     }
   }, [
     initialQuantity,
+    revertingQuantity,
   ])
 
   return (
@@ -88,7 +99,7 @@ function OrderItemBottom({
           <Typography
             type='description'
             size={13}
-            dangerouslySetInnerHTML={{ __html: `<b>${quantity}</b> unidades`}}
+            dangerouslySetInnerHTML={{ __html: `<b>${quantity}</b> unidades` }}
           />
         )
       }
