@@ -1,3 +1,7 @@
-export default function capitalize(string: string = ''): string {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+function capitalize(value: string): string {
+  const phrase: string = String(value ?? '')
+
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1)
 }
+
+export default capitalize

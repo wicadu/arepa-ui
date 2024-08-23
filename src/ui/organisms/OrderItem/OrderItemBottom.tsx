@@ -85,6 +85,10 @@ function OrderItemBottom({
       setQuantity(initialQuantity)
       setRevertingQuantity(false)
     }
+
+    if (initialQuantity !== quantity) {
+      setQuantity(initialQuantity)
+    }
   }, [
     initialQuantity,
     revertingQuantity,

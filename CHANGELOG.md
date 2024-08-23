@@ -1,3 +1,8 @@
+# 1.28.1
+
+- Update `capitalize` util
+- Update _useEffect_ for `OrderItemBottom`
+
 # 1.28.0
 
 - Refactor `OrderSnapshot`
