@@ -1,34 +1,38 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
-const propTypes = {
-  headers: PropTypes.arrayOf(PropTypes.element).isRequired,
-  tabs: PropTypes.arrayOf(PropTypes.element).isRequired,
+interface Props {
+  headers: React.ReactElement[]
+  tabs: React.ReactElement[]
+  onChangeTabs: (index: number) => void
 }
 
-type Props = PropTypes.InferProps<typeof propTypes>
-
-function Tabs({ headers, tabs, ...props }: Props) {
+function Tabs({ headers, tabs, onChangeTabs }: Props) {
   const [selectedTab, setSelectedTab] = useState(0)
 
   const { colors } = useTheme()
 
+  const onChange = (index: number) => {
+    setSelectedTab(index)
+    onChangeTabs?.(index)
+  }
+
   return (
-    <Container {...props}>
-      <HeadersRow>
+    <Container>
+      <Headers>
         {headers?.map((children, index) => (
           <HeaderTab
-            isItSelected={selectedTab === index}
+            isActive={selectedTab === index}
             key={index}
-            onClick={() => setSelectedTab(index)}>
+            onClick={() => onChange  (index)}
+          >
             {React.cloneElement(children, {
               color: selectedTab === index ? colors.MAIN.PRIMARY : colors.FONT.DESCRIPTION,
             })}
           </HeaderTab>
         ))}
-      </HeadersRow>
+      </Headers>
 
       <Row>{tabs?.[selectedTab]}</Row>
     </Container>
@@ -43,11 +47,11 @@ const Row = styled.div`
   height: 100%;
 `
 
-const HeadersRow = styled.ul`
+const Headers = styled.ul`
   display: flex;
 `
 
-const HeaderTab = styled.li<any>`
+const HeaderTab = styled.li<{ isActive: boolean }>`
   flex-basis: 100%;
   list-style-type: none;
   cursor: pointer;
@@ -55,10 +59,8 @@ const HeaderTab = styled.li<any>`
   justify-content: center;
   align-items: center;
   height: 50px;
-
   border-bottom: 1px solid
-    ${({ theme, isItSelected }: any) =>
-      isItSelected ? theme.colors.MAIN.PRIMARY : theme.colors.NEUTRAL.TRANSPARENT};
+    ${({ theme, isActive }) => isActive ? theme?.colors.MAIN.PRIMARY : theme.colors?.NEUTRAL.TRANSPARENT};
 `
 
 export default Tabs

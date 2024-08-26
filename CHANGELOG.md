@@ -1,3 +1,7 @@
+# 1.28.2
+
+- Small refactor for `Tabs` to get _onChangeTabs_ and _isActive_ tab
+
 # 1.28.1
 
 - Update `capitalize` util
