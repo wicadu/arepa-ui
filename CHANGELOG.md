@@ -1,3 +1,12 @@
+# 1.29.0
+
+- Refactor `InputFile` and `Breadcrumbs`
+- Fix _styles_ for `OrderSnapshot` and `InputFeedback`
+- Fix _defaultProps_ through deconstruction for `OrderItem`, `Spin` and `ImagesGallery`
+- Add _time_ prop for Alert
+- Force deleting _loadedFile_ first in `ImageUploaded`
+- Export _useFormState_ as part of `Form`
+
 # 1.28.2
 
 - Small refactor for `Tabs` to get _onChangeTabs_ and _isActive_ tab
