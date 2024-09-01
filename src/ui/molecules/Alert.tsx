@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import styled from '@emotion/styled'
 import { SerializedStyles, useTheme } from '@emotion/react'
@@ -25,6 +25,7 @@ interface Props {
   width: string
   size?: UIElementSizesEnum
   styles?: SerializedStyles | string
+  time?: number
 }
 
 const defaultProps: Partial<Props> = {
@@ -35,15 +36,35 @@ const defaultProps: Partial<Props> = {
   width: '100%',
   size: UIElementSizesEnum.Medium,
   styles: '',
+  time: 0
 }
 
-function Alert({ title, description, type, show, width, size, styles }: Props) {
+function Alert(props: Props) {
+  const { title, description, type, show, width, size, styles, time } = {
+    ...defaultProps,
+    ...props
+  }
+
+  const [showAlert, setShowAlert] = useState<boolean>(show)
+
   const { colors } = useTheme()
 
   const color = useMemo(() => colors.MAIN[String(type).toUpperCase()], [type])
 
+  useEffect(() => {
+    setShowAlert(show)
+
+    if (time && show) {
+      const timer = setTimeout(() => setShowAlert(false), time)
+      return () => clearTimeout(timer)
+    }
+  }, [
+    time,
+    show
+  ])
+
   return (
-    <Container width={width} show={show} type={type} size={size} styles={styles}>
+    <Container width={width} show={showAlert} type={type} size={size} styles={styles}>
       <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
