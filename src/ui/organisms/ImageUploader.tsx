@@ -152,7 +152,8 @@ function ImageUploader({
             src={image}
             width={imageWidth}
             height={imageHeight}
-            fit='contain'
+            fit='cover'
+            rounded={10}
           />
         ) : (
           <Spacer
@@ -169,7 +170,7 @@ function ImageUploader({
           />
         )}
 
-        {Boolean(!editing && !loadingDelete) && (
+        {Boolean(!editing && !loadingDelete && !Boolean(defaultImage)) && (
           <EditIconContainer onClick={handleStartEditing}>
             <Icon name='edit' size={10} color='white' />
           </EditIconContainer>
