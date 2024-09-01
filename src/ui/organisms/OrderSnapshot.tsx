@@ -109,9 +109,8 @@ function OrderSnapshot({
               ? <Image
                 src={image}
                 key={index}
-                width={32.5}
-                height={32.5}
-                backgroundColor={colors.NEUTRAL.SIDE}
+                width={50}
+                height={50}
               />
               : <Icon
                 name='image'
@@ -219,8 +218,8 @@ const cssItemsStyles = css`
     }
 
     img {
-      width: 48.8px;
-      height: 48.8px;
+      width: 65px;
+      height: 65px;
     }
   }
 `
@@ -236,25 +235,27 @@ const UsersContainer = styled.div`
   }
 `
 
+const userProfileStyles = (position: number) => css`
+  z-index: ${3 - position};
+  left: -${10 * position}px;
+  top: -${10 * position}px;
+
+  @media screen and (min-width: 768px) {
+    img {
+      width: 42px;
+      height: 42px;
+    }
+
+    width: 42px;
+    height: 42px;
+    left: -${15 * position}px;
+    top: -${15 * position}px;
+  }
+`
+
 const ImageContainer = styled.figure <{ position: number }>`
   position: absolute;
-
-  ${({ position }) => `
-    z-index: ${3 - position};
-
-    left: -${10 * position}px;
-    top: -${10 * position}px;
-
-    @media screen and (min-width: 768px) {
-      img {
-        width: 42px;
-        height: 42px;
-      }
-
-      left: -${15 * position}px;
-      top: -${15 * position}px;
-    }
-  `}
+  ${({ position }) => userProfileStyles(position)}
 `
 
 const DefaultProfileImage = styled(Icon) <{ position: number }>`
@@ -268,19 +269,7 @@ const DefaultProfileImage = styled(Icon) <{ position: number }>`
   user-select: none;
   position: absolute;
 
-  ${({ position }) => `
-    z-index: ${3 - position};
-    
-    left: -${10 * position}px;
-    top: -${10 * position}px;
-    
-    @media screen and (min-width: 768px) {
-      width: 42px;
-      height: 42px;
-      left: -${15 * position}px;
-      top: -${15 * position}px;
-    }
-  `}
+  ${({ position }) => userProfileStyles(position)}
 `
 
 const TotalOfRemainingItems = styled(Typography) <{ show: boolean }>`
@@ -295,7 +284,7 @@ const TotalOfRemainingItems = styled(Typography) <{ show: boolean }>`
   ${({ show }) => !show && 'display: none;'}
 `
 
-const cssBottomStyles =css`
+const cssBottomStyles = css`
   @media screen and (min-width: 768px) {
     p[type="helper"] {
       font-size: 16px;

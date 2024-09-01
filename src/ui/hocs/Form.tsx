@@ -3,6 +3,7 @@ import {
   useForm,
   useWatch,
   FormProvider,
+  useFormState,
   useFormContext,
   useFieldArray,
 } from 'react-hook-form'
@@ -37,5 +38,6 @@ Form.defaultProps = defaultProps
 Form.useForm = useFormContext
 Form.useWatch = useWatch
 Form.useFieldArray = useFieldArray
+Form.useFormState = useFormState
 
 export default Form

@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react'
+import React, { Fragment, useEffect, useRef } from 'react'
 
 import styled from '@emotion/styled'
 import { SerializedStyles, useTheme } from '@emotion/react'
@@ -9,49 +9,51 @@ import Typography from '../../atoms/Typography'
 import Icon from '../../atoms/Icon'
 
 interface Props {
-  component: React.ReactNode,
   disabled: boolean,
   onChange: (file: File) => void,
   width: string,
   accept: string
   styles?: SerializedStyles | string
+  loadedFile?: File
 }
 
 const defaultProps: Partial<Props> = {
   disabled: false,
-  width: '100%'
+  width: '100%',
+  loadedFile: null
 }
 
 function InputFileUploader({
   width,
   accept,
-  component,
   disabled,
   onChange,
-  styles
-}: Props): JSX.Element {
+  styles,
+  loadedFile
+}: Props) {
   const { colors } = useTheme()
   const inputRef: React.MutableRefObject<any> = useRef()
 
-  const onLoadWindowToUploadPicture = () => {
+  const onLoadFileDialog = () => {
     if (disabled) return
-
     inputRef?.current?.click()
   }
 
+  useEffect(() => {
+    if (!Boolean(loadedFile)) {
+      if (inputRef?.current) inputRef.current.value = ''
+    }
+  }, [loadedFile])
+
   return (
     <Fragment>
-      {component
-        ? React.cloneElement(component as React.ReactElement, { onClick: onLoadWindowToUploadPicture, styles })
-        : (
-          <Uploader width={width} onClick={onLoadWindowToUploadPicture} styles={styles}>
-            <Icon name='upload' size={30} color={colors.MAIN.PRIMARY} />
-            <div>
-              <Typography size={12} weight={700} color={colors.MAIN.PRIMARY}>Subir archivo</Typography>
-              <Typography size={10} color={colors.MAIN.PRIMARY}>Tamaño máximo: 2 mb</Typography>
-            </div>
-          </Uploader>
-        )}
+      <Uploader width={width} onClick={onLoadFileDialog} styles={styles}>
+        <Icon name='upload' size={30} color={colors.MAIN.PRIMARY} />
+        <div>
+          <Typography size={12} weight={700} color={colors.MAIN.PRIMARY}>Subir archivo</Typography>
+          <Typography size={10} color={colors.MAIN.PRIMARY}>Tamaño máximo: 2 mb</Typography>
+        </div>
+      </Uploader>
 
       <HiddenInput
         ref={inputRef}

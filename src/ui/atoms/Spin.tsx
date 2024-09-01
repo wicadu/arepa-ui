@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import PropTypes, { InferProps } from 'prop-types'
 
 enum spinType {
   primary = 'primary',
@@ -11,22 +10,25 @@ enum spinType {
   white = 'white',
 }
 
-const propTypes = {
-  center: PropTypes.bool,
-  size: PropTypes.number,
-  type: PropTypes.oneOf<spinType>(Object.values(spinType)),
+interface Props {
+  center?: boolean,
+  size?: number,
+  type: spinType,
 }
-
-type Props = InferProps<typeof propTypes>
 
 const defaultProps = {
   size: 40,
   type: spinType.primary,
 }
 
-function SpinComponent({ center, size, type, ...props }: Props) {
+function SpinComponent(props: Props) {
+  const { center, size, type, ...propsLeft } = {
+    ...defaultProps,
+    ...props,
+  }
+
   return (
-    <Wrapper center={center} data-testid="loading-spin-testid" {...props}>
+    <Wrapper center={center} data-testid="loading-spin-testid" {...propsLeft}>
       <Spin size={size} type={type}>
         <div className='double-bounce1' />
         <div className='double-bounce2' />
@@ -35,7 +37,7 @@ function SpinComponent({ center, size, type, ...props }: Props) {
   )
 }
 
-const Wrapper = styled.div<Props>`
+const Wrapper = styled.div<Partial<Props>>`
   ${({ center }) =>
     center &&
     `
@@ -62,12 +64,12 @@ const Spin = styled.div<Props>`
     left: 0;
 
     background-color: ${({ type, theme }) => {
-      if (type === spinType.ghost) return theme.colors.NEUTRAL.SELECTED
-      if (type === spinType.white) return theme.colors.FONT.TITLE
-      if (type === spinType.link) return theme.colors.MAIN.PRIMARY
+    if (type === spinType.ghost) return theme.colors.NEUTRAL.SELECTED
+    if (type === spinType.white) return theme.colors.FONT.TITLE
+    if (type === spinType.link) return theme.colors.MAIN.PRIMARY
 
-      return theme.colors.MAIN?.[String(type).toUpperCase()]
-    }};
+    return theme.colors.MAIN?.[String(type).toUpperCase()]
+  }};
 
     -webkit-animation: sk-bounce 2s infinite ease-in-out;
     animation: sk-bounce 2s infinite ease-in-out;
@@ -100,8 +102,5 @@ const Spin = styled.div<Props>`
     }
   }
 `
-
-SpinComponent.propTypes = propTypes
-SpinComponent.defaultProps = defaultProps
 
 export default SpinComponent

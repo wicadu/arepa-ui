@@ -34,16 +34,21 @@ const defaultProps: Props = {
   specs: [],
 }
 
-function OrderItem({
-  specs,
-  name,
-  label,
-  image,
-  customSpecComponent,
-  onClick,
-  description,
-  containerStyles
-}: Props) {
+function OrderItem(props: Props) {
+  const {
+    specs,
+    name,
+    label,
+    image,
+    customSpecComponent,
+    onClick,
+    description,
+    containerStyles
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Column gap={5} onClick={onClick} styles={cssContainerStyles(containerStyles)}>
       <Typography
@@ -59,7 +64,7 @@ function OrderItem({
         <ImageContainer>
           {!image
             ? <Icon name='image' size={35} />
-            : <Image src={image} fit='contain' width={70} height={70} />
+            : <Image src={image} fit='cover' width={68} height={68} />
           }
         </ImageContainer>
 
