@@ -33,17 +33,22 @@ const defaultProps: Partial<Props> = {
   onChangeImage() {},
 }
 
-function ImagesGallery({
-  images,
-  defaultImage,
-  mainImageWidth,
-  mainImageHeight,
-  slideImageSize,
-  isItOnOverlay,
-  containerStyles,
-  onExpandImage,
-  onChangeImage,
-}: Props) {
+function ImagesGallery(props: Props) {
+  const {
+    images,
+    defaultImage,
+    mainImageWidth,
+    mainImageHeight,
+    slideImageSize,
+    isItOnOverlay,
+    containerStyles,
+    onExpandImage,
+    onChangeImage,
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   const [currentImage, setCurrentImage] = useState<Image>()
 
   const { colors } = useTheme()
@@ -118,7 +123,5 @@ const Carousel = styled.div`
   align-items: center;
   justify-content: center;
 `
-
-ImagesGallery.defaultProps = defaultProps
 
 export default ImagesGallery
