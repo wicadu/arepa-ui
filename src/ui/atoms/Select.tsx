@@ -78,7 +78,6 @@ function SelectComponent({
     options
   ])
 
-  // console.log('selectedOption: ', defaultValue, options, selectedOption)
   const { label, value } = selectedOption || {}
 
   const Container: React.FC<any> = useMemo(
