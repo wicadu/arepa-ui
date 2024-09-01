@@ -56,7 +56,8 @@ export const Wrapper = styled.div<{
   width: string,
   styles?: SerializedStyles | string
 }>`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: ${({ width }) => width};
 
 
