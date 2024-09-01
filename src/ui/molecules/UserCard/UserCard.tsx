@@ -25,7 +25,7 @@ function UserCard({ name, image, description }: Props) {
     <Column gap={5}>
       <Row gap={10}>
         {image
-          ? <Image src={image} width={50} height={50} rounded />
+          ? <Image src={image} width={50} height={50} rounded={50} />
           : <Icon name='account_circle' size={50} />
         }
         <Column align='top'>
