@@ -151,8 +151,8 @@ const WrapperButton = styled(Button)`
 
     if (type === ButtonType.white) {
       style += `
-          background-color: ${colors.NEUTRAL.CARD};
-          color: ${colors.FONT.TITLE};
+          background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.CARD};
+          color: ${outlined ? colors.NEUTRAL.CARD : colors.FONT.TITLE};
           font-weight: 700;
           ${getBordersStyles(1, outlined, colors.NEUTRAL.SELECTED)}
         `
