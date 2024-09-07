@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.0.0",
+    "react-easy-crop": "^5.0.8",
     "react-hook-form": "^7.52.1",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loading-skeleton": "^3.1.0",
