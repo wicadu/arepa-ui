@@ -1,3 +1,12 @@
+# 1.30.0
+
+- Update _ButtonType.white_ type for `Button`
+- Add `useWindowWidth` hook
+- Add `UIElementShapeEnum`
+- Refactor `ImageUploader`
+- Add `getCroppedImg`, `createImage` and `blobToFile` utils
+- Add `react-easy-crop` dependency
+
 # 1.29.0
 
 - Refactor `InputFile` and `Breadcrumbs`
