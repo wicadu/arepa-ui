@@ -31,7 +31,7 @@ import Breadcrumbs from './molecules/Breadcrumbs'
 import OrderItem from './organisms/OrderItem/OrderItem'
 import FlatList from './organisms/FlatList/FlatList'
 import OrderSnapshot from './organisms/OrderSnapshot'
-import ImageUploader from './organisms/ImageUploader'
+import ImageUploader from './organisms/ImageUploader/ImageUploader'
 import ImagesGallery from './organisms/ImagesGallery'
 
 import { Controller } from 'react-hook-form'
