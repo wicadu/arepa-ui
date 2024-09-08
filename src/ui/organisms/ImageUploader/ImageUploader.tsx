@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useMemo, useEffect } from 'react'
 
 import styled from '@emotion/styled'
 import { Size } from 'react-easy-crop'
+import { css } from '@emotion/react'
 
 import Form from '../../hocs/Form'
 import Alert from '../../molecules/Alert'
@@ -70,12 +71,12 @@ function ImageUploader(props: Props) {
     ...props
   }
 
-  const { formState: { errors }, setValue, reset, watch } = Form.useForm()
+  const { formState: { errors }, setValue, reset, watch, trigger } = Form.useForm()
 
   const hiddenInputRef = useRef<HTMLInputElement | null>(null)
 
   const handleOnCancel = useCallback(() => {
-    setValue(name, defaultImage || '')
+    setValue(name, null)
     setValue('editing', false)
     if (hiddenInputRef?.current) hiddenInputRef.current.value = '';
   }, [
@@ -91,11 +92,16 @@ function ImageUploader(props: Props) {
   const handleOnChangeImage = useCallback((event) => {
     const { files } = event?.target || {}
 
-    if (files?.[0]) {
-      setValue(name, files)
-      setValue('editing', true)
-    }
+    if (!files?.[0]) return
+
+    setValue(name, files)
+
+    trigger('image')
+      .then((isValid: boolean) => {
+        if (isValid) setValue('editing', true)
+      })
   }, [
+    trigger,
     setValue,
     name
   ])
@@ -106,6 +112,10 @@ function ImageUploader(props: Props) {
 
   const hasError: boolean = useMemo(() => Boolean(errors?.[name]?.message), [
     errors?.[name]
+  ])
+
+  const alertStyles = useMemo(() => cssAlertStyles(size?.width), [
+    size?.width
   ])
 
   useEffect(() => {
@@ -190,13 +200,13 @@ function ImageUploader(props: Props) {
         type={UIElementStatusEnum.Error}
         title={errors?.[name]?.type as string}
         description={errors?.[name]?.message as string}
+        styles={alertStyles}
       />
 
       <HiddenInputFilePicker
         type='file'
         name={name}
         accept='image/*'
-        capture='environment'
         onChange={handleOnChangeImage}
         ref={hiddenInputRef}
       />
@@ -237,6 +247,12 @@ const CustomDashedBorder = styled.div<{
 
 const HiddenInputFilePicker = styled.input`
   display: none;
+`
+
+const cssAlertStyles = (maxWidth: number) => css`
+  max-width: ${maxWidth}px;
+  background-color: transparent;
+  margin-top: 25px;
 `
 
 ImageUploader.defaultProps = defaultProps
