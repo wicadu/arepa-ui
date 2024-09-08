@@ -1,3 +1,7 @@
+# 1.30.1
+
+- Check if _OriginalImageSize_ is valid and increase quality compression for `ImageCropper`
+
 # 1.30.0
 
 - Update _ButtonType.white_ type for `Button`
