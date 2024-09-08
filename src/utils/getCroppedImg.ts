@@ -76,6 +76,6 @@ export async function getCroppedImg(
     canvas.toBlob((file: Blob) => {
       if (file) resolve(file)
       else reject(null)
-    }, fileType, 0.65)
+    }, fileType, 0.70)
   })
 }
