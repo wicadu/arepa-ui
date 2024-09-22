@@ -1,3 +1,7 @@
+# 1.30.2
+
+- Export `InputFeeback` molecule.
+
 # 1.30.1
 
 - Check if _OriginalImageSize_ is valid and increase quality compression for `ImageCropper`
