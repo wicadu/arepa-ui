@@ -39,6 +39,8 @@ import Form from './hocs/Form'
 import InfiniteScroll from './hocs/InfiniteScroll'
 import ThemeProvider from './hocs/ThemeProvider'
 import RefForwarding from './hocs/RefForwarding'
+import InputFeedback from './hocs/InputFeedback'
+
 
 import { useTheme } from '@emotion/react'
 
@@ -101,6 +103,7 @@ export {
   Controller,
   InfiniteScroll,
   RefForwarding,
+  InputFeedback,
 
   // Hooks
   useTheme,
