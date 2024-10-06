@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { css } from '@emotion/react'
+
 import Typography from '../../atoms/Typography'
 import Image from '../../atoms/Image'
 import Icon from '../../atoms/Icon'
@@ -11,6 +13,7 @@ interface Props {
   name: string
   description: string
   defaultIcon?: string
+  onClick?: () => void
 }
 
 const defaultProps: Partial<Props> = {
@@ -18,17 +21,23 @@ const defaultProps: Partial<Props> = {
   description: '',
   image: '',
   defaultIcon: 'account_circle',
+  onClick() { }
 }
 
-function UserCard({ name, image, description }: Props) {
+function UserCard(props: Props) {
+  const { name, image, description, onClick } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
-    <Column gap={5}>
+    <Column gap={5} styles={cssContainerStyles} onClick={onClick}>
       <Row gap={10}>
         {image
           ? <Image src={image} width={50} height={50} rounded={50} />
           : <Icon name='account_circle' size={50} />
         }
-        <Column align='top'>
+        <Column gap={0} align='top'>
           <Typography size={16} weight={700}>{name}</Typography>
           <Typography type='description' size={14}>{description}</Typography>
         </Column>
@@ -37,6 +46,12 @@ function UserCard({ name, image, description }: Props) {
   )
 }
 
-UserCard.defaultProps = defaultProps
+const cssContainerStyles = css`
+  img, .material-icons {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+`
 
 export default UserCard

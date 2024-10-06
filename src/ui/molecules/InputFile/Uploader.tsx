@@ -23,14 +23,12 @@ const defaultProps: Partial<Props> = {
   loadedFile: null
 }
 
-function InputFileUploader({
-  width,
-  accept,
-  disabled,
-  onChange,
-  styles,
-  loadedFile
-}: Props) {
+function InputFileUploader(props: Props) {
+  const { width, accept, disabled, onChange, styles, loadedFile } =  {
+    ...defaultProps,
+    ...props
+  }
+
   const { colors } = useTheme()
   const inputRef: React.MutableRefObject<any> = useRef()
 
@@ -106,7 +104,5 @@ const Uploader = styled.div<Partial<Props>>`
 
   ${({ styles }) => styles}
 `
-
-InputFileUploader.defaultProps = defaultProps
 
 export default InputFileUploader
