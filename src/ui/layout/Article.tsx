@@ -1,11 +1,12 @@
 import React, { ReactNode, ReactElement } from 'react'
-import { SerializedStyles, css } from '@emotion/react'
+import { SerializedStyles, css, useTheme } from '@emotion/react'
 
 import Typography from '../atoms/Typography'
 import Row from './Row'
 
 import styled from '@emotion/styled'
 import { RightChildAsButton } from './Section'
+import Icon from '../atoms/Icon'
 
 type AfterStyles = {
   content: string
@@ -18,6 +19,7 @@ interface Props {
   children: ReactNode | ReactElement | ReactElement[]
   titleAfterStyles?: AfterStyles
   title: string | ReactElement
+  iconName?: string
   description?: string
   descriptionAfterStyles?: AfterStyles
   rightChild?: string | ReactElement
@@ -27,6 +29,7 @@ interface Props {
 
 function Article({
   title,
+  iconName,
   titleAfterStyles,
   description,
   descriptionAfterStyles,
@@ -35,11 +38,20 @@ function Article({
   className,
   styles,
 }: Props) {
+  const { colors } = useTheme()
   return (
     <Container className={className} styles={styles}>
       <div>
         <Row align='space-between' styles={cssHeaderStyles}>
-          {typeof title === 'string' ?
+          <Row gap={10}>
+            {iconName && (
+              <Icon
+                name={iconName}
+                color={colors?.FONT?.TITLE}
+                size={15}
+              />
+            )}
+
             <Typography
               type='title-4'
               lineHeight={30}
@@ -47,11 +59,14 @@ function Article({
               children={title}
               afterStyles={titleAfterStyles}
             />
-            : title}
+          </Row>
+
           <div>{rightChild}</div>
         </Row>
+
         <Typography
           type='description'
+          size={12}
           afterStyles={descriptionAfterStyles}
           children={description}
         />
@@ -71,7 +86,7 @@ const cssHeaderStyles = css`
   }
 `
 
-const Container = styled.section<Partial<Props>>`
+const Container = styled.article<Partial<Props>>`
   display: flex;
   flex-direction: column;
   ${({ styles }) => styles}
