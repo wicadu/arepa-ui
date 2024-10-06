@@ -3,7 +3,7 @@ import React, { Fragment, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 import { css, SerializedStyles } from '@emotion/react'
 
-import { getFileSize, getFormFieldsErrors } from '../../../utils'
+import { getFormFieldsErrors } from '../../../utils'
 import Form from '../../hocs/Form'
 import InputFileUploader from './Uploader'
 import InputFeedback from '../../hocs/InputFeedback'
@@ -15,34 +15,43 @@ interface Props {
   disabled?: boolean
   defaultValue?: string | number
   doNotShowFeedback?: boolean
+  doNotShowErrors?: boolean
   label?: string
   width?: string
   accept: string
   containerStyles?: SerializedStyles | string
   uploaderStyles?: SerializedStyles | string
+  onChangeInput(f: File | File[]): void
 }
 
 const defaultProps: Partial<Props> = {
   defaultValue: '',
   disabled: false,
   width: '100%',
-  accept: '.jpg, .jpeg, .png, .svg, .webp, application/pdf'
+  accept: '.jpg, .jpeg, .png, .svg, .webp, application/pdf',
+  onChangeInput(){}
 }
 
-function InputFile({
-  name,
-  label,
-  width,
-  accept,
-  disabled,
-  defaultValue,
-  doNotShowFeedback,
-  doNotShowErrors,
-  containerStyles,
-  uploaderStyles
-}) {
+function InputFile(props: Props) {
+  const {
+    name,
+    label,
+    width,
+    accept,
+    disabled,
+    defaultValue,
+    doNotShowFeedback,
+    doNotShowErrors,
+    containerStyles,
+    uploaderStyles,
+    onChangeInput,
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   const { control, formState: { errors } } = Form.useForm()
-  const loadedFile: File = Form.useWatch({ name, control })
+  const loadedFile: File | string = Form.useWatch({ name, control })
 
   const fieldError = getFormFieldsErrors(errors, name)
 
@@ -50,7 +59,12 @@ function InputFile({
     doNotShowFeedback
   ])
 
-  const onPreviewFile = () => {
+  const goToPreview = () => {
+    if (typeof loadedFile === 'string') {
+      window.open(loadedFile, '_blank')
+      return
+    }
+
     window.open(URL.createObjectURL(loadedFile), '_blank')
   }
 
@@ -67,21 +81,29 @@ function InputFile({
           doNotShowErrors={doNotShowErrors}
           styles={containerStyles}
         >
-          <Row gap={10}>
+          <Row gap={35}>
             <InputFileUploader
               accept={accept}
               width={width}
               disabled={disabled}
-              onChange={(file: File | File[]) => onChange?.(file)}
+              onChange={(f: File | File[]) => {
+                onChange?.(f)
+                onChangeInput?.(f)
+              }}
               styles={uploaderStyles}
-              loadedFile={loadedFile}
+              loadedFile={loadedFile as File}
             />
             {Boolean(loadedFile) && (
               <Button
                 type='link'
                 align='right'
-                children={`${loadedFile?.name?.slice(-17)} - ${getFileSize(loadedFile?.size)}`}
-                onClick={onPreviewFile}
+                children={
+                  typeof loadedFile === 'string'
+                    ? loadedFile?.slice(-17)
+                    : loadedFile?.name?.slice(-17) || ''
+                }
+                width='auto'
+                onClick={goToPreview}
                 styles={cssPreviewButtonStyles}
               />
             )}
@@ -94,6 +116,8 @@ function InputFile({
 }
 
 const cssPreviewButtonStyles = css`
+  min-width: 105px;
+
   @media screen and (min-width: 768px) {
     width: 60% !important;
   }
@@ -102,7 +126,5 @@ const cssPreviewButtonStyles = css`
     width: 40%;
   }
 `
-
-InputFile.defaultProps = defaultProps
 
 export default InputFile

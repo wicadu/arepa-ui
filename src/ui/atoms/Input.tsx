@@ -28,13 +28,12 @@ const defaultProps: Partial<Props> = {
   width: '100%',
 }
 
-function InputComponent({
-  name,
-  htmlType,
-  doNotShowFeedback,
-  styles,
-  ...props
-}: Props) {
+function InputComponent(props: Props) {
+  const { name, htmlType, doNotShowFeedback, styles, ...restOfProps } = {
+    ...defaultProps,
+    ...props
+  }
+
   const { formState: { errors }, register } = Form.useForm()
 
   const fieldError: any = getFormFieldsErrors(errors, name)
@@ -46,13 +45,13 @@ function InputComponent({
 
   return (
     <Container
-      {...props}
+      {...restOfProps}
       errors={fieldError}
       hasError={Boolean(fieldError?.message)}
       name={name}
     >
       <Input
-        {...props}
+        {...restOfProps as Record<string, any>}
         id={name}
         name={name}
         type={htmlType}
@@ -106,7 +105,5 @@ const Input = styled.input<Partial<Props> & { hasError: boolean }>`
 
   ${({ styles }) => styles}
 `
-
-InputComponent.defaultProps = defaultProps
 
 export default InputComponent
