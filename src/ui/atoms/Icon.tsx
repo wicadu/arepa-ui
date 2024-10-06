@@ -16,14 +16,12 @@ const defaultProps: Partial<Props> = {
   withBackground: false
 }
 
-function Icon({
-  className,
-  name,
-  size,
-  color,
-  withBackground,
-  onClick
-}: Props): JSX.Element {
+function Icon(props: Props) {
+  const { className, name, size, color, withBackground, onClick } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Container
       className={`${className} ${name} material-icons`}
@@ -70,7 +68,5 @@ const Container = styled.span<Partial<Props>>`
   }}
 
 `
-
-Icon.defaultProps = defaultProps
 
 export default Icon

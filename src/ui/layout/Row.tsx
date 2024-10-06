@@ -9,7 +9,7 @@ interface Props {
   align?: ItemsAlign
   gap: number
   flex?: number
-  styles: string | SerializedStyles
+  styles?: string | SerializedStyles
   onClick?: () => void
 }
 
@@ -19,7 +19,12 @@ const defaultProps: Props = {
   styles: ''
 }
 
-function Row({ children, align, gap, flex, styles, onClick }: Props) {
+function Row(props: Props) {
+  const { children, align, gap, flex, styles, onClick } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Container
       align={align}
@@ -55,9 +60,5 @@ const Container = styled.div<Partial<Props>>`
 
   ${({ styles }) => styles}
 `
-
-
-
-Row.defaultProps = defaultProps
 
 export default Row
