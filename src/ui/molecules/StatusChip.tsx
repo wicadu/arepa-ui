@@ -4,10 +4,10 @@ import React from 'react'
 import { SerializedStyles, useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
 
-import Row from '../../layout/Row'
-import Typography from '../../atoms/Typography'
-import Icon from '../../atoms/Icon'
-import { hexToRGBA } from '../../../utils'
+import Row from '../layout/Row'
+import Typography from '../atoms/Typography'
+import Icon from '../atoms/Icon'
+import { hexToRGBA } from '../../utils'
 
 export enum Types {
   Success = 'success',
@@ -40,15 +40,20 @@ const defaultProps: Partial<Props> = {
   textStyles: ''
 }
 
-function StatusChip({
-  containerStyles,
-  type,
-  text,
-  textColor,
-  textSize,
-  iconSize,
-  textStyles
-}: Props) {
+function StatusChip(props: Props) {
+  const {
+    containerStyles,
+    type,
+    text,
+    textColor,
+    textSize,
+    iconSize,
+    textStyles
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   const { colors } = useTheme()
 
   return (
@@ -80,7 +85,5 @@ const CheckIcon = styled(Icon)`
     `
   }}
 `
-
-StatusChip.defaultProps = defaultProps
 
 export default StatusChip

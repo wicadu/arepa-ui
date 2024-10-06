@@ -1,3 +1,11 @@
+# 1.30.3
+
+- Fix _defaultProps_ through deconstruction for: `Icon`, `Image`, `InfiniteScroll`, `InputFeedback`, `Column`, `Row`, `OrderItemBottom`, `Uploder`, `UserCard`, `StatusChip`, and `Flatlist`
+- Add _onChangeInput_ prop as callback for `InputFile`
+- Add icons with _iconName_ prop for `Article`
+- Fix _highlight_ and _gap_ warnings for `Section` and `OrderItem` components
+- Add _totalOfDocs_ prop for OrderSnapshot
+
 # 1.30.2
 
 - Export `InputFeeback` molecule.

@@ -7,7 +7,7 @@ import Typography from '../atoms/Typography'
 import Icon from '../atoms/Icon'
 import Image from '../atoms/Image'
 import Alert from '../molecules/Alert'
-import StatusChip from '../molecules/StatusChip/StatusChip'
+import StatusChip from '../molecules/StatusChip'
 import Pricing from '../molecules/Pricing'
 import Column from '../layout/Column'
 import Row from '../layout/Row'
@@ -39,6 +39,7 @@ interface Props {
   date: string
   status: string
   docs: string[]
+  totalOfDocs: number,
   price: PriceProps
   totalOfItems: number
   items: string[]
@@ -53,6 +54,7 @@ function OrderSnapshot({
   status,
   alert,
   docs,
+  totalOfDocs,
   price,
   items,
   users,
@@ -73,7 +75,7 @@ function OrderSnapshot({
   const doContainsDocs: boolean = useMemo(() => Boolean(docs?.length), [docs])
 
   return (
-    <Column gap={10} onClick={onClick}>
+    <Column gap={10} onClick={onClick} styles={cssContainerStyles}>
       <Alert
         size={UIElementSizesEnum.Small}
         type={alert?.type}
@@ -161,7 +163,7 @@ function OrderSnapshot({
               type='helper'
               weight={700}
               size={12}
-              children={`Documentos adicionales (${docs?.length})`}
+              children={`Documentos adicionales (${totalOfDocs})`}
             />
 
             <Typography numberOfLines={1} children={docs} size={15} />
@@ -189,6 +191,10 @@ function OrderSnapshot({
     </Column>
   )
 }
+
+const cssContainerStyles = css`
+  cursor: pointer
+`
 
 const cssHeaderStyles = css`
   @media screen and (min-width: 768px) {

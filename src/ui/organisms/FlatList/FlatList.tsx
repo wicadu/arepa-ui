@@ -31,17 +31,22 @@ const defaultProps: Partial<Props<any>> = {
   keyExtracted: '',
 }
 
-function FlatList<ItemT>({
-  data,
-  hasMore,
-  fetchNext,
-  component: Component,
-  itemWrapper: ItemWrapper,
-  dataExtractor,
-  keyExtracted,
-  endMessage,
-  styles
-}: Props<ItemT>) {
+function FlatList<ItemT>(props: Props<ItemT>) {
+  const {
+    data,
+    hasMore,
+    fetchNext,
+    component: Component,
+    itemWrapper: ItemWrapper,
+    dataExtractor,
+    keyExtracted,
+    endMessage,
+    styles
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <InfiniteScroll
       dataLength={data?.length}
@@ -76,7 +81,6 @@ export const ListWrapper = styled.ul<Partial<Props<unknown>>>`
   ${({ styles }) => styles}
 `
 
-FlatList.defaultProps = defaultProps
 FlatList.Skeleton = FlatListSkeleton
 
 export default FlatList

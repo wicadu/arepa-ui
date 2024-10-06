@@ -17,17 +17,22 @@ const defaultProps = {
   'data-id': null
 }
 
-const Image = ({
-  src,
-  width,
-  height,
-  alt,
-  rounded,
-  backgroundColor,
-  fit,
-  'data-id': dataId,
-  onClick,
-}: Props) => {
+const Image = (props: Props) => {
+  const {
+    src,
+    width,
+    height,
+    alt,
+    rounded,
+    backgroundColor,
+    fit,
+    'data-id': dataId,
+    onClick,
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Img
       src={src}
@@ -69,7 +74,5 @@ const Img = styled.img<Props>`
     return styles
   }}
 `
-
-Image.defaultProps = defaultProps
 
 export default Image

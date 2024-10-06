@@ -27,18 +27,23 @@ const defaultProps: Partial<Props> = {
   errors: null
 }
 
-function InputFeedback({
-  label,
-  name,
-  hasError,
-  errors,
-  children,
-  doNotShowErrors,
-  labelSize,
-  width,
-  className,
-  styles,
-}: Props) {
+function InputFeedback(props: Props) {
+  const {
+    label,
+    name,
+    hasError,
+    errors,
+    children,
+    doNotShowErrors,
+    labelSize,
+    width,
+    className,
+    styles,
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Wrapper labelSize={labelSize} className={className} width={width} styles={styles}>
       {label && <Label htmlFor={name}>{label}</Label>}
@@ -78,7 +83,5 @@ const ErrorMessage = styled.span<Partial<Props>>`
 
   ${({ hasError }) => !hasError && 'opacity: 0;'}
 `
-
-InputFeedback.defaultProps = defaultProps
 
 export default InputFeedback

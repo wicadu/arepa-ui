@@ -10,7 +10,7 @@ interface Props {
   gap: number
   onClick?: () => void
   flex?: number
-  styles: string | SerializedStyles
+  styles?: string | SerializedStyles
 }
 
 const defaultProps: Partial<Props> = {
@@ -18,14 +18,12 @@ const defaultProps: Partial<Props> = {
   gap: 0
 }
 
-function Column({
-  children,
-  align,
-  gap,
-  flex,
-  styles,
-  onClick
-}: Props) {
+function Column(props: Props) {
+  const { children, align, gap, flex, styles, onClick } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Container
       align={align}
@@ -63,9 +61,5 @@ const Container = styled.div<Partial<Props>>`
 
   ${({ styles }) => styles}
 `
-
-
-
-Column.defaultProps = defaultProps
 
 export default Column

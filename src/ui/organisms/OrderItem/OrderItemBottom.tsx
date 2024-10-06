@@ -31,15 +31,20 @@ const defaultProps: Partial<Props> = {
   loading: false,
 }
 
-function OrderItemBottom({
-  initialQuantity,
-  onChangeQuantity,
-  minQuantity,
-  maxQuantity,
-  disabled,
-  editable,
-  loading
-}: Props) {
+function OrderItemBottom(props: Props) {
+  const {
+    initialQuantity,
+    onChangeQuantity,
+    minQuantity,
+    maxQuantity,
+    disabled,
+    editable,
+    loading
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   const [quantity, setQuantity] = useState<number>(initialQuantity)
   const [revertingQuantity, setRevertingQuantity] = useState<boolean>(false)
 
@@ -141,7 +146,5 @@ const Container = styled.div`
     }
   }
 `
-
-OrderItemBottom.defaultProps = defaultProps
 
 export default OrderItemBottom

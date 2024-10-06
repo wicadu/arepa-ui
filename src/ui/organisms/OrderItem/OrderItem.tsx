@@ -68,8 +68,8 @@ function OrderItem(props: Props) {
           }
         </ImageContainer>
 
-        <Column align='space-between' flex={1}>
-          <Column>
+        <Column align='space-between' gap={0} flex={1}>
+          <Column gap={0}>
             <Typography
               type='title-4'
               numberOfLines={1}
@@ -90,7 +90,7 @@ function OrderItem(props: Props) {
           {customSpecComponent
             ? React.cloneElement(customSpecComponent)
             : (
-              <Row align='space-between'>
+              <Row gap={0} align='space-between'>
                 {specs?.map(({ key, value }) => (
                   <Typography
                     key={`${key}-${value}`}
@@ -163,14 +163,16 @@ const ImageContainer = styled.figure`
   height: 70px;
   background-color: ${({ theme }) => theme.colors.NEUTRAL.SIDE};
   border-radius: 10px;
+  
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 
   @media screen and (min-width: 768px) {
     width: 80px;
     height: 80px;
   }
 `
-
-OrderItem.defaultProps = defaultProps
 
 OrderItem.OrderItemBottom = OrderItemBottom
 OrderItem.Skeleton = OrderItemSkeleton

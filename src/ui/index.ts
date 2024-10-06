@@ -20,7 +20,7 @@ import Tabs from './molecules/Tabs'
 import Notice from './molecules/Notice/Notice'
 import InputFile from './molecules/InputFile/InputFile'
 import UserCard from './molecules/UserCard/UserCard'
-import StatusChip from './molecules/StatusChip/StatusChip'
+import StatusChip from './molecules/StatusChip'
 import Collapsable from './molecules/Collapsable'
 import Pricing from './molecules/Pricing'
 import Toast from './molecules/Toast'
@@ -40,7 +40,6 @@ import InfiniteScroll from './hocs/InfiniteScroll'
 import ThemeProvider from './hocs/ThemeProvider'
 import RefForwarding from './hocs/RefForwarding'
 import InputFeedback from './hocs/InputFeedback'
-
 
 import { useTheme } from '@emotion/react'
 

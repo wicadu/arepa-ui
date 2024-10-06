@@ -21,14 +21,11 @@ const defaultProps: Props = {
   endMessage: null
 }
 
-function InfiniteScroll({
-  next,
-  dataLength,
-  scrollableTarget,
-  hasMore,
-  children,
-  endMessage,
-}: Props) {
+function InfiniteScroll(props: Props) {
+  const { next, dataLength, scrollableTarget, hasMore, children, endMessage } = {
+    ...defaultProps,
+    ...props
+  }
   return (
     <InfiniteScrollComponent
       dataLength={dataLength}
@@ -50,7 +47,5 @@ function InfiniteScroll({
 const SpinWrapper = styled.div`
   margin: 15px 0;
 `
-
-InfiniteScroll.defaultProps = defaultProps
 
 export default InfiniteScroll
