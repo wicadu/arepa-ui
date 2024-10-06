@@ -38,7 +38,7 @@ function Section({
   return (
     <Container className={className} styles={styles}>
       <div>
-        <Row align='space-between' styles={cssTitleStyles}>
+        <Row align='space-between' gap={0} styles={cssTitleStyles}>
           {typeof title === 'string' ?
             <Typography
               type='title-3'
@@ -110,7 +110,7 @@ export function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonPr
     <RightChildButton
       type='link'
       onClick={onClick}
-      highlight={false}
+      highlight={undefined}
       children={text}
     />
   )
