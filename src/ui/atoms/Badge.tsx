@@ -29,15 +29,20 @@ const defaultProps: Partial<Props> = {
   width: 'fit-content'
 }
 
-function Badge({
-  children,
-  styles,
-  width,
-  margin,
-  padding,
-  type,
-  inverse
-}: Props) {
+function Badge(props: Props) {
+  const {
+    children,
+    styles,
+    width,
+    margin,
+    padding,
+    type,
+    inverse
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   return (
     <Container
       styles={styles}
@@ -76,7 +81,5 @@ const Container = styled.div<Partial<Props>>`
 
   ${({ styles }) => styles}
 `
-
-Badge.defaultProps = defaultProps
 
 export default Badge
