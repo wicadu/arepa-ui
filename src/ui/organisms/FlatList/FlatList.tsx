@@ -5,7 +5,7 @@ import InfiniteScroll from '../../hocs/InfiniteScroll'
 import FlatListSkeleton from './Skeleton'
 import { SerializedStyles } from '@emotion/react'
 
-type DataExtracted<ItemT> = (info: ItemT) => Partial<ItemT>
+type DataExtracted<ItemT> = (info: ItemT, index: number) => Partial<ItemT>
 
 interface Props<ItemT> {
   data: Array<ItemT> | null | undefined
@@ -62,9 +62,9 @@ function FlatList<ItemT>(props: Props<ItemT>) {
             value={String(item?.[keyExtracted])}
             name={String(item?.[keyExtracted])}
           >
-            { React.isValidElement(Component)
-              ? React.cloneElement(Component, dataExtractor({ ...item }))
-              : <Component {...dataExtractor({ ...item })} />
+            {React.isValidElement(Component)
+              ? React.cloneElement(Component, dataExtractor({ ...item }, index))
+              : <Component {...dataExtractor({ ...item }, index)} />
             }
           </ItemWrapper>
         ))}
