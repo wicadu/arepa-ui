@@ -1,3 +1,9 @@
+# 1.30.4
+
+- Include _index_ for _dataExtractor_ in `FlatList`
+- Fix _defaultProps_ through deconstruction for: `Form`, `Badge`, `Pricing` and `Collapsable`
+- Fix _gap_ warnings for `Collapsable` and `OrderItem` components
+
 # 1.30.3
 
 - Fix _defaultProps_ through deconstruction for: `Icon`, `Image`, `InfiniteScroll`, `InputFeedback`, `Column`, `Row`, `OrderItemBottom`, `Uploder`, `UserCard`, `StatusChip`, and `Flatlist`
