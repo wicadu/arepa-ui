@@ -17,7 +17,12 @@ const defaultProps: Partial<Props> = {
   value: false
 }
 
-function Collapsable({ value, header, children, containerStyles }: Props) {
+function Collapsable(props: Props) {
+  const { value, header, children, containerStyles } = {
+    ...defaultProps,
+    ...props
+  }
+
   const [isItCollapsed, setIsItCollapsed] = useState<boolean>(value)
 
   const { colors } = useTheme()
@@ -30,7 +35,7 @@ function Collapsable({ value, header, children, containerStyles }: Props) {
 
   return (
     <Column align='center' gap={10} styles={containerStyles}>
-      <Row onClick={toggleIsItCollapsed} styles={cssHeaderContainerStyles}>
+      <Row onClick={toggleIsItCollapsed} gap={0} styles={cssHeaderContainerStyles}>
         <Icon
           name={isItCollapsed ? 'arrow_drop_down' : 'arrow_right'}
           size={25}
@@ -39,7 +44,7 @@ function Collapsable({ value, header, children, containerStyles }: Props) {
         {header}
       </Row>
 
-      {isItCollapsed ? <Column>{children}</Column> : null}
+      {isItCollapsed ? <Column gap={0}>{children}</Column> : null}
     </Column>
   )
 }
@@ -47,7 +52,5 @@ function Collapsable({ value, header, children, containerStyles }: Props) {
 const cssHeaderContainerStyles = css`
   cursor: pointer;
 `
-
-Collapsable.defaultProps = defaultProps
 
 export default Collapsable
