@@ -17,16 +17,20 @@ const defaultProps: Partial<Props> = {
   currencyWeight: 500
 }
 
-function Pricing({
-  color,
-  currencyCode,
-  amount,
-  size,
-  weight,
-  currencySize,
-  currencyWeight,
-  ...props
-}: Props) {
+function Pricing(props: Props) {
+  const {
+    color,
+    currencyCode,
+    amount,
+    size,
+    weight,
+    currencySize,
+    currencyWeight,
+    ...restOfProps
+  } = {
+    ...defaultProps,
+    ...props
+  }
   const formattedAmount = useMemo(() => formatCurrency(amount, { currency: currencyCode }), [
     currencyCode,
     amount
@@ -35,7 +39,8 @@ function Pricing({
   const [, currencySign, value] = formattedAmount?.match(/^(\D*)(\d.*)$/) || []
 
   return (
-    <Typography {...props}
+    <Typography
+      {...restOfProps}
       color={color}
       size={size}
       weight={weight}
@@ -50,7 +55,5 @@ function Pricing({
     </Typography>
   )
 }
-
-Pricing.defaultProps = defaultProps
 
 export default Pricing
