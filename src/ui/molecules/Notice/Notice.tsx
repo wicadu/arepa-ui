@@ -48,7 +48,7 @@ function Notice({
   return (
     <Container noSpace={noSpace}>
       <Icon name={name} size={50} color={color} />
-      <Typography type="title-4" size={26} color={color}>
+      <Typography type="title-4" size={22} color={color}>
         {title}
       </Typography>
       <Typography color={color} align="center">
