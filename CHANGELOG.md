@@ -1,3 +1,10 @@
+# 1.30.5
+
+- Export `Icon` _Props_ and convert _className_ as optional
+- Add _leftIcon_ props for `Input`
+- Update `Notice` title size
+- Pass _styles_ props for Styled in `InputFeedback`
+
 # 1.30.4
 
 - Include _index_ for _dataExtractor_ in `FlatList`
