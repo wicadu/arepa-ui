@@ -6,7 +6,7 @@ interface Props extends Partial<HTMLProps<HTMLSpanElement>> {
   size?: number
   color?: string
   onClick?: () => void
-  className: string
+  className?: string
   withBackground?: boolean | number
 }
 
@@ -68,5 +68,7 @@ const Container = styled.span<Partial<Props>>`
   }}
 
 `
+
+export { Props as IconProps }
 
 export default Icon
