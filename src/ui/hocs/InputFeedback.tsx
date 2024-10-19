@@ -61,6 +61,7 @@ export const Wrapper = styled.div<{
   width: string,
   styles?: SerializedStyles | string
 }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: ${({ width }) => width};
@@ -70,6 +71,8 @@ export const Wrapper = styled.div<{
     font-weight: bold;
     ${({ labelSize }: any) => `font-size: ${labelSize}px;`}
   }
+
+  ${({ styles }) => styles}
 `
 
 const Label = styled.label``
