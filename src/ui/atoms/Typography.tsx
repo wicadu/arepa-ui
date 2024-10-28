@@ -51,7 +51,12 @@ const defaultProps: Partial<Props> = {
   afterStyles: defaultAfterStyles
 }
 
-function Typography({ children, type, ...props }: Props) {
+function Typography(props: Props) {
+  const { children, type, ...restOfProps } = {
+    ...defaultProps,
+    ...props
+  }
+
   const Component = useMemo(() => {
     if (type === htmlType.title) return Title
     if (type === htmlType['title-2']) return Title2
@@ -66,7 +71,7 @@ function Typography({ children, type, ...props }: Props) {
   }, [type])
 
   return (
-    <Component type={type} {...props}>
+    <Component type={type} {...restOfProps}>
       {children}
     </Component>
   )
@@ -205,8 +210,6 @@ const Link = styled.a<Partial<Props>>`
   ${({ styles }) => styles}
 
 `
-
-Typography.defaultProps = defaultProps
 
 export { Props as TypographyProps }
 
