@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import PropTypes from 'prop-types'
 
 import { Global, ThemeProvider, css } from '@emotion/react'
 
@@ -8,27 +7,34 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import colors from '../constants/colors'
 
-const propTypes = {
-  mode: PropTypes.oneOf(['LIGHT', 'DARK']),
-  colors: PropTypes.shape({
-    LIGHT: PropTypes.object,
-    DARK: PropTypes.object
-  })
+interface Props {
+  children: React.ReactElement | React.ReactElement[] | React.ReactNode
+  mode: 'LIGHT' | 'DARK'
+  colors: {
+    LIGHT: Record<string, unknown>
+    DARK: Record<string, unknown>
+  }
 }
 
-const defaultProps = {
+const defaultProps: Partial<Props> = {
   mode: 'LIGHT',
   colors: colors
 }
 
-function WrapperThemeProvider ({ children, colors, mode }) {
+function WrapperThemeProvider(props: Props) {
+  const { children, colors, mode } = {
+    ...defaultProps,
+    ...props
+  }
+
   const appColors = useMemo(() => colors[String(mode).toUpperCase()], [colors, mode])
 
   return (
     <ThemeProvider theme={{ colors: appColors, mode }}>
       <Global styles={ResetCSS} />
-      <Global styles={
-        css`
+      <Global
+        styles={
+          css`
           @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,700;1,400;1,700&display=swap');
           @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
           @import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,700;1,700&display=swap');
@@ -40,13 +46,12 @@ function WrapperThemeProvider ({ children, colors, mode }) {
             font-family: 'Cabin', sans-serif;
           }
         `
-      } />
+        }
+      />
+
       {children}
     </ThemeProvider>
   )
 }
-
-WrapperThemeProvider.propTypes = propTypes
-WrapperThemeProvider.defaultProps = defaultProps
 
 export default WrapperThemeProvider

@@ -1,3 +1,11 @@
+# 1.30.6
+
+- Fix _defaultProps_ through deconstruction for: `Typhograpy` and `Select`
+- replace _propTypes_ by ts _interface_ for `WrapperThemeProvider`
+- Fix proper display for negative amounts in `Pricing`
+- Hide _text_ if it is not pass as prop for `StatusChip`
+- Add _styles_ prop in `Tabs`
+
 # 1.30.5
 
 - Export `Icon` _Props_ and convert _className_ as optional

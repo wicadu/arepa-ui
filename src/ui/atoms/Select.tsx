@@ -34,19 +34,24 @@ const defaultProps: Partial<Props> = {
   width: '100%',
 }
 
-function SelectComponent({
-  name,
-  placeholder,
-  options,
-  disabled,
-  defaultValue,
-  doNotShowFeedback,
-  ...props
-}: Props) {
+function SelectComponent(props: Props) {
+  const {
+    name,
+    placeholder,
+    options,
+    disabled,
+    defaultValue,
+    doNotShowFeedback,
+    ...restOfProps
+  } = {
+    ...defaultProps,
+    ...props
+  }
+
   const [selectedOption, setSelectedOption] = useState<Option>()
   const [showOptions, setShowOptions] = useState<boolean>(false)
 
-  const { register,  control,formState: { errors } } = Form.useForm()
+  const { register, control, formState: { errors } } = Form.useForm()
   const ref = useRef(null)
 
   const fieldError = getFormFieldsErrors(errors, name)
@@ -90,7 +95,12 @@ function SelectComponent({
       name={name}
       control={control}
       render={({ field: { onChange } }) =>
-        <Container {...props} errors={fieldError} hasError={Boolean(fieldError?.message)} name={name}>
+        <Container
+          {...restOfProps}
+          errors={fieldError}
+          hasError={Boolean(fieldError?.message)}
+          name={name}
+        >
           <Wrapper ref={ref}>
             <HiddenInput
               readOnly
@@ -100,7 +110,7 @@ function SelectComponent({
               {...register(name) as any}
             />
             <SelectedValueRendering
-              {...props}
+              {...restOfProps}
               disabled={disabled}
               hasError={Boolean(fieldError?.message)}
               onClick={handleShowOptions}
@@ -219,7 +229,5 @@ const OptionItem = styled.li<any>`
     hexToRGBA(theme.colors.MAIN.PRIMARY, 0.04)};
   }
 `
-
-SelectComponent.defaultProps = defaultProps
 
 export default SelectComponent

@@ -59,14 +59,17 @@ function StatusChip(props: Props) {
   return (
     <Row gap={5} styles={containerStyles}>
       <CheckIcon name={_types?.[type?.toLowerCase()]} type={type} size={iconSize} />
-      <Typography
-        color={textColor || colors.MAIN?.[String(type).toUpperCase()]}
-        weight={700}
-        size={textSize}
-        styles={textStyles}
-      >
-        {text}
-      </Typography>
+
+      {text && (
+        <Typography
+          color={textColor || colors.MAIN?.[String(type).toUpperCase()]}
+          weight={700}
+          size={textSize}
+          styles={textStyles}
+        >
+          {text}
+        </Typography>
+      )}
     </Row>
   )
 }
