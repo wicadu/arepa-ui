@@ -31,12 +31,17 @@ function Pricing(props: Props) {
     ...defaultProps,
     ...props
   }
+
+  const isNegativeValue: boolean = useMemo(() => amount < 0, [amount])
+
   const formattedAmount = useMemo(() => formatCurrency(amount, { currency: currencyCode }), [
     currencyCode,
     amount
   ])
 
   const [, currencySign, value] = formattedAmount?.match(/^(\D*)(\d.*)$/) || []
+
+  const fCurrencySign: string = currencySign?.replace('-', '') || ''
 
   return (
     <Typography
@@ -46,12 +51,12 @@ function Pricing(props: Props) {
       weight={weight}
       afterStyles={{
         color,
-        content: currencySign,
+        content: fCurrencySign,
         size: currencySize,
         weight: currencyWeight,
       }}
     >
-      {value || '$?'}
+      {isNegativeValue ? `-${value}` : value || '$?'}
     </Typography>
   )
 }
