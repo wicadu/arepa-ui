@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { useTheme } from '@emotion/react'
+import { SerializedStyles, useTheme } from '@emotion/react'
 
 interface Props {
   headers: React.ReactElement[]
   tabs: React.ReactElement[]
+  styles?: SerializedStyles | string
   onChangeTabs: (index: number) => void
 }
 
-function Tabs({ headers, tabs, onChangeTabs }: Props) {
+function Tabs({ headers, tabs, styles, onChangeTabs }: Props) {
   const [selectedTab, setSelectedTab] = useState(0)
 
   const { colors } = useTheme()
@@ -19,13 +20,13 @@ function Tabs({ headers, tabs, onChangeTabs }: Props) {
   }
 
   return (
-    <Container>
+    <Container styles={styles}>
       <Headers>
         {headers?.map((children, index) => (
           <HeaderTab
             isActive={selectedTab === index}
             key={index}
-            onClick={() => onChange  (index)}
+            onClick={() => onChange(index)}
           >
             {React.cloneElement(children, {
               color: selectedTab === index ? colors.MAIN.PRIMARY : colors.FONT.DESCRIPTION,
@@ -39,8 +40,10 @@ function Tabs({ headers, tabs, onChangeTabs }: Props) {
   )
 }
 
-const Container = styled.div`
+const Container = styled.div<{ styles?: SerializedStyles | string }>`
   height: 100%;
+
+  ${({ styles }) => styles}
 `
 
 const Row = styled.div`
