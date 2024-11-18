@@ -23,42 +23,66 @@ interface Props {
   rightChild?: string | ReactElement
   className?: string
   styles?: SerializedStyles | string
+  titleHtmlType?: string
 }
 
-function Section({
-  title,
-  titleAfterStyles,
-  description,
-  descriptionAfterStyles,
-  rightChild,
-  children,
-  className,
-  styles,
-}: Props) {
+const defaultProps: Partial<Props> = {
+  title: '',
+  titleHtmlType: 'title-3',
+  titleAfterStyles: {} as AfterStyles,
+  description: '',
+  descriptionAfterStyles: {} as AfterStyles,
+  rightChild: null,
+  children: null,
+  className: '',
+  styles: '',
+}
+
+function Section(props: Props) {
+  const {
+    title,
+    titleHtmlType,
+    titleAfterStyles,
+    description,
+    descriptionAfterStyles,
+    rightChild,
+    children,
+    className,
+    styles,
+  } = {
+    ...defaultProps,
+    ...props,
+  }
+
   return (
     <Container className={className} styles={styles}>
-      <div>
-        <Row align='space-between' gap={0} styles={cssTitleStyles}>
-          {typeof title === 'string' ?
+      <meta itemProp="name" content={title} />
+
+      <header>
+        <Row align="space-between" gap={0} styles={cssTitleStyles}>
+          {typeof title === 'string' ? (
             <Typography
-              type='title-3'
+              type={titleHtmlType}
               lineHeight={30}
               size={20}
               children={title}
               afterStyles={titleAfterStyles}
             />
-            : title}
-          <div>{rightChild}</div>
+          ) : (
+            title
+          )}
+
+          {rightChild}
         </Row>
         <Typography
-          type='description'
+          type="description"
           styles={cssDescriptionStyles}
           lineHeight={25}
           afterStyles={descriptionAfterStyles}
         >
           {description}
         </Typography>
-      </div>
+      </header>
 
       {children}
     </Container>
@@ -103,12 +127,18 @@ interface RightChildAsButtonProps {
   hide?: boolean
 }
 
-export function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonProps) {
+export function RightChildAsButton({
+  onClick,
+  text,
+  hide,
+  ...restOfProps
+}: RightChildAsButtonProps) {
   if (hide) return
 
   return (
     <RightChildButton
-      type='link'
+      {...restOfProps}
+      type="link"
       onClick={onClick}
       highlight={undefined}
       children={text}
@@ -118,6 +148,8 @@ export function RightChildAsButton({ onClick, text, hide }: RightChildAsButtonPr
 
 const RightChildButton = styled(Button)`
   font-size: 12px !important;
+
+  color: ${({ theme }) => theme?.colors?.MAIN?.INFO} !important;
 
   @media screen and (min-width: 768px) {
     font-size: 16px !important;

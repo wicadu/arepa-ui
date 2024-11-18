@@ -9,6 +9,13 @@ import Icon, { IconProps } from './Icon'
 import { getFormFieldsErrors } from '../../utils'
 import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
+type IconPosition = 'left' | 'right'
+
+interface InputIcon extends IconProps {
+  position: IconPosition
+  component?: React.ReactElement
+}
+
 interface Props {
   label?: string | JSX.Element
   htmlType?: string
@@ -17,7 +24,7 @@ interface Props {
   size?: UIElementSizesEnum
   withBorder?: boolean
   width: string
-  leftIcon?: IconProps
+  icon?: InputIcon
   styles?: SerializedStyles | string
   containerStyles?: SerializedStyles | string
 }
@@ -28,7 +35,8 @@ const defaultProps: Partial<Props> = {
   doNotShowFeedback: false,
   withBorder: true,
   styles: '',
-  leftIcon: {
+  icon: {
+    position: 'left',
     name: '',
     onClick() { },
     size: 18,
@@ -44,7 +52,7 @@ function InputComponent(props: Props) {
     doNotShowFeedback,
     styles,
     containerStyles,
-    leftIcon,
+    icon,
     ...restOfProps
   } = {
     ...defaultProps,
@@ -60,24 +68,34 @@ function InputComponent(props: Props) {
     [doNotShowFeedback]
   )
 
-  const bLeftIcon: boolean = useMemo(() => leftIcon?.name?.length > 0, [
-    leftIcon
+  const buildIcon: boolean = useMemo(() =>
+    icon?.name?.length > 0 || React.isValidElement(icon?.component), [
+    icon?.component,
+    icon,
   ])
 
   return (
     <Container
       {...restOfProps}
       errors={fieldError}
+
       hasError={Boolean(fieldError?.message)}
       name={name}
       styles={containerStyles}
     >
-      {bLeftIcon && <LeftIconStyled {...leftIcon} />}
+      {buildIcon && (
+        <IconContainer position={icon?.position}>
+          {React.isValidElement(icon?.component)
+            ? icon?.component : <Icon {...icon} />
+          }
+        </IconContainer>
+      )}
 
       <Input
         {...restOfProps as Record<string, any>}
         id={name}
-        bLeftIcon={bLeftIcon}
+        buildIcon={buildIcon}
+        iconPosition={icon?.position}
         name={name}
         type={htmlType}
         hasError={Boolean(fieldError?.message)}
@@ -90,7 +108,8 @@ function InputComponent(props: Props) {
 
 const Input = styled.input<Partial<Props> & {
   hasError: boolean,
-  bLeftIcon: boolean
+  buildIcon: boolean,
+  iconPosition: 'left' | 'right'
 }>`
   border-radius: 7px;
   padding: 0 15px;
@@ -123,23 +142,42 @@ const Input = styled.input<Partial<Props> & {
     margin: 0;
   }
 
-  ${({ size }) => {
-    if (size === UIElementSizesEnum.Small) return 'height: 40px;'
-    if (size === UIElementSizesEnum.Medium) return 'height: 45px;'
-    if (size === UIElementSizesEnum.Large) return 'height: 50px;'
+  ${({ size, buildIcon, iconPosition }) => {
+    let styles = ''
+
+    if (size === UIElementSizesEnum.Small) styles += 'height: 40px;'
+    if (size === UIElementSizesEnum.Medium) styles += 'height: 45px;'
+    if (size === UIElementSizesEnum.Large) styles += 'height: 50px;'
+
+    if (buildIcon) {
+      if (iconPosition === 'left') styles += 'padding-left: 35px;'
+      if (iconPosition === 'right') styles += 'padding-right: 35px;'
+    }
+
+    return styles
   }}
 
-  ${({ bLeftIcon }) => bLeftIcon ? 'padding-left: 35px;' : ''}
 
   ${({ styles }) => styles}
 `
 
-const LeftIconStyled = styled(Icon)<any>`
+const IconContainer = styled.div<{
+  children: React.ReactElement,
+  position: IconPosition
+}>`
   position: absolute;
-  top: 48%;
+  top: 50%;
   transform: translate(0, -50%);
-  left: 10px;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+  ${({ position }) => {
+    let styles = ''
+
+    if (position === 'left') styles += 'left: 10px;'
+    if (position === 'right') styles += 'right: 10px;'
+
+    return styles
+  }}
 `
 
 export default InputComponent

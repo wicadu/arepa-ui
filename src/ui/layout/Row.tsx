@@ -1,28 +1,43 @@
 import React from 'react'
+
 import styled from '@emotion/styled'
 import { SerializedStyles } from '@emotion/react'
 
 type ItemsAlign = 'left' | 'center' | 'right' | 'space-between'
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode | React.ReactElement | React.ReactElement[]
   align?: ItemsAlign
   gap: number
   flex?: number
   styles?: string | SerializedStyles
   onClick?: () => void
+  itemProp?: string
+  itemScope?: boolean
+  itemType?: string
 }
 
 const defaultProps: Props = {
   children: '',
   gap: 0,
-  styles: ''
+  styles: '',
 }
 
 function Row(props: Props) {
-  const { children, align, gap, flex, styles, onClick } = {
+  const {
+    children,
+    align,
+    gap,
+    flex,
+    styles,
+    onClick,
+    itemProp,
+    itemScope,
+    itemType,
+    ...restOfProps
+  } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   return (
@@ -31,7 +46,11 @@ function Row(props: Props) {
       gap={gap}
       flex={flex}
       styles={styles}
+      itemProp={itemProp}
+      itemScope={itemScope}
+      itemType={itemType}
       onClick={onClick}
+      {...restOfProps}
     >
       {children}
     </Container>
@@ -42,8 +61,8 @@ const Container = styled.div<Partial<Props>>`
   display: flex;
   align-items: center;
 
-  ${({ gap }) => gap ? `gap: ${gap}px;` : ''}
-  ${({ flex }) => flex ? `flex: ${flex};` : ''}
+  ${({ gap }) => (gap ? `gap: ${gap}px;` : '')}
+  ${({ flex }) => (flex ? `flex: ${flex};` : '')}
 
   ${({ align }) => {
     let styles: string = ''

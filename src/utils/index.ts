@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+
 import hexToRGBA from './hexToRGBA'
 import isValidRun from './isValidRun'
 import isBrowser from './isBrowser'
@@ -13,15 +14,14 @@ import getErrorMessage from './getErrorMessage'
 import getFormFieldsErrors from './getFormFieldsErrors'
 import getBordersStyles from './getBordersStyles'
 import getFileSize from './getFileSize'
+import localStorage from './localStorage'
 
 yup.addMethod(yup.string, 'wicaduEmail', function validateEmail(message) {
-  return this
-    .matches(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`, {
-      message,
-      name: 'wicaduEmail',
-      excludeEmptyString: true,
-    })
-    .transform(email => `${email}`.toLowerCase())
+  return this.matches(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`, {
+    message,
+    name: 'wicaduEmail',
+    excludeEmptyString: true,
+  }).transform((email) => `${email}`.toLowerCase())
 })
 
 export {
@@ -39,5 +39,6 @@ export {
   getErrorMessage,
   getFormFieldsErrors,
   getBordersStyles,
-  getFileSize
+  getFileSize,
+  localStorage,
 }

@@ -1,3 +1,15 @@
+# 1.30.7
+
+- Add hook `useLocalStorageListener`
+- Update `Image` prop _itemProp_ and _loading_
+- Add _itemProp_ prop to `Typography`
+- Add _className_ prop to `Badge` for enabling _styled_ wrapping
+- Update _Tag.Header_ and add _defaultProps_ for `Section`
+- Add `localStorage` utils
+- Add _Tag.Meta_ to `Pricing`
+- Add semantic props _itemProp_, _itemScope_ and _itemType_ to `Row`
+- Refactor Badge to get wrapperTag
+
 # 1.30.6
 
 - Fix _defaultProps_ through deconstruction for: `Typhograpy` and `Select`
@@ -65,23 +77,23 @@
 # 1.28.0
 
 - Refactor `OrderSnapshot`
-- Add *removeToast* for `Toast`
-- Add *revertQuantity* method for `OrderItem.OrderItemBottom`
-- Fix *type* prop for `Alert`
+- Add _removeToast_ for `Toast`
+- Add _revertQuantity_ method for `OrderItem.OrderItemBottom`
+- Fix _type_ prop for `Alert`
 
 # 1.27.0
 
 - Delete `DraftBottomActions`, `DraftOrderItem` and `OrderUserCard`
-- Add *styles* prop for `InputFeedback`, `RadioController`, `Alert`, `InputFile` and `OrderItem`
-- Update *component* prop into `FlatList` to accept different React.ElementTypes
-- Add *afterStyles* prop for `Article` and `Section`
-- Update *defaultProps* and *defaultStyles* for `Column`, `Row`, `Collapsable` and `StatusChip`
+- Add _styles_ prop for `InputFeedback`, `RadioController`, `Alert`, `InputFile` and `OrderItem`
+- Update _component_ prop into `FlatList` to accept different React.ElementTypes
+- Add _afterStyles_ prop for `Article` and `Section`
+- Update _defaultProps_ and _defaultStyles_ for `Column`, `Row`, `Collapsable` and `StatusChip`
 - Add `OrderItemBottom` as sub component for `OrderItem`
 
 # 1.26.0
 
 - Refactor `Select` to use `Controller` from react-hook-form
-- Add *width: 100%* as default for `Button`, `Input` and `InputFeedback`
+- Add _width: 100%_ as default for `Button`, `Input` and `InputFeedback`
 - Refactor `OrderItem` and `OrderItem.Skeleton`
 - Add `Article`
 - Add extra props to custom `ImagesGallery`
@@ -89,8 +101,8 @@
 
 # 1.25.5
 
-- Update `VirtualInputs` typescript props and *index* as *key*
-- Change props from *prop-types* to *interface* into `Input`
+- Update `VirtualInputs` typescript props and _index_ as _key_
+- Change props from _prop-types_ to _interface_ into `Input`
 - Add tablet styles support for `Section`, `Alert` and `StatusChip`
 
 # 1.25.4
@@ -101,7 +113,7 @@
 
 # 1.25.3
 
-- Upgrade *defaultAfterStyles* prop for `Typography`
+- Upgrade _defaultAfterStyles_ prop for `Typography`
 
 # 1.25.2
 
@@ -136,14 +148,14 @@
 # 1.21.6
 
 - Add styles prop into `Spacer`
-- Fix first-child and last-child to *of-type* warning for css into `Alert`
-- Add *iconProp* into `StatusChip` and update its Enum
+- Fix first-child and last-child to _of-type_ warning for css into `Alert`
+- Add _iconProp_ into `StatusChip` and update its Enum
 - Design was updated for `Toggle`
 
 # 1.21.5
 
 - Add `styles` prop to `Typography`, `Spacer` and `Collapsable`.
-- Add *Tablet* media styles for `Alert`
+- Add _Tablet_ media styles for `Alert`
 - Border radius set `7px` for `Input`
 
 # 1.21.4
@@ -202,8 +214,8 @@
 # 1.19.1
 
 - Refactor: `OrderSnapshot`.
-- Set margin *0px* into `Button` and background color to *NEUTRAL.SIDE* into `Icon`.
-- Add *flex* to `Column` and `Row`
+- Set margin _0px_ into `Button` and background color to _NEUTRAL.SIDE_ into `Icon`.
+- Add _flex_ to `Column` and `Row`
 
 # 1.19.0
 
@@ -219,9 +231,11 @@
 - Rename: `FlatList`, `OrderItem`
 
 # 1.18.2
+
 - `Tabs` component was updated to support custom height
 
 # 1.18.1
+
 - Version was added because 1.18.0 already existed
 
 # 1.18.0
