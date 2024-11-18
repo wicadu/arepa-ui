@@ -1,20 +1,25 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-interface Props extends Partial<React.ImgHTMLAttributes<HTMLImageElement>> {
+interface Props {
+  src: string
+  alt: string
   backgroundColor?: string
   width?: number | string
   height?: number | string
   rounded?: number
-  fit: 'contain' | 'cover'
+  fit?: 'contain' | 'cover'
   'data-id'?: string | number
+  onClick?: React.MouseEventHandler<HTMLImageElement>
+  loading?: 'eager' | 'lazy'
+  itemProp?: string
 }
 
-const defaultProps = {
+const defaultProps: Partial<Props> = {
   width: 100,
   height: 100,
   fit: 'cover',
-  'data-id': null
+  'data-id': null,
 }
 
 const Image = (props: Props) => {
@@ -28,9 +33,10 @@ const Image = (props: Props) => {
     fit,
     'data-id': dataId,
     onClick,
+    loading,
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   return (
@@ -44,6 +50,7 @@ const Image = (props: Props) => {
       onClick={onClick}
       backgroundColor={backgroundColor}
       data-id={dataId}
+      loading={loading}
     />
   )
 }
