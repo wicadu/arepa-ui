@@ -9,7 +9,8 @@
     "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false
+    "esModuleInterop": false,
+    "types": ["@types/react", "@types/react-dom"]
   },
   "include": ["src"],
   "exclude": [
