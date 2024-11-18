@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styled from '@emotion/styled'
-import { SerializedStyles } from '@emotion/react'
+import type { SerializedStyles } from '@emotion/react'
 
 enum BadgeType {
   Primary = 'primary',
@@ -19,6 +19,7 @@ interface Props extends Partial<React.HTMLAttributes<HTMLDivElement>> {
   width?: number | string | 'fit-content'
   margin?: string | number
   padding?: string | number
+  className?: string
 }
 
 const defaultProps: Partial<Props> = {
@@ -26,22 +27,16 @@ const defaultProps: Partial<Props> = {
   type: BadgeType.Primary,
   inverse: false,
   color: '',
-  width: 'fit-content'
+  width: 'fit-content',
+  className: '',
 }
 
 function Badge(props: Props) {
-  const {
-    children,
-    styles,
-    width,
-    margin,
-    padding,
-    type,
-    inverse
-  } = {
-    ...defaultProps,
-    ...props
-  }
+  const { children, styles, width, margin, padding, type, inverse, className } =
+    {
+      ...defaultProps,
+      ...props,
+    }
 
   return (
     <Container
@@ -51,6 +46,7 @@ function Badge(props: Props) {
       padding={padding}
       type={type}
       inverse={inverse}
+      className={className}
     >
       {children}
     </Container>
