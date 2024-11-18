@@ -5,6 +5,7 @@ import useDataset from './useDataset'
 import useGetWidthElementById from './useGetWidthElementById'
 import useOutsideClick from './useOutsideClick'
 import useWindowWidth from './useWindowWidth'
+import useLocalStorageListener from './useLocalStorageListener'
 
 export {
   useFetch,
@@ -13,5 +14,6 @@ export {
   useDataset,
   useGetWidthElementById,
   useOutsideClick,
-  useWindowWidth
+  useWindowWidth,
+  useLocalStorageListener,
 }
