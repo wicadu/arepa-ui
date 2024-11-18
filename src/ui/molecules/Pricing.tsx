@@ -14,7 +14,7 @@ const defaultProps: Partial<Props> = {
   currencyCode: 'clp',
   amount: 0,
   currencySize: 12,
-  currencyWeight: 500
+  currencyWeight: 500,
 }
 
 function Pricing(props: Props) {
@@ -29,15 +29,15 @@ function Pricing(props: Props) {
     ...restOfProps
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const isNegativeValue: boolean = useMemo(() => amount < 0, [amount])
 
-  const formattedAmount = useMemo(() => formatCurrency(amount, { currency: currencyCode }), [
-    currencyCode,
-    amount
-  ])
+  const formattedAmount = useMemo(
+    () => formatCurrency(amount, { currency: currencyCode }),
+    [currencyCode, amount]
+  )
 
   const [, currencySign, value] = formattedAmount?.match(/^(\D*)(\d.*)$/) || []
 
@@ -56,6 +56,8 @@ function Pricing(props: Props) {
         weight: currencyWeight,
       }}
     >
+      <meta itemProp="priceCurrency" content={currencyCode} />
+
       {isNegativeValue ? `-${value}` : value || '$?'}
     </Typography>
   )
