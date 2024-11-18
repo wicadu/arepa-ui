@@ -56,7 +56,7 @@ function Section(props: Props) {
 
   return (
     <Container className={className} styles={styles}>
-      <meta itemprop="name" content={title} />
+      <meta itemProp="name" content={title} />
 
       <header>
         <Row align="space-between" gap={0} styles={cssTitleStyles}>

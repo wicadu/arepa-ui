@@ -20,6 +20,7 @@ interface Props extends Partial<React.HTMLAttributes<HTMLDivElement>> {
   margin?: string | number
   padding?: string | number
   className?: string
+  wrapperTag?: keyof JSX.IntrinsicElements
 }
 
 const defaultProps: Partial<Props> = {
@@ -29,27 +30,36 @@ const defaultProps: Partial<Props> = {
   color: '',
   width: 'fit-content',
   className: '',
+  wrapperTag: 'div',
 }
 
 function Badge(props: Props) {
-  const { children, styles, width, margin, padding, type, inverse, className } =
-    {
-      ...defaultProps,
-      ...props,
-    }
+  const {
+    children,
+    styles,
+    width,
+    margin,
+    padding,
+    type,
+    inverse,
+    className,
+    wrapperTag,
+    ...restOfProps
+  } = { ...defaultProps, ...props }
 
-  return (
-    <Container
-      styles={styles}
-      width={width}
-      margin={margin}
-      padding={padding}
-      type={type}
-      inverse={inverse}
-      className={className}
-    >
-      {children}
-    </Container>
+  return React.createElement(
+    Container.withComponent(wrapperTag),
+    {
+      styles,
+      width,
+      margin,
+      padding,
+      type,
+      inverse,
+      className,
+      ...restOfProps,
+    },
+    children
   )
 }
 
@@ -71,7 +81,7 @@ const Container = styled.div<Partial<Props>>`
 
       font-size: 14px;
       text-align: center;
-      ${inverse ? `font-weight: 700;` : ''}
+      font-weight: 700;
     `
   }}
 
