@@ -36,6 +36,7 @@ interface Props {
   decoration: string
   bold?: boolean
   styles?: string | SerializedStyles
+  itemProp?: string
 }
 
 const defaultAfterStyles: Props['afterStyles'] = {
@@ -48,13 +49,13 @@ const defaultAfterStyles: Props['afterStyles'] = {
 const defaultProps: Partial<Props> = {
   type: htmlType.default,
   align: 'left',
-  afterStyles: defaultAfterStyles
+  afterStyles: defaultAfterStyles,
 }
 
 function Typography(props: Props) {
   const { children, type, ...restOfProps } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const Component = useMemo(() => {
@@ -103,17 +104,18 @@ const defaultStyles = ({
   color: ${color || theme.colors.FONT.TITLE};
   ${lineHeight ? `line-height: ${lineHeight}px;` : ''}
 
-  ${numberOfLines
-    ? `
+  ${
+    numberOfLines
+      ? `
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: ${numberOfLines};
         -webkit-box-orient: vertical;
       `
-    : ''
+      : ''
   }
 
-  ${addAfterStyles({ ...defaultAfterStyles, ...afterStyles})}
+  ${addAfterStyles({ ...defaultAfterStyles, ...afterStyles })}
 `
 
 const Title = styled.h1<Partial<Props>>`
@@ -208,7 +210,6 @@ const Link = styled.a<Partial<Props>>`
 
   ${({ decoration }) => (decoration ? `text-decoration: ${decoration};` : '')}
   ${({ styles }) => styles}
-
 `
 
 export { Props as TypographyProps }
