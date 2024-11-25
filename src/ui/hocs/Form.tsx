@@ -9,27 +9,29 @@ import {
 } from 'react-hook-form'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
   opts?: Record<string, unknown>
   onSubmit: () => void
 }
 
 const defaultProps: Partial<Props> = {
   opts: {},
-  onSubmit() { },
+  onSubmit() {},
 }
 
 function Form(props: Props) {
-  const { children, opts, onSubmit } = {
+  const { children, opts, onSubmit, ...restOfProps } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const methods = useForm<any>(opts)
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form {...restOfProps} onSubmit={methods.handleSubmit(onSubmit)}>
+        {children}
+      </form>
     </FormProvider>
   )
 }

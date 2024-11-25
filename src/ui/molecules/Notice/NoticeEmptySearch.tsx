@@ -9,7 +9,7 @@ const translate = {
   },
 }
 
-function NoticeEmptySearch(): JSX.Element {
+function NoticeEmptySearch() {
   return (
     <Notice
       name="search_off"

@@ -11,25 +11,39 @@ interface Props {
   onClick?: () => void
   flex?: number
   styles?: string | SerializedStyles
+  className?: string
+  forwardedRef?: React.Ref<HTMLDivElement>
 }
 
 const defaultProps: Partial<Props> = {
   children: null,
-  gap: 0
+  gap: 0,
+  className: '',
 }
 
 function Column(props: Props) {
-  const { children, align, gap, flex, styles, onClick } = {
+  const {
+    children,
+    align,
+    gap,
+    flex,
+    styles,
+    className,
+    forwardedRef,
+    onClick,
+  } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   return (
     <Container
+      ref={forwardedRef}
       align={align}
       gap={gap}
       flex={flex}
       onClick={onClick}
+      className={className}
       styles={styles}
     >
       {children}
@@ -42,9 +56,9 @@ const Container = styled.div<Partial<Props>>`
   flex-direction: column;
   justify-content: center;
 
-  ${({ gap }) => gap ? `gap: ${gap}px;` : ''}
+  ${({ gap }) => (gap ? `gap: ${gap}px;` : '')}
 
-  ${({ flex }) => flex ? `flex: ${flex};` : ''}
+  ${({ flex }) => (flex ? `flex: ${flex};` : '')}
 
   ${({ align }) => {
     let styles: string = ''

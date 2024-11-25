@@ -10,7 +10,7 @@ const translate = {
   },
 }
 
-function NoticeError(): JSX.Element {
+function NoticeError() {
   return (
     <Notice
       name="error"

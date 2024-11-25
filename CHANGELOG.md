@@ -1,3 +1,14 @@
+# 1.31.0
+
+- Update dependencies
+- Code linter for `Input`, `Column` and `Row`
+- Replace _interface_ for _propTypes_ in Notice
+- Add **Typescript** to `useDataset` hook
+- Add `stringInterpolator` util
+- Refactor `Image` to receive **GatsbyImage** or **NextImage** as prop
+- Add _className_ and _forwardedRef_ props into `Row` and `Column`
+- Spread restOfProps in Form for semantic enhancement
+
 # 1.30.7
 
 - Add hook `useLocalStorageListener`

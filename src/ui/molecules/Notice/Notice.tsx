@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import { useTheme } from '@emotion/react'
 import styled from '@emotion/styled'
@@ -12,13 +11,13 @@ import NoticeError from './NoticeError'
 import NoticeUnavailable from './NoticeUnavailable'
 import NoticeEmptySearch from './NoticeEmptySearch'
 
-const propTypes = {
-  description: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  toAction: PropTypes.func,
-  toActionText: PropTypes.string,
-  noSpace: PropTypes.bool,
+interface Props {
+  description: string
+  title: string
+  name: string
+  toAction?: () => void
+  toActionText?: string
+  noSpace?: boolean
 }
 
 const defaultProps: Props = {
@@ -30,16 +29,12 @@ const defaultProps: Props = {
   noSpace: false,
 }
 
-type Props = InferProps<typeof propTypes>
+function Notice(props: Props) {
+  const { description, name, title, toAction, toActionText, noSpace } = {
+    ...defaultProps,
+    ...props,
+  }
 
-function Notice({
-  description,
-  name,
-  title,
-  toAction,
-  toActionText,
-  noSpace,
-}: Props) {
   const { colors } = useTheme()
 
   const color = useMemo(() => colors.FONT.DESCRIPTION, [colors])
@@ -78,9 +73,6 @@ const Container = styled.div<Props>`
     margin-top: 10px;
   }
 `
-
-Notice.propTypes = propTypes
-Notice.defaultProps = defaultProps
 
 Notice.Error = NoticeError
 Notice.Unavailable = NoticeUnavailable

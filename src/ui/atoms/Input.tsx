@@ -38,7 +38,7 @@ const defaultProps: Partial<Props> = {
   icon: {
     position: 'left',
     name: '',
-    onClick() { },
+    onClick() {},
     size: 18,
   },
   containerStyles: '',
@@ -56,10 +56,13 @@ function InputComponent(props: Props) {
     ...restOfProps
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
-  const { formState: { errors }, register } = Form.useForm()
+  const {
+    formState: { errors },
+    register,
+  } = Form.useForm()
 
   const fieldError: any = getFormFieldsErrors(errors, name)
 
@@ -68,31 +71,31 @@ function InputComponent(props: Props) {
     [doNotShowFeedback]
   )
 
-  const buildIcon: boolean = useMemo(() =>
-    icon?.name?.length > 0 || React.isValidElement(icon?.component), [
-    icon?.component,
-    icon,
-  ])
+  const buildIcon: boolean = useMemo(
+    () => icon?.name?.length > 0 || React.isValidElement(icon?.component),
+    [icon?.component, icon]
+  )
 
   return (
     <Container
       {...restOfProps}
       errors={fieldError}
-
       hasError={Boolean(fieldError?.message)}
       name={name}
       styles={containerStyles}
     >
       {buildIcon && (
         <IconContainer position={icon?.position}>
-          {React.isValidElement(icon?.component)
-            ? icon?.component : <Icon {...icon} />
-          }
+          {React.isValidElement(icon?.component) ? (
+            icon?.component
+          ) : (
+            <Icon {...icon} />
+          )}
         </IconContainer>
       )}
 
       <Input
-        {...restOfProps as Record<string, any>}
+        {...(restOfProps as Record<string, any>)}
         id={name}
         buildIcon={buildIcon}
         iconPosition={icon?.position}
@@ -100,20 +103,22 @@ function InputComponent(props: Props) {
         type={htmlType}
         hasError={Boolean(fieldError?.message)}
         styles={styles}
-        {...register(name) as const}
+        {...(register(name) as const)}
       />
     </Container>
   )
 }
 
-const Input = styled.input<Partial<Props> & {
-  hasError: boolean,
-  buildIcon: boolean,
-  iconPosition: 'left' | 'right'
-}>`
+const Input = styled.input<
+  Partial<Props> & {
+    hasError: boolean
+    buildIcon: boolean
+    iconPosition: 'left' | 'right'
+  }
+>`
   border-radius: 7px;
   padding: 0 15px;
-  font-family: "Catamaran", sans-serif;
+  font-family: 'Catamaran', sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
   font-style: normal;
@@ -157,18 +162,17 @@ const Input = styled.input<Partial<Props> & {
     return styles
   }}
 
-
   ${({ styles }) => styles}
 `
 
 const IconContainer = styled.div<{
-  children: React.ReactElement,
+  children: React.ReactElement
   position: IconPosition
 }>`
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   ${({ position }) => {
     let styles = ''
