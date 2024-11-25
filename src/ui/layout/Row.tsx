@@ -15,12 +15,15 @@ interface Props {
   itemProp?: string
   itemScope?: boolean
   itemType?: string
+  className?: string
+  forwardedRef?: React.Ref<HTMLDivElement>
 }
 
-const defaultProps: Props = {
+const defaultProps: Partial<Props> = {
   children: '',
   gap: 0,
   styles: '',
+  className: '',
 }
 
 function Row(props: Props) {
@@ -34,6 +37,8 @@ function Row(props: Props) {
     itemProp,
     itemScope,
     itemType,
+    className,
+    forwardedRef,
     ...restOfProps
   } = {
     ...defaultProps,
@@ -49,7 +54,9 @@ function Row(props: Props) {
       itemProp={itemProp}
       itemScope={itemScope}
       itemType={itemType}
+      className={className}
       onClick={onClick}
+      ref={forwardedRef}
       {...restOfProps}
     >
       {children}
