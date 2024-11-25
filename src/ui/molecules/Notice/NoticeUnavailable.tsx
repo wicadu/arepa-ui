@@ -9,7 +9,7 @@ const translate = {
   },
 }
 
-function NoticeUnavailable(): JSX.Element {
+function NoticeUnavailable() {
   return (
     <Notice
       name="fas fa-exclamation-circle"
