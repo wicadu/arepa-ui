@@ -169,6 +169,8 @@ const IconContainer = styled.div<{
   children: React.ReactElement
   position: IconPosition
 }>`
+  align-items: center;
+  display: flex;
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);

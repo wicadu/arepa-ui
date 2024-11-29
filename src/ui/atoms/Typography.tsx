@@ -131,7 +131,7 @@ const Title2 = styled.h2<Partial<Props>>`
 
   @media screen and (min-width: 768px) {
     font-size: 38px;
-    line-height: 40px;
+    line-height: 45px;
   }
 
   ${({ styles }) => styles}
