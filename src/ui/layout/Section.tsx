@@ -1,7 +1,7 @@
 import React, { ReactNode, ReactElement } from 'react'
 import { SerializedStyles, css } from '@emotion/react'
 
-import Typography from '../atoms/Typography'
+import Typography, { TypographyProps } from '../atoms/Typography'
 import Button from '../atoms/Button'
 import Row from './Row'
 
@@ -18,8 +18,10 @@ interface Props {
   children: ReactNode | ReactElement | ReactElement[]
   title: string | ReactElement
   titleAfterStyles?: AfterStyles
+  titleProps?: TypographyProps
   description?: string
   descriptionAfterStyles?: AfterStyles
+  descriptionProps?: TypographyProps
   rightChild?: string | ReactElement
   className?: string
   styles?: SerializedStyles | string
@@ -27,11 +29,13 @@ interface Props {
 }
 
 const defaultProps: Partial<Props> = {
-  title: '',
+  title: null,
   titleHtmlType: 'title-3',
   titleAfterStyles: {} as AfterStyles,
+  titleProps: {} as TypographyProps,
   description: '',
   descriptionAfterStyles: {} as AfterStyles,
+  descriptionProps: {} as TypographyProps,
   rightChild: null,
   children: null,
   className: '',
@@ -43,12 +47,14 @@ function Section(props: Props) {
     title,
     titleHtmlType,
     titleAfterStyles,
+    titleProps,
     description,
     descriptionAfterStyles,
     rightChild,
     children,
     className,
     styles,
+    descriptionProps,
   } = {
     ...defaultProps,
     ...props,
@@ -67,6 +73,7 @@ function Section(props: Props) {
               size={20}
               children={title}
               afterStyles={titleAfterStyles}
+              {...titleProps}
             />
           ) : (
             title
@@ -79,6 +86,7 @@ function Section(props: Props) {
           styles={cssDescriptionStyles}
           lineHeight={25}
           afterStyles={descriptionAfterStyles}
+          {...descriptionProps}
         >
           {description}
         </Typography>
