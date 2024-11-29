@@ -26,37 +26,36 @@ const defaultProps: Partial<Props> = {
   routes: [],
   segmentDelimiter: '-',
   offset: 0,
-  limit: undefined
+  limit: undefined,
 }
 
 function Breadcrumbs(props: Props) {
   const { routes, names, offset, limit, segmentDelimiter } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const { pathname } = useLocation() || {}
 
-  const defaultRoutes: Route[] = useMemo(() =>
-    pathname
-      ?.split('/')
-      ?.filter((segments: string) => segments?.length > 0)
-      ?.slice(offset, limit)
-      ?.map((path: string) => ({
-        path: `${pathname?.split(path)?.[0]}${path}`,
-        name: capitalize(names?.[path] || path?.replace(segmentDelimiter, ' '))
-      })), [
-    pathname,
-    names,
-    offset,
-    limit,
-  ])
+  const defaultRoutes: Route[] = useMemo(
+    () =>
+      pathname
+        ?.split('/')
+        ?.filter((segments: string) => segments?.length > 0)
+        ?.slice(offset, limit)
+        ?.map((path: string) => ({
+          path: `${pathname?.split(path)?.[0]}${path}`,
+          name: capitalize(
+            names?.[path] || path?.replace(segmentDelimiter, ' ')
+          ),
+        })),
+    [pathname, names, offset, limit]
+  )
 
-  const routesToRender: Route[] = useMemo(() =>
-    routes?.length > 0 ? routes : defaultRoutes, [
-    routes,
-    defaultRoutes
-  ])
+  const routesToRender: Route[] = useMemo(
+    () => (routes?.length > 0 ? routes : defaultRoutes),
+    [routes, defaultRoutes]
+  )
 
   const navigateTo = (path: string) => {
     if (pathname === path) return
@@ -70,11 +69,11 @@ function Breadcrumbs(props: Props) {
           <Typography
             size={11}
             lineHeight={11}
-            type='description'
+            type="description"
             children={name}
             styles={cssItemStyles}
           />
-          <Icon name='arrow_forward_ios' size={8} />
+          <Icon name="arrow_forward_ios" size={8} />
         </Row>
       ))}
     </Container>
@@ -89,6 +88,9 @@ const Container = styled.nav`
 
 const cssItemStyles = css`
   cursor: pointer;
+  min-height: 15px;
+  align-items: center;
+  display: flex;
 
   @media screen and (min-width: 768px) {
     font-size: 13px !important;
