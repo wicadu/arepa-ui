@@ -23,7 +23,6 @@ enum ButtonType {
   link = 'link',
 }
 
-
 interface Props {
   children: React.ReactNode
   onClick?: () => void
@@ -43,9 +42,9 @@ const defaultProps: Partial<Props> = {
   type: ButtonType.primary,
   size: UIElementSizesEnum.Medium,
   htmlType: HtmlType.button,
-  onClick() { },
+  onClick() {},
   loading: false,
-  width: '100%'
+  width: '100%',
 }
 
 function Button({
@@ -57,16 +56,13 @@ function Button({
   loading,
   ...restOfProps
 }: Props) {
-
   return (
     <button {...restOfProps} type={htmlType} disabled={disabled || loading}>
       {loading ? (
-        <Spin
-          type={outlined ? type : ButtonType.ghost}
-          size={20}
-        />
-      )
-        : children}
+        <Spin type={outlined ? type : ButtonType.ghost} size={20} />
+      ) : (
+        children
+      )}
     </button>
   )
 }
@@ -86,8 +82,8 @@ const WrapperButton = styled(Button)`
     ${({ width }) => width && `width: ${width};`}
 
     ${({ size }) => {
-    if (size === UIElementSizesEnum.Small)
-      return `
+      if (size === UIElementSizesEnum.Small)
+        return `
         height: 35px;
         font-size: 12px;
         border-radius: 7px;
@@ -97,8 +93,8 @@ const WrapperButton = styled(Button)`
         }
       `
 
-    if (size === UIElementSizesEnum.Medium)
-      return `
+      if (size === UIElementSizesEnum.Medium)
+        return `
         height: 44px;
         font-size: 12px;
         border-radius: 7px;
@@ -108,8 +104,8 @@ const WrapperButton = styled(Button)`
         }
       `
 
-    if (size === UIElementSizesEnum.Large)
-      return `
+      if (size === UIElementSizesEnum.Large)
+        return `
         height: 50px;
         font-size: 18px;
 
@@ -117,18 +113,18 @@ const WrapperButton = styled(Button)`
           font-size: 20px;
         }
       `
-  }}
+    }}
 
     ${({ type, outlined, theme, margin = '5px 0', highlight }) => {
-    const { colors } = theme
+      const { colors } = theme
 
-    let style: string = `
+      let style: string = `
       ${!highlight ? '-webkit-tap-highlight-color: transparent;' : ''}
     `
 
-    if (type === ButtonType.link) {
-      style += `
-          color: ${colors.MAIN.PRIMARY};
+      if (type === ButtonType.link) {
+        style += `
+          color: ${colors.MAIN.INFO};
           background-color: ${colors.NEUTRAL.TRANSPARENT};
           font-weight: bold;
           padding: 0px;
@@ -136,52 +132,56 @@ const WrapperButton = styled(Button)`
           margin: ${margin};
         `
 
-      return style
-    }
+        return style
+      }
 
-    if (type === ButtonType.ghost) {
-      style += `
+      if (type === ButtonType.ghost) {
+        style += `
         color: ${colors.FONT.HELPER};      
-        background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.SELECTED};
+        background-color: ${
+          outlined ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.SELECTED
+        };
         ${getBordersStyles(1, outlined, colors.NEUTRAL.SELECTED)}
       `
 
-      return style
-    }
+        return style
+      }
 
-    if (type === ButtonType.white) {
-      style += `
-          background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.CARD};
+      if (type === ButtonType.white) {
+        style += `
+          background-color: ${
+            outlined ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.CARD
+          };
           color: ${outlined ? colors.NEUTRAL.CARD : colors.FONT.TITLE};
           font-weight: 700;
           ${getBordersStyles(1, outlined, colors.NEUTRAL.SELECTED)}
         `
 
-      return style
-    }
+        return style
+      }
 
-    const mainColor = colors.MAIN?.[String(type).toUpperCase()]
+      const mainColor = colors.MAIN?.[String(type).toUpperCase()]
 
-    style += `
+      style += `
         background-color: ${outlined ? colors.NEUTRAL.TRANSPARENT : mainColor};
         color: ${outlined ? mainColor : colors.NEUTRAL.BACKGROUND};
         ${getBordersStyles(1, outlined, mainColor)}
       `
 
-    return style
-  }}
+      return style
+    }}
 
     ${({ disabled, type, theme }) => {
-    const { colors } = theme
+      const { colors } = theme
 
-    if (disabled && type === ButtonType.link) {
-      return `
-        color: ${colors.darkGray};
+      if (disabled && type === ButtonType.link) {
+        return `
+        color: ${colors.FONT.HELPER};
       `
-    }
+      }
 
-    if (disabled) return `opacity: 0.85;`
-  }}
+      if (disabled) return `opacity: 0.85;`
+    }}
 
   ${({ styles }) => styles}
   }
