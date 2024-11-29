@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from '@emotion/styled'
 
 import InfiniteScroll from '../../hocs/InfiniteScroll'
@@ -13,8 +13,11 @@ interface Props<ItemT> {
   keyExtracted: string
   hasMore?: boolean
   fetchNext?: () => void
+  wrapperTag?: keyof JSX.IntrinsicElements
   component: React.ReactElement
-  itemWrapper: React.ReactElement | any
+  itemWrapperTag?: keyof JSX.IntrinsicElements
+  listWrapperProps?: Record<string, unknown>
+  itemWrapperProps?: Record<string, unknown>
   dataExtractor: DataExtracted<ItemT> | null | undefined
   endMessage: React.ReactElement | null
   styles: string | SerializedStyles
@@ -24,11 +27,16 @@ const defaultProps: Partial<Props<any>> = {
   data: [],
   error: false,
   hasMore: false,
-  fetchNext() { },
-  dataExtractor: null,
-  itemWrapper: 'div',
+  wrapperTag: 'ul',
+  itemWrapperTag: 'li',
+  itemWrapperProps: {},
+  listWrapperProps: {},
   endMessage: null,
   keyExtracted: '',
+  fetchNext() {},
+  dataExtractor(item) {
+    return item
+  },
 }
 
 function FlatList<ItemT>(props: Props<ItemT>) {
@@ -37,15 +45,28 @@ function FlatList<ItemT>(props: Props<ItemT>) {
     hasMore,
     fetchNext,
     component: Component,
-    itemWrapper: ItemWrapper,
+    wrapperTag,
+    listWrapperProps,
+    itemWrapperTag,
+    itemWrapperProps,
     dataExtractor,
     keyExtracted,
     endMessage,
-    styles
+    styles,
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
+
+  const ListWrapper = useMemo(
+    () => Container.withComponent(wrapperTag!),
+    [wrapperTag]
+  )
+
+  const ItemWrapper = useMemo(
+    () => Item.withComponent(itemWrapperTag!),
+    [itemWrapperTag]
+  )
 
   return (
     <InfiniteScroll
@@ -54,18 +75,22 @@ function FlatList<ItemT>(props: Props<ItemT>) {
       next={fetchNext}
       endMessage={endMessage}
     >
-      <ListWrapper styles={styles}>
+      <ListWrapper styles={styles} {...listWrapperProps}>
         {data?.map((item, index) => (
           <ItemWrapper
             key={item?.[keyExtracted]}
             index={index}
             value={String(item?.[keyExtracted])}
             name={String(item?.[keyExtracted])}
+            {...itemWrapperProps}
           >
-            {React.isValidElement(Component)
-              ? React.cloneElement(Component, dataExtractor({ ...item }, index))
-              : <Component {...dataExtractor({ ...item }, index)} />
-            }
+            {React.isValidElement(Component) ? (
+              React.cloneElement(Component, dataExtractor?.({ ...item }, index))
+            ) : (
+              <Component {...dataExtractor?.({ ...item }, index)} />
+            )}
+
+            <meta itemProp="position" content={index} />
           </ItemWrapper>
         ))}
       </ListWrapper>
@@ -73,12 +98,20 @@ function FlatList<ItemT>(props: Props<ItemT>) {
   )
 }
 
-export const ListWrapper = styled.ul<Partial<Props<unknown>>>`
+export const Container = styled.div<Partial<Props<unknown>>>`
   display: flex;
   flex-direction: column;
   gap: 15px;
 
   ${({ styles }) => styles}
+`
+
+export const Item = styled.div<Partial<Props<unknown>>>`
+  width: 100%;
+
+  meta {
+    display: none;
+  }
 `
 
 FlatList.Skeleton = FlatListSkeleton
