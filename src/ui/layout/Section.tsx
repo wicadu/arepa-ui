@@ -73,6 +73,7 @@ function Section(props: Props) {
               size={20}
               children={title}
               afterStyles={titleAfterStyles}
+              data-title
               {...titleProps}
             />
           ) : (
@@ -86,6 +87,7 @@ function Section(props: Props) {
           styles={cssDescriptionStyles}
           lineHeight={25}
           afterStyles={descriptionAfterStyles}
+          data-description
           {...descriptionProps}
         >
           {description}
