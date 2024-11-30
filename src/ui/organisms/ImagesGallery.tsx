@@ -15,11 +15,15 @@ type Image = {
 type Props = {
   images: Image[]
   defaultImage: Image
+  alt: string
+  fit?: 'contain' | 'cover'
+  fallbackImage?: string
   isItOnOverlay?: boolean
   mainImageWidth?: number | string
   mainImageHeight?: number | string
   slideImageSize?: number
   containerStyles?: SerializedStyles | string
+  className?: string
   onExpandImage?: (event?: React.MouseEvent<HTMLElement>) => void
   onChangeImage?: (data: Image) => void
 }
@@ -27,26 +31,34 @@ type Props = {
 const defaultProps: Partial<Props> = {
   images: [],
   isItOnOverlay: false,
+  fit: 'contain',
+  alt: '',
+  fallbackImage: '',
   slideImageSize: 30,
   containerStyles: '',
+  className: '',
   onExpandImage() {},
   onChangeImage() {},
 }
 
 function ImagesGallery(props: Props) {
   const {
+    alt,
+    fit,
     images,
     defaultImage,
+    fallbackImage,
     mainImageWidth,
     mainImageHeight,
     slideImageSize,
     isItOnOverlay,
     containerStyles,
+    className,
     onExpandImage,
     onChangeImage,
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const [currentImage, setCurrentImage] = useState<Image>()
@@ -58,15 +70,17 @@ function ImagesGallery(props: Props) {
     [isItOnOverlay, colors]
   )
 
-  const onChange = useCallback((image: Image) => {
-    setCurrentImage(image)
-    onChangeImage?.(image)
-  }, [onChangeImage])
+  const onChange = useCallback(
+    (image: Image) => {
+      setCurrentImage(image)
+      onChangeImage?.(image)
+    },
+    [onChangeImage]
+  )
 
   useEffect(() => {
     setCurrentImage(defaultImage)
   }, [defaultImage])
-
 
   if (!Boolean(images?.length)) {
     return (
@@ -77,28 +91,45 @@ function ImagesGallery(props: Props) {
   }
 
   return (
-    <Column gap={15} align='center' styles={containerStyles}>
-      <Image
-        src={currentImage?.value}
-        width={mainImageWidth}
-        height={mainImageHeight}
-        onClick={onExpandImage}
-        fit='contain'
-        data-id={currentImage?.id}
-      />
+    <Column
+      gap={15}
+      align="center"
+      styles={containerStyles}
+      className={className}
+    >
+      <MainImageFigure
+        mainImageHeight={mainImageHeight}
+        mainImageWidth={mainImageWidth}
+        data-main-image="true"
+      >
+        <Image
+          src={currentImage?.value}
+          alt={alt}
+          width="100%"
+          height="100%"
+          fallback={fallbackImage}
+          onClick={onExpandImage}
+          fit={fit}
+          datasets={{
+            id: currentImage?.id,
+          }}
+        />
+      </MainImageFigure>
 
-      <Carousel>
+      <Carousel data-image-carousel="true">
         {images?.map(({ value, id }: Image) => (
           <Image
             width={slideImageSize}
             height={slideImageSize}
+            fallback={fallbackImage}
             src={value}
+            alt={`${alt} - ${id}`}
             key={id}
-            fit='contain'
+            fit="contain"
             onClick={() => onChange({ value, id })}
             backgroundColor={
               currentImage?.value === value
-                ? colors.NEUTRAL.SELECTED
+                ? colors.NEUTRAL.SIDE
                 : colors.NEUTRAL.TRANSPARENT
             }
           />
@@ -110,14 +141,24 @@ function ImagesGallery(props: Props) {
 
 const NoImageContainer = styled.div<{ height: number | string }>`
   width: 100%;
-  height: ${({ height }) => typeof height ==='number' ? `${height}px`: height};
+  height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
   display: flex;
   align-items: center;
   justify-content: center;
   justify-self: center;
 `
 
-const Carousel = styled.div`
+const MainImageFigure = styled.figure<Partial<Props>>`
+  border-radius: 10px;
+  overflow: hidden;
+  ${({ mainImageHeight, mainImageWidth }) => `
+    width: ${mainImageWidth};
+    height: ${mainImageHeight};
+  `}
+`
+
+const Carousel = styled.figure`
   display: flex;
   gap: 5px;
   align-items: center;
