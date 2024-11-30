@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react'
 
 import styled from '@emotion/styled'
-import { navigate, useLocation } from '@reach/router'
 import { css } from '@emotion/react'
 
-import { capitalize } from '../../utils'
+import { capitalize, isBrowser } from '../../utils'
 import Icon from '../atoms/Icon'
 import Row from '../layout/Row'
 import Typography from '../atoms/Typography'
@@ -20,6 +19,7 @@ interface Props {
   segmentDelimiter?: string
   offset?: number
   limit?: number
+  navigate: (to: string, params?: Record<string, unknown>) => void
 }
 
 const defaultProps: Partial<Props> = {
@@ -27,15 +27,18 @@ const defaultProps: Partial<Props> = {
   segmentDelimiter: '-',
   offset: 0,
   limit: undefined,
+  navigate(to: string) {
+    window.location.href = to
+  },
 }
 
 function Breadcrumbs(props: Props) {
-  const { routes, names, offset, limit, segmentDelimiter } = {
+  const { routes, names, offset, limit, segmentDelimiter, navigate } = {
     ...defaultProps,
     ...props,
   }
 
-  const { pathname } = useLocation() || {}
+  const pathname: string = isBrowser() ? window?.location?.pathname : ''
 
   const defaultRoutes: Route[] = useMemo(
     () =>
