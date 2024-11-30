@@ -45,10 +45,11 @@ function Pricing(props: Props) {
 
   return (
     <Typography
-      {...restOfProps}
       color={color}
       size={size}
       weight={weight}
+      itemProp="price"
+      {...restOfProps}
       afterStyles={{
         color,
         content: fCurrencySign,
@@ -57,6 +58,7 @@ function Pricing(props: Props) {
       }}
     >
       <meta itemProp="priceCurrency" content={currencyCode} />
+      <meta itemProp="price" content={amount} />
 
       {isNegativeValue ? `-${value}` : value || '$?'}
     </Typography>

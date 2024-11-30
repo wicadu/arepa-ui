@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import styled from '@emotion/styled'
 
@@ -12,21 +12,22 @@ interface Props {
   height?: number | string
   rounded?: number
   fit?: 'contain' | 'cover'
-  'data-id'?: string | number
-  onClick?: React.MouseEventHandler<HTMLImageElement>
   loading?: 'eager' | 'lazy'
   itemProp?: string
-  datasets: {
+  datasets?: {
     [key: string]: string | number
   }
-  imageComponent: React.ElementType
+  fallback?: string
+  imageComponent?: React.ElementType
+  onClick?: React.MouseEventHandler<HTMLImageElement>
+  onError?: React.ReactEventHandler<HTMLImageElement>
 }
 
 const defaultProps: Partial<Props> = {
   width: 100,
   height: 100,
+  datasets: {},
   fit: 'cover',
-  'data-id': null,
   imageComponent: 'img',
 }
 
@@ -39,18 +40,30 @@ const Image = (props: Props) => {
     rounded,
     backgroundColor,
     fit,
-    onClick,
     loading,
     datasets,
     itemProp,
     imageComponent,
+    fallback,
+    onClick,
+    onError,
     ...restOfProps
   } = {
     ...defaultProps,
     ...props,
   }
 
+  const [imageUrl, setImageUrl] = useState<string>(src)
   const dataAttributes = useDataset(datasets)
+
+  const onHandlerError = (e) => {
+    if (fallback) setImageUrl(fallback)
+    onError?.(e)
+  }
+
+  useEffect(() => {
+    if (src) setImageUrl(src)
+  }, [src])
 
   const _PADDING_PERCENTAGE = 25
   const _DEFAULT_RADIUS = 7
@@ -81,8 +94,9 @@ const Image = (props: Props) => {
 
   return (
     <StyledImage
-      src={src}
+      src={imageUrl}
       alt={alt}
+      data-image-is-fallback={imageUrl === fallback}
       width={width}
       rounded={rounded}
       height={height}
@@ -91,6 +105,8 @@ const Image = (props: Props) => {
       backgroundColor={backgroundColor}
       loading={loading}
       itemProp={itemProp}
+      fallback={fallback}
+      onError={onHandlerError}
       {...restOfProps}
       {...dataAttributes}
     />

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 import styled from '@emotion/styled'
 import { css, SerializedStyles } from '@emotion/react'
 
@@ -23,6 +24,8 @@ interface Props {
   description: string
   customSpecComponent?: React.ReactElement
   specs?: Spec[]
+  imageLoadingType?: 'eager' | 'lazy'
+  fallbackImage?: string
   containerStyles?: SerializedStyles | string
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
 }
@@ -32,6 +35,8 @@ const defaultProps: Props = {
   name: '',
   description: '',
   specs: [],
+  fallbackImage: '',
+  imageLoadingType: 'eager',
 }
 
 function OrderItem(props: Props) {
@@ -43,71 +48,88 @@ function OrderItem(props: Props) {
     customSpecComponent,
     onClick,
     description,
-    containerStyles
+    fallbackImage,
+    imageLoadingType,
+    containerStyles,
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   return (
-    <Column gap={5} onClick={onClick} styles={cssContainerStyles(containerStyles)}>
+    <Column
+      gap={5}
+      onClick={onClick}
+      styles={cssContainerStyles(containerStyles)}
+      itemProp="item"
+      itemScope
+      itemType="https://schema.org/Product"
+    >
       <Typography
-        type='helper'
+        type="helper"
         numberOfLines={1}
         weight={700}
         size={10}
         children={label}
+        itemProp="gtin13"
         styles={cssLabelStyles}
       />
 
       <Content>
-        <ImageContainer>
-          {!image
-            ? <Icon name='image' size={35} />
-            : <Image src={image} fit='cover' width={68} height={68} />
-          }
+        <ImageContainer itemProp="image" content={image}>
+          <Image
+            src={image}
+            fit="cover"
+            loading={imageLoadingType}
+            width="100%"
+            height="100%"
+            fallback={fallbackImage}
+            alt={name}
+          />
         </ImageContainer>
 
-        <Column align='space-between' gap={0} flex={1}>
+        <Column align="space-between" gap={0} flex={1}>
           <Column gap={0}>
             <Typography
-              type='title-4'
+              type="title-3"
               numberOfLines={1}
               weight={700}
               size={16}
               children={name}
+              itemProp="name"
               styles={cssTitleStyles}
             />
             <Typography
-              type='description'
+              type="description"
               numberOfLines={2}
               size={12}
+              itemProp="description"
               children={description}
               styles={cssDescriptionStyles}
             />
           </Column>
 
-          {customSpecComponent
-            ? React.cloneElement(customSpecComponent)
-            : (
-              <Row gap={0} align='space-between'>
-                {specs?.map(({ key, value }) => (
-                  <Typography
-                    key={`${key}-${value}`}
-                    type='description'
-                    children={value}
-                    weight={700}
-                    size={14}
-                    styles={cssSpecsStyles}
-                    afterStyles={{
-                      content: ` ${key ?? ''}`,
-                      size: 10,
-                      weight: 300,
-                    }}
-                  />
-                ))}
-              </Row>
-            )}
+          {customSpecComponent ? (
+            React.cloneElement(customSpecComponent)
+          ) : (
+            <Row gap={0} align="space-between">
+              {specs?.map(({ key, value }) => (
+                <Typography
+                  key={`${key}-${value}`}
+                  type="description"
+                  children={value}
+                  weight={700}
+                  size={14}
+                  styles={cssSpecsStyles}
+                  afterStyles={{
+                    content: ` ${key ?? ''}`,
+                    size: 10,
+                    weight: 300,
+                  }}
+                />
+              ))}
+            </Row>
+          )}
         </Column>
       </Content>
     </Column>
@@ -149,7 +171,7 @@ const cssSpecsStyles = css`
     font-size: 18px;
     line-height: 22px;
 
-     &::after {
+    &::after {
       font-size: 16px;
     }
   }
@@ -163,14 +185,24 @@ const ImageContainer = styled.figure`
   height: 70px;
   background-color: ${({ theme }) => theme.colors.NEUTRAL.SIDE};
   border-radius: 10px;
-  
+
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
 
+  img[data-image-is-fallback='true'] {
+    width: 40px;
+    height: 40px;
+  }
+
   @media screen and (min-width: 768px) {
     width: 80px;
     height: 80px;
+
+    img[data-image-is-fallback='true'] {
+      width: 50px;
+      height: 50px;
+    }
   }
 `
 

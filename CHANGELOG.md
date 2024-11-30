@@ -1,3 +1,19 @@
+# 1.32.0
+
+- Add _fallback image_ if initial _src_ fails in `Image`
+- Update `Button.Link` to use _color_ as colors.MAIN.INFO
+- Align `Input` _icon_ vertically and increase _line-height_ for title-2
+- Add _itemProps_ and _Tag.Meta_ for `Column`, `Pricing` and `OrderItem`
+- Add _titleProps_ and _descriptionProps_ in `Section`
+- Align `Breadcrumbs` _links_ vertically
+- Add _fallbackImage_ for prop drilling into `OrderItem` and `ImagesGallery`
+- Refactor
+  - `FlatList` to render list based on _wrapperTag_ and _itemWrapperTag_
+  - `ImagesGallery` for better SEO structure.
+- Add `useDatasets` hook to `Image` and `Typography`
+- Add _navigate_ prop in `Breadcrumbs` for using prefer navigator handler
+- Add _versioning guide_ for Readme.md
+
 # 1.31.0
 
 - Update dependencies

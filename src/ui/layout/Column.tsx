@@ -5,13 +5,16 @@ import { SerializedStyles } from '@emotion/react'
 type ItemsAlign = 'top' | 'center' | 'bottom' | 'space-between'
 
 interface Props {
-  children: React.ReactNode
+  children?: React.ReactNode
   align?: ItemsAlign
   gap: number
   onClick?: () => void
   flex?: number
   styles?: string | SerializedStyles
   className?: string
+  itemProp?: string
+  itemScope?: boolean
+  itemType?: string
   forwardedRef?: React.Ref<HTMLDivElement>
 }
 
@@ -29,6 +32,9 @@ function Column(props: Props) {
     flex,
     styles,
     className,
+    itemProp,
+    itemScope,
+    itemType,
     forwardedRef,
     onClick,
   } = {
@@ -44,6 +50,9 @@ function Column(props: Props) {
       flex={flex}
       onClick={onClick}
       className={className}
+      itemProp={itemProp}
+      itemScope={itemScope}
+      itemType={itemType}
       styles={styles}
     >
       {children}
