@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 
 import styled from '@emotion/styled'
 import { SerializedStyles } from '@emotion/react'
+import { useDataset } from '../../hooks'
 
 enum htmlType {
   default = 'default',
@@ -33,6 +34,9 @@ interface Props {
     weight: number
     color?: string
   }
+  datasets?: {
+    [key: string]: string | number
+  }
   decoration: string
   bold?: boolean
   styles?: string | SerializedStyles
@@ -49,14 +53,17 @@ const defaultAfterStyles: Props['afterStyles'] = {
 const defaultProps: Partial<Props> = {
   type: htmlType.default,
   align: 'left',
+  datasets: {},
   afterStyles: defaultAfterStyles,
 }
 
 function Typography(props: Props) {
-  const { children, type, ...restOfProps } = {
+  const { children, type, datasets, ...restOfProps } = {
     ...defaultProps,
     ...props,
   }
+
+  const dataAttributes = useDataset(datasets)
 
   const Component = useMemo(() => {
     if (type === htmlType.title) return Title
@@ -72,7 +79,7 @@ function Typography(props: Props) {
   }, [type])
 
   return (
-    <Component type={type} {...restOfProps}>
+    <Component type={type} {...dataAttributes} {...restOfProps}>
       {children}
     </Component>
   )

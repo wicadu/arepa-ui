@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import styled from '@emotion/styled'
 
@@ -26,6 +26,7 @@ interface Props {
 const defaultProps: Partial<Props> = {
   width: 100,
   height: 100,
+  datasets: {},
   fit: 'cover',
   imageComponent: 'img',
 }
@@ -59,6 +60,10 @@ const Image = (props: Props) => {
     if (fallback) setImageUrl(fallback)
     onError?.(e)
   }
+
+  useEffect(() => {
+    if (src) setImageUrl(src)
+  }, [src])
 
   const _PADDING_PERCENTAGE = 25
   const _DEFAULT_RADIUS = 7
