@@ -1,5 +1,6 @@
 import React, { HTMLProps } from 'react'
 import styled from '@emotion/styled'
+import { useDataset } from '../../hooks'
 
 interface Props extends Partial<HTMLProps<HTMLSpanElement>> {
   name: string
@@ -8,19 +9,25 @@ interface Props extends Partial<HTMLProps<HTMLSpanElement>> {
   onClick?: () => void
   className?: string
   withBackground?: boolean | number
+  datasets?: {
+    [key: string]: string | number
+  }
 }
 
 const defaultProps: Partial<Props> = {
   className: '',
   size: 22,
-  withBackground: false
+  withBackground: false,
+  datasets: {},
 }
 
 function Icon(props: Props) {
-  const { className, name, size, color, withBackground, onClick } = {
+  const { className, name, size, color, withBackground, datasets, onClick } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
+
+  const dataAttributes = useDataset(datasets)
 
   return (
     <Container
@@ -29,12 +36,12 @@ function Icon(props: Props) {
       color={color}
       onClick={onClick}
       withBackground={withBackground}
+      {...dataAttributes}
     >
       {name}
     </Container>
   )
 }
-
 
 const Container = styled.span<Partial<Props>>`
   ${({ theme, size, color, withBackground, onClick }) => {
@@ -46,7 +53,8 @@ const Container = styled.span<Partial<Props>>`
     `
 
     if (withBackground) {
-      const _SUBTRACTED_SIZE_PERCENTAGE = typeof withBackground === 'number' ? withBackground : 0.35 // -- 35%
+      const _SUBTRACTED_SIZE_PERCENTAGE =
+        typeof withBackground === 'number' ? withBackground : 0.35 // -- 35%
 
       styles += `
         width: ${size}px;
@@ -55,7 +63,7 @@ const Container = styled.span<Partial<Props>>`
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: ${size - (size * _SUBTRACTED_SIZE_PERCENTAGE)}px;
+        font-size: ${size - size * _SUBTRACTED_SIZE_PERCENTAGE}px;
         background-color: ${colors.NEUTRAL.SIDE};
       `
     }
@@ -66,7 +74,6 @@ const Container = styled.span<Partial<Props>>`
 
     return styles
   }}
-
 `
 
 export { Props as IconProps }
