@@ -27,6 +27,7 @@ interface Props {
   icon?: InputIcon
   styles?: SerializedStyles | string
   containerStyles?: SerializedStyles | string
+  className?: string
 }
 
 const defaultProps: Partial<Props> = {
@@ -43,6 +44,7 @@ const defaultProps: Partial<Props> = {
   },
   containerStyles: '',
   width: '100%',
+  className: '',
 }
 
 function InputComponent(props: Props) {
@@ -53,6 +55,7 @@ function InputComponent(props: Props) {
     styles,
     containerStyles,
     icon,
+    className,
     ...restOfProps
   } = {
     ...defaultProps,
@@ -82,6 +85,7 @@ function InputComponent(props: Props) {
       errors={fieldError}
       hasError={Boolean(fieldError?.message)}
       name={name}
+      className={className}
       styles={containerStyles}
     >
       {buildIcon && (
