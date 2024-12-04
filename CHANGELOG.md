@@ -1,3 +1,12 @@
+# 1.33.0
+
+- Add _datasets_ for `Icon` and _className_ for `Input`
+- Remove prefix 'data-' in `useDatasets`
+- Implement _renderHeader_ avoid rendering unnecessary tags in `Section`
+- Drill _imageComponent_ prop from `OrderItem` to `Image`
+- Refactor `OrderItemBottom` for better SEO/Accessibility
+- Pass _index_ for item in `FlatList` and remove _defaultProps_ warn into `Alert`
+
 # 1.32.0
 
 - Add _fallback image_ if initial _src_ fails in `Image`
