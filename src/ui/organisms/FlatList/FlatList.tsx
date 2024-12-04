@@ -85,9 +85,16 @@ function FlatList<ItemT>(props: Props<ItemT>) {
             {...itemWrapperProps}
           >
             {React.isValidElement(Component) ? (
-              React.cloneElement(Component, dataExtractor?.({ ...item }, index))
+              React.cloneElement(
+                Component,
+                dataExtractor?.({ ...item }, index),
+                index
+              )
             ) : (
-              <Component {...dataExtractor?.({ ...item }, index)} />
+              <Component
+                {...dataExtractor?.({ ...item }, index)}
+                index={index}
+              />
             )}
 
             <meta itemProp="position" content={index} />

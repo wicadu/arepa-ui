@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement } from 'react'
+import React, { ReactNode, ReactElement, useMemo } from 'react'
 import { SerializedStyles, css } from '@emotion/react'
 
 import Typography, { TypographyProps } from '../atoms/Typography'
@@ -60,39 +60,46 @@ function Section(props: Props) {
     ...props,
   }
 
+  const renderHeader: boolean = useMemo(
+    () => Boolean(description?.length) || Boolean(title) || Boolean(rightChild),
+    [description, title, rightChild]
+  )
+
   return (
     <Container className={className} styles={styles}>
-      <meta itemProp="name" content={title} />
+      {title && <meta itemProp="name" content={title} />}
 
-      <header>
-        <Row align="space-between" gap={0} styles={cssTitleStyles}>
-          {typeof title === 'string' ? (
-            <Typography
-              type={titleHtmlType}
-              lineHeight={30}
-              size={20}
-              children={title}
-              afterStyles={titleAfterStyles}
-              data-title
-              {...titleProps}
-            />
-          ) : (
-            title
-          )}
+      {renderHeader && (
+        <header>
+          <Row align="space-between" gap={0} styles={cssTitleStyles}>
+            {typeof title === 'string' ? (
+              <Typography
+                type={titleHtmlType}
+                lineHeight={30}
+                size={20}
+                children={title}
+                afterStyles={titleAfterStyles}
+                data-title
+                {...titleProps}
+              />
+            ) : (
+              title
+            )}
 
-          {rightChild}
-        </Row>
-        <Typography
-          type="description"
-          styles={cssDescriptionStyles}
-          lineHeight={25}
-          afterStyles={descriptionAfterStyles}
-          data-description
-          {...descriptionProps}
-        >
-          {description}
-        </Typography>
-      </header>
+            {rightChild}
+          </Row>
+          <Typography
+            type="description"
+            styles={cssDescriptionStyles}
+            lineHeight={25}
+            afterStyles={descriptionAfterStyles}
+            data-description
+            {...descriptionProps}
+          >
+            {description}
+          </Typography>
+        </header>
+      )}
 
       {children}
     </Container>

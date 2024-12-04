@@ -28,6 +28,7 @@ interface Props {
   fallbackImage?: string
   containerStyles?: SerializedStyles | string
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
+  imageComponent?: React.ElementType
 }
 
 const defaultProps: Props = {
@@ -37,6 +38,7 @@ const defaultProps: Props = {
   specs: [],
   fallbackImage: '',
   imageLoadingType: 'eager',
+  imageComponent: 'img',
 }
 
 function OrderItem(props: Props) {
@@ -51,6 +53,7 @@ function OrderItem(props: Props) {
     fallbackImage,
     imageLoadingType,
     containerStyles,
+    imageComponent,
   } = {
     ...defaultProps,
     ...props,
@@ -84,6 +87,7 @@ function OrderItem(props: Props) {
             width="100%"
             height="100%"
             fallback={fallbackImage}
+            imageComponent={imageComponent}
             alt={name}
           />
         </ImageContainer>
