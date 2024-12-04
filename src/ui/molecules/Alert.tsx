@@ -36,13 +36,13 @@ const defaultProps: Partial<Props> = {
   width: '100%',
   size: UIElementSizesEnum.Medium,
   styles: '',
-  time: 0
+  time: 0,
 }
 
 function Alert(props: Props) {
   const { title, description, type, show, width, size, styles, time } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const [showAlert, setShowAlert] = useState<boolean>(show)
@@ -58,17 +58,22 @@ function Alert(props: Props) {
       const timer = setTimeout(() => setShowAlert(false), time)
       return () => clearTimeout(timer)
     }
-  }, [
-    time,
-    show
-  ])
+  }, [time, show])
 
   return (
-    <Container width={width} show={showAlert} type={type} size={size} styles={styles}>
+    <Container
+      width={width}
+      show={showAlert}
+      type={type}
+      size={size}
+      styles={styles}
+    >
       <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
-        <Typography weight={700} color={color}>{title}</Typography>
+        <Typography weight={700} color={color}>
+          {title}
+        </Typography>
         <Typography color={color}>{description}</Typography>
       </Content>
 
@@ -84,7 +89,7 @@ const Container = styled.div<Partial<Props>>`
   display: flex;
   align-items: center;
   gap: 5px;
-  
+
   ${({ type, theme, show, width, size }) => {
     if (!show) return 'display: none;'
 
@@ -187,7 +192,5 @@ const OpacityCanceler = styled.div<Partial<Props>>`
   right: 0;
   z-index: 1;
 `
-
-Alert.defaultProps = defaultProps
 
 export default Alert
