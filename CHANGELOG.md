@@ -1,3 +1,10 @@
+# 1.34.0
+
+- Create `SearchInput` molecule
+- Hide _description_ if not added into `Section`
+- Update `Input` background-color and center text for `OrderItemBottom`
+- Catch and block tabHeader if children has disabled prop
+
 # 1.33.0
 
 - Add _datasets_ for `Icon` and _className_ for `Input`

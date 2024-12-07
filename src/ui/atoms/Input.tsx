@@ -128,7 +128,7 @@ const Input = styled.input<
   font-style: normal;
   font-size: 14px;
 
-  background-color: ${({ theme }) => theme.colors.NEUTRAL.CARD};
+  background-color: ${({ theme }) => theme.colors.NEUTRAL.BACKGROUND};
   opacity: ${({ readOnly }) => (readOnly ? 0.65 : 1)};
 
   ${({ disabled }) => disabled && 'opacity: 0.7;'}

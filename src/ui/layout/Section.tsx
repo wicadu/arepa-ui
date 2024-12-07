@@ -88,16 +88,18 @@ function Section(props: Props) {
 
             {rightChild}
           </Row>
-          <Typography
-            type="description"
-            styles={cssDescriptionStyles}
-            lineHeight={25}
-            afterStyles={descriptionAfterStyles}
-            data-description
-            {...descriptionProps}
-          >
-            {description}
-          </Typography>
+          {Boolean(description?.length) && (
+            <Typography
+              type="description"
+              styles={cssDescriptionStyles}
+              lineHeight={25}
+              afterStyles={descriptionAfterStyles}
+              data-description
+              {...descriptionProps}
+            >
+              {description}
+            </Typography>
+          )}
         </header>
       )}
 
