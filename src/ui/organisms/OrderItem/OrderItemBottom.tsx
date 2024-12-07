@@ -125,6 +125,7 @@ function OrderItemBottom(props: Props) {
         <Typography
           type="description"
           size={13}
+          align="center"
           dangerouslySetInnerHTML={{ __html: `<b>${quantity}</b> unidades` }}
         />
       )}
@@ -167,6 +168,10 @@ const Container = styled.div`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+
+  p[type='description'] {
+    margin: auto;
   }
 
   @media screen and (min-width: 768px) {
