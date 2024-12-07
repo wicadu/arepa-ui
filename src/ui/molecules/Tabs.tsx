@@ -6,10 +6,11 @@ interface Props {
   headers: React.ReactElement[]
   tabs: React.ReactElement[]
   styles?: SerializedStyles | string
+  className?: string
   onChangeTabs: (index: number) => void
 }
 
-function Tabs({ headers, tabs, styles, onChangeTabs }: Props) {
+function Tabs({ headers, tabs, styles, className, onChangeTabs }: Props) {
   const [selectedTab, setSelectedTab] = useState(0)
 
   const { colors } = useTheme()
@@ -20,19 +21,32 @@ function Tabs({ headers, tabs, styles, onChangeTabs }: Props) {
   }
 
   return (
-    <Container styles={styles}>
+    <Container styles={styles} className={className}>
       <Headers>
-        {headers?.map((children, index) => (
-          <HeaderTab
-            isActive={selectedTab === index}
-            key={index}
-            onClick={() => onChange(index)}
-          >
-            {React.cloneElement(children, {
-              color: selectedTab === index ? colors.MAIN.PRIMARY : colors.FONT.DESCRIPTION,
-            })}
-          </HeaderTab>
-        ))}
+        {headers?.map((children, index) => {
+          const isActiveTab: boolean = selectedTab === index
+          const isDisabledTab: boolean =
+            React.isValidElement(children) && children.props.disabled
+
+          return (
+            <HeaderTab
+              key={index}
+              isActive={isActiveTab}
+              isDisabledTab={isDisabledTab}
+              onClick={() => (isDisabledTab ? null : onChange(index))}
+              data-tabs-header
+            >
+              {React.isValidElement(children) &&
+                React.cloneElement(children, {
+                  color: isActiveTab
+                    ? colors.MAIN.INFO
+                    : colors.FONT.DESCRIPTION,
+                  'data-active': isActiveTab,
+                  'aria-disabled': isDisabledTab,
+                })}
+            </HeaderTab>
+          )
+        })}
       </Headers>
 
       <Row>{tabs?.[selectedTab]}</Row>
@@ -54,7 +68,7 @@ const Headers = styled.ul`
   display: flex;
 `
 
-const HeaderTab = styled.li<{ isActive: boolean }>`
+const HeaderTab = styled.li<{ isActive: boolean; isDisabledTab: boolean }>`
   flex-basis: 100%;
   list-style-type: none;
   cursor: pointer;
@@ -63,7 +77,21 @@ const HeaderTab = styled.li<{ isActive: boolean }>`
   align-items: center;
   height: 50px;
   border-bottom: 1px solid
-    ${({ theme, isActive }) => isActive ? theme?.colors.MAIN.PRIMARY : theme.colors?.NEUTRAL.TRANSPARENT};
+    ${({ theme, isActive }) =>
+      isActive ? theme?.colors.MAIN.INFO : theme.colors?.NEUTRAL.TRANSPARENT};
+
+  ${({ isDisabledTab }) => {
+    let styles = ``
+
+    if (isDisabledTab) {
+      styles += `
+          opacity: 0.4;
+          cursor: not-allowed;
+        `
+    }
+
+    return styles
+  }}
 `
 
 export default Tabs
