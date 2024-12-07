@@ -24,6 +24,7 @@ import StatusChip from './molecules/StatusChip'
 import Collapsable from './molecules/Collapsable'
 import Pricing from './molecules/Pricing'
 import Toast from './molecules/Toast'
+import SearchInput from './molecules/SearchInput'
 
 import Stepper from './molecules/Stepper'
 import Breadcrumbs from './molecules/Breadcrumbs'
@@ -80,12 +81,12 @@ export {
   Collapsable,
   Pricing,
   Toast,
+  SearchInput,
 
   // Organisms
   FlatList,
   OrderItem,
   OrderSnapshot,
-
   ImageUploader,
   ImagesGallery,
 
