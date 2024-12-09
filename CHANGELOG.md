@@ -1,3 +1,11 @@
+# 1.35.0
+
+- Support rendering custom HTML tags in `Row` and `Column` by using _as_ prop
+- Add `isBrowser` support for `useGetWidthElementById` hook
+- Create `MemoizedWrapper` HOC and apply it into `FlatList`
+- Update `Collapsable` to render section tag HTML
+- Add _fallbackImage_ and _if-clause_ to render docs quantity In OrderSnapshot
+
 # 1.34.0
 
 - Create `SearchInput` molecule
