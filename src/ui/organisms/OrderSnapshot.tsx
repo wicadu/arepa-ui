@@ -39,11 +39,12 @@ interface Props {
   date: string
   status: string
   docs: string[]
-  totalOfDocs: number,
+  totalOfDocs: number
   price: PriceProps
   totalOfItems: number
   items: string[]
   users: string[]
+  fallbackImage: string
   alert?: AlertProps
   onClick: () => void
 }
@@ -59,32 +60,36 @@ function OrderSnapshot({
   items,
   users,
   totalOfItems,
-  onClick
+  fallbackImage,
+  onClick,
 }: Props) {
   const { colors } = useTheme()
 
-  const statusAsAlert: boolean = useMemo(() => !!Object.values(alert || {})?.length, [
-    alert
-  ])
+  const statusAsAlert: boolean = useMemo(
+    () => !!Object.values(alert || {})?.length,
+    [alert]
+  )
 
-  const remainingTotalOfItems: number = useMemo(() => totalOfItems - items?.length, [
-    totalOfItems,
-    items?.length
-  ])
+  const remainingTotalOfItems: number = useMemo(
+    () => totalOfItems - items?.length,
+    [totalOfItems, items?.length]
+  )
 
   const doContainsDocs: boolean = useMemo(() => Boolean(docs?.length), [docs])
 
   return (
     <Column gap={10} onClick={onClick} styles={cssContainerStyles}>
-      <Alert
-        size={UIElementSizesEnum.Small}
-        type={alert?.type}
-        title={alert?.title}
-        description={alert?.description}
-        show={statusAsAlert}
-      />
+      {statusAsAlert && (
+        <Alert
+          size={UIElementSizesEnum.Small}
+          type={alert?.type}
+          title={alert?.title}
+          description={alert?.description}
+          show={statusAsAlert}
+        />
+      )}
 
-      <Row align='space-between' styles={cssHeaderStyles}>
+      <Row align="space-between" styles={cssHeaderStyles}>
         {!statusAsAlert ? (
           <StatusChip
             type={statusAsTypes[status]}
@@ -94,37 +99,33 @@ function OrderSnapshot({
             iconSize={15}
           />
         ) : (
-          <Typography weight={700} size={16}>{String(id)}</Typography>
+          <Typography weight={700} size={16} children={String(id)} />
         )}
 
         <Typography
-          type='description'
+          type="description"
           size={12}
           children={dateFormat(date, { language: 'es-CL', withHours: true })}
         />
       </Row>
 
-      <Row align='space-between'>
+      <Row align="space-between">
         <Row gap={10} styles={cssItemsStyles}>
           <Row gap={5}>
-            {items?.map((image, index) => image
-              ? <Image
-                src={image}
+            {items?.map((image, index) => (
+              <Image
+                src={image || ''}
+                alt={`Product image ${index}`}
+                fallback={fallbackImage}
                 key={index}
                 width={50}
                 height={50}
               />
-              : <Icon
-                name='image'
-                key={index}
-                size={50}
-                withBackground={0.65}
-              />
-            )}
+            ))}
           </Row>
 
           <TotalOfRemainingItems
-            type='description'
+            type="description"
             size={16}
             show={remainingTotalOfItems > 0}
             children={`+${remainingTotalOfItems}`}
@@ -132,22 +133,20 @@ function OrderSnapshot({
         </Row>
 
         <UsersContainer>
-          {users?.map((image, index) => image
-            ? <ImageContainer position={index} key={index}>
-              <Image
-                src={image}
-                width={35}
-                height={35}
-                rounded={100}
+          {users?.map((image, index) =>
+            image ? (
+              <ImageContainer position={index} key={index}>
+                <Image src={image} width={35} height={35} rounded={100} />
+              </ImageContainer>
+            ) : (
+              <DefaultProfileImage
+                name="person"
+                key={index}
+                size={15}
+                color="white"
+                position={index}
               />
-            </ImageContainer>
-            : <DefaultProfileImage
-              name='person'
-              key={index}
-              size={15}
-              color='white'
-              position={index}
-            />
+            )
           )}
         </UsersContainer>
       </Row>
@@ -160,10 +159,12 @@ function OrderSnapshot({
         {doContainsDocs && (
           <Column gap={5}>
             <Typography
-              type='helper'
+              type="helper"
               weight={700}
               size={12}
-              children={`Documentos adicionales (${totalOfDocs})`}
+              children={`Documentos adicionales ${
+                Boolean(totalOfDocs) ? `(${totalOfDocs})` : ''
+              }`}
             />
 
             <Typography numberOfLines={1} children={docs} size={15} />
@@ -172,11 +173,11 @@ function OrderSnapshot({
 
         <Column gap={5}>
           <Typography
-            type='helper'
+            type="helper"
             weight={700}
             size={12}
-            align='right'
-            children='Total'
+            align="right"
+            children="Total"
           />
           <Pricing
             weight={700}
@@ -184,7 +185,7 @@ function OrderSnapshot({
             currencyCode={price?.currencyCode}
             currencySize={10}
             amount={price?.amount}
-            align='right'
+            align="right"
           />
         </Column>
       </Row>
@@ -193,7 +194,7 @@ function OrderSnapshot({
 }
 
 const cssContainerStyles = css`
-  cursor: pointer
+  cursor: pointer;
 `
 
 const cssHeaderStyles = css`
@@ -203,10 +204,10 @@ const cssHeaderStyles = css`
       padding: 4px;
     }
 
-    p[type="default"] {
+    p[type='default'] {
       font-size: 22px !important;
     }
-    p[type="description"] {
+    p[type='description'] {
       font-size: 18px !important;
     }
   }
@@ -217,7 +218,8 @@ const cssItemsStyles = css`
     gap: 15px;
     padding-top: 5px;
 
-    span.material-icons, p[type="description"] {
+    span.material-icons,
+    p[type='description'] {
       font-size: 18px;
       width: 65px;
       height: 65px;
@@ -259,12 +261,12 @@ const userProfileStyles = (position: number) => css`
   }
 `
 
-const ImageContainer = styled.figure <{ position: number }>`
+const ImageContainer = styled.figure<{ position: number }>`
   position: absolute;
   ${({ position }) => userProfileStyles(position)}
 `
 
-const DefaultProfileImage = styled(Icon) <{ position: number }>`
+const DefaultProfileImage = styled(Icon)<{ position: number }>`
   background-color: ${({ theme }) => theme.colors.FONT.HELPER};
   width: 35px;
   height: 35px;
@@ -278,7 +280,7 @@ const DefaultProfileImage = styled(Icon) <{ position: number }>`
   ${({ position }) => userProfileStyles(position)}
 `
 
-const TotalOfRemainingItems = styled(Typography) <{ show: boolean }>`
+const TotalOfRemainingItems = styled(Typography)<{ show: boolean }>`
   width: 45px;
   height: 45px;
   border-radius: 7px;
@@ -292,15 +294,15 @@ const TotalOfRemainingItems = styled(Typography) <{ show: boolean }>`
 
 const cssBottomStyles = css`
   @media screen and (min-width: 768px) {
-    p[type="helper"] {
+    p[type='helper'] {
       font-size: 16px;
     }
 
-    div:first-of-type > p[type="default"] {
+    div:first-of-type > p[type='default'] {
       font-size: 18px !important;
     }
 
-    div:last-of-type > p[type="default"] {
+    div:last-of-type > p[type='default'] {
       font-size: 22px !important;
 
       &::after {
@@ -309,6 +311,5 @@ const cssBottomStyles = css`
     }
   }
 `
-
 
 export default OrderSnapshot
