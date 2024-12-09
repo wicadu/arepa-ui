@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react'
+
 import styled from '@emotion/styled'
+import { SerializedStyles } from '@emotion/react'
 
 import InfiniteScroll from '../../hocs/InfiniteScroll'
 import FlatListSkeleton from './Skeleton'
-import { SerializedStyles } from '@emotion/react'
+import MemoizedWrapper from '../../hocs/MemoizedWrapper'
 
 type DataExtracted<ItemT> = (info: ItemT, index: number) => Partial<ItemT>
 
@@ -84,20 +86,22 @@ function FlatList<ItemT>(props: Props<ItemT>) {
             name={String(item?.[keyExtracted])}
             {...itemWrapperProps}
           >
-            {React.isValidElement(Component) ? (
-              React.cloneElement(
-                Component,
-                dataExtractor?.({ ...item }, index),
-                index
-              )
-            ) : (
-              <Component
-                {...dataExtractor?.({ ...item }, index)}
-                index={index}
-              />
-            )}
+            <MemoizedWrapper>
+              {React.isValidElement(Component) ? (
+                React.cloneElement(
+                  Component,
+                  dataExtractor?.({ ...item }, index),
+                  index
+                )
+              ) : (
+                <Component
+                  {...dataExtractor?.({ ...item }, index)}
+                  index={index}
+                />
+              )}
 
-            <meta itemProp="position" content={index} />
+              <meta itemProp="position" content={index} />
+            </MemoizedWrapper>
           </ItemWrapper>
         ))}
       </ListWrapper>
