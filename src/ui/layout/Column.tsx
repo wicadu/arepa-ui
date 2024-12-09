@@ -16,16 +16,19 @@ interface Props {
   itemScope?: boolean
   itemType?: string
   forwardedRef?: React.Ref<HTMLDivElement>
+  as?: keyof JSX.IntrinsicElements
 }
 
 const defaultProps: Partial<Props> = {
   children: null,
   gap: 0,
   className: '',
+  as: 'div',
 }
 
 function Column(props: Props) {
   const {
+    as,
     children,
     align,
     gap,
@@ -45,6 +48,7 @@ function Column(props: Props) {
   return (
     <Container
       ref={forwardedRef}
+      as={as}
       align={align}
       gap={gap}
       flex={flex}
