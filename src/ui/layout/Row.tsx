@@ -17,6 +17,7 @@ interface Props {
   itemType?: string
   className?: string
   forwardedRef?: React.Ref<HTMLDivElement>
+  as?: keyof JSX.IntrinsicElements
 }
 
 const defaultProps: Partial<Props> = {
@@ -24,11 +25,13 @@ const defaultProps: Partial<Props> = {
   gap: 0,
   styles: '',
   className: '',
+  as: '',
 }
 
 function Row(props: Props) {
   const {
     children,
+    as,
     align,
     gap,
     flex,
@@ -48,6 +51,7 @@ function Row(props: Props) {
   return (
     <Container
       align={align}
+      as={as}
       gap={gap}
       flex={flex}
       styles={styles}

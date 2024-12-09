@@ -41,6 +41,7 @@ import InfiniteScroll from './hocs/InfiniteScroll'
 import ThemeProvider from './hocs/ThemeProvider'
 import RefForwarding from './hocs/RefForwarding'
 import InputFeedback from './hocs/InputFeedback'
+import MemoizedWrapper from './hocs/MemoizedWrapper'
 
 import { useTheme } from '@emotion/react'
 
@@ -104,6 +105,7 @@ export {
   InfiniteScroll,
   RefForwarding,
   InputFeedback,
+  MemoizedWrapper,
 
   // Hooks
   useTheme,
