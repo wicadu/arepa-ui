@@ -42,21 +42,24 @@ function Article({
   return (
     <Container className={className} styles={styles}>
       <div>
-        <Row align='space-between' styles={cssHeaderStyles}>
+        <Row align="space-between" styles={cssHeaderStyles}>
           <Row gap={10}>
             {iconName && (
               <Icon
                 name={iconName}
                 color={colors?.FONT?.TITLE}
                 size={15}
+                datasets={{
+                  'data-article-title-icon': true,
+                }}
               />
             )}
-
             <Typography
-              type='title-4'
+              type="title-4"
               lineHeight={30}
               size={16}
               children={title}
+              data-title
               afterStyles={titleAfterStyles}
             />
           </Row>
@@ -65,7 +68,7 @@ function Article({
         </Row>
 
         <Typography
-          type='description'
+          type="description"
           size={12}
           afterStyles={descriptionAfterStyles}
           children={description}
