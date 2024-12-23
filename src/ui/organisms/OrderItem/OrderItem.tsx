@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import styled from '@emotion/styled'
 import { css, SerializedStyles } from '@emotion/react'
@@ -6,7 +6,6 @@ import { css, SerializedStyles } from '@emotion/react'
 import Typography from '../../atoms/Typography'
 import Column from '../../layout/Column'
 import Row from '../../layout/Row'
-import Icon from '../../atoms/Icon'
 import Image from '../../atoms/Image'
 
 import OrderItemSkeleton from './Skeleton'
@@ -29,6 +28,7 @@ interface Props {
   containerStyles?: SerializedStyles | string
   onClick?: (event?: React.MouseEvent<HTMLElement>) => void
   imageComponent?: React.ElementType
+  className?: string
 }
 
 const defaultProps: Props = {
@@ -39,6 +39,7 @@ const defaultProps: Props = {
   fallbackImage: '',
   imageLoadingType: 'eager',
   imageComponent: 'img',
+  className: '',
 }
 
 function OrderItem(props: Props) {
@@ -54,6 +55,7 @@ function OrderItem(props: Props) {
     imageLoadingType,
     containerStyles,
     imageComponent,
+    className,
   } = {
     ...defaultProps,
     ...props,
@@ -197,6 +199,7 @@ const ImageContainer = styled.figure`
   img[data-image-is-fallback='true'] {
     width: 40px;
     height: 40px;
+    margin: auto;
   }
 
   @media screen and (min-width: 768px) {
