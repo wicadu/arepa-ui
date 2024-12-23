@@ -6,7 +6,7 @@ interface Props {
   skeleton: React.FC
 }
 
-function FlatListSkeleton({ skeleton: Skeleton }: Props): JSX.Element {
+function FlatListSkeleton({ skeleton: Skeleton }: Props) {
   return (
     <Column gap={10}>
       <Skeleton />

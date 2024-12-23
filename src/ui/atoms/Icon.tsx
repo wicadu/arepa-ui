@@ -10,7 +10,7 @@ interface Props extends Partial<HTMLProps<HTMLSpanElement>> {
   className?: string
   withBackground?: boolean | number
   datasets?: {
-    [key: string]: string | number
+    [key: string]: string | number | boolean
   }
 }
 

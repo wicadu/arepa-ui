@@ -26,6 +26,7 @@ interface Props {
   size?: UIElementSizesEnum
   styles?: SerializedStyles | string
   time?: number
+  className?: string
 }
 
 const defaultProps: Partial<Props> = {
@@ -37,10 +38,21 @@ const defaultProps: Partial<Props> = {
   size: UIElementSizesEnum.Medium,
   styles: '',
   time: 0,
+  className: '',
 }
 
 function Alert(props: Props) {
-  const { title, description, type, show, width, size, styles, time } = {
+  const {
+    title,
+    description,
+    type,
+    show,
+    width,
+    size,
+    styles,
+    time,
+    className,
+  } = {
     ...defaultProps,
     ...props,
   }
@@ -67,13 +79,12 @@ function Alert(props: Props) {
       type={type}
       size={size}
       styles={styles}
+      className={className}
     >
       <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
 
       <Content size={size}>
-        <Typography weight={700} color={color}>
-          {title}
-        </Typography>
+        <Typography weight={700} color={color} children={title} />
         <Typography color={color}>{description}</Typography>
       </Content>
 

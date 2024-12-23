@@ -158,6 +158,7 @@ export function RightChildAsButton({
     <RightChildButton
       {...restOfProps}
       type="link"
+      data-section-link
       onClick={onClick}
       highlight={undefined}
       children={text}

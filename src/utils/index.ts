@@ -16,6 +16,8 @@ import getBordersStyles from './getBordersStyles'
 import getFileSize from './getFileSize'
 import localStorage from './localStorage'
 import stringInterpolator from './stringInterpolator'
+import isNumber from './isNumber'
+import isObject from './isObject'
 
 yup.addMethod(yup.string, 'wicaduEmail', function validateEmail(message) {
   return this.matches(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`, {
@@ -43,4 +45,6 @@ export {
   getFileSize,
   localStorage,
   stringInterpolator,
+  isNumber,
+  isObject,
 }
