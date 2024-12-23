@@ -1,3 +1,11 @@
+# 1.36.0
+
+- Added _datasets_ for _title_, _description_, and _icon_ in `Article`
+- Added _datasets_ in Section.RightChildAsButton
+- Added _className_ prop to `Alert`, `SearchInput`, and `OrderItem` for styling
+- Added try-catch block in `hexToRBGA` to prevent breaking errors
+- Added `isNumber` and `isObject` _utils_
+
 # 1.35.0
 
 - Support rendering custom HTML tags in `Row` and `Column` by using _as_ prop
