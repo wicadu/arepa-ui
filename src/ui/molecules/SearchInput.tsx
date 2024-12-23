@@ -18,6 +18,7 @@ interface Props {
   sideUtilityIcon?: React.ReactNode
   min?: number
   leftIcon?: string | undefined
+  className?: string
   onLeftIcon?: (action: LeftIconAction) => void
   onFocus: () => void
   onSubmit: (_: string) => void
@@ -29,6 +30,7 @@ const defaultProps: Partial<Props> = {
   sideUtilityIcon: null,
   min: 1,
   leftIcon: undefined,
+  className: '',
   onLeftIcon() {},
 }
 
@@ -42,6 +44,7 @@ function SearchInput(props: Props) {
     onLeftIcon,
     onFocus,
     onSubmit,
+    className,
     ...restOfProps
   } = {
     ...defaultProps,
@@ -69,7 +72,7 @@ function SearchInput(props: Props) {
   }, [hasTyped, name, setValue, onLeftIcon])
 
   return (
-    <Container gap={10}>
+    <Container gap={10} className={className}>
       <StyledInput
         role="searchbox"
         doNotShowErrors
