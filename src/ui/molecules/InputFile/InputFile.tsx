@@ -3,7 +3,7 @@ import React, { Fragment, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 import { css, SerializedStyles } from '@emotion/react'
 
-import { getFormFieldsErrors } from '../../../utils'
+import { getObjectField } from '../../../utils'
 import Form from '../../hocs/Form'
 import InputFileUploader from './Uploader'
 import InputFeedback from '../../hocs/InputFeedback'
@@ -29,7 +29,7 @@ const defaultProps: Partial<Props> = {
   disabled: false,
   width: '100%',
   accept: '.jpg, .jpeg, .png, .svg, .webp, application/pdf',
-  onChangeInput(){}
+  onChangeInput() {},
 }
 
 function InputFile(props: Props) {
@@ -47,17 +47,21 @@ function InputFile(props: Props) {
     onChangeInput,
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
-  const { control, formState: { errors } } = Form.useForm()
+  const {
+    control,
+    formState: { errors },
+  } = Form.useForm()
   const loadedFile: File | string = Form.useWatch({ name, control })
 
-  const fieldError = getFormFieldsErrors(errors, name)
+  const fieldError = getObjectField(errors, name)
 
-  const Container = useMemo(() => doNotShowFeedback ? Fragment : InputFeedback, [
-    doNotShowFeedback
-  ])
+  const Container = useMemo(
+    () => (doNotShowFeedback ? Fragment : InputFeedback),
+    [doNotShowFeedback]
+  )
 
   const goToPreview = () => {
     if (typeof loadedFile === 'string') {
@@ -72,7 +76,7 @@ function InputFile(props: Props) {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange } }) =>
+      render={({ field: { onChange } }) => (
         <Container
           label={label}
           errors={fieldError}
@@ -95,21 +99,21 @@ function InputFile(props: Props) {
             />
             {Boolean(loadedFile) && (
               <Button
-                type='link'
-                align='right'
+                type="link"
+                align="right"
                 children={
                   typeof loadedFile === 'string'
                     ? loadedFile?.slice(-17)
                     : loadedFile?.name?.slice(-17) || ''
                 }
-                width='auto'
+                width="auto"
                 onClick={goToPreview}
                 styles={cssPreviewButtonStyles}
               />
             )}
           </Row>
         </Container>
-      }
+      )}
       defaultValue={defaultValue}
     />
   )
