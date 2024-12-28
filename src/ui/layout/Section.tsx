@@ -156,18 +156,20 @@ export function RightChildAsButton({
 
   return (
     <RightChildButton
-      {...restOfProps}
       type="link"
+      width="auto"
       data-section-link
       onClick={onClick}
       highlight={undefined}
       children={text}
+      {...restOfProps}
     />
   )
 }
 
 const RightChildButton = styled(Button)`
   font-size: 12px !important;
+  min-width: fit-content;
 
   color: ${({ theme }) => theme?.colors?.MAIN?.INFO} !important;
 
