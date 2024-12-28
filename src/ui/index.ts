@@ -23,13 +23,15 @@ import UserCard from './molecules/UserCard/UserCard'
 import StatusChip from './molecules/StatusChip'
 import Collapsable from './molecules/Collapsable'
 import Pricing from './molecules/Pricing'
-import Toast from './molecules/Toast'
+import Toast from './molecules/Toast/Toast'
 import SearchInput from './molecules/SearchInput'
 
 import Stepper from './molecules/Stepper'
 import Breadcrumbs from './molecules/Breadcrumbs'
 
-import OrderItem from './organisms/OrderItem/OrderItem'
+import OrderItem, {
+  Props as OrderItemProps,
+} from './organisms/OrderItem/OrderItem'
 import FlatList from './organisms/FlatList/FlatList'
 import OrderSnapshot from './organisms/OrderSnapshot'
 import ImageUploader from './organisms/ImageUploader/ImageUploader'
@@ -87,6 +89,7 @@ export {
   // Organisms
   FlatList,
   OrderItem,
+  OrderItemProps,
   OrderSnapshot,
   ImageUploader,
   ImagesGallery,
