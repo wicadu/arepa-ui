@@ -80,7 +80,7 @@ function FlatList<ItemT>(props: Props<ItemT>) {
       <ListWrapper styles={styles} {...listWrapperProps}>
         {data?.map((item, index) => (
           <ItemWrapper
-            key={item?.[keyExtracted]}
+            key={keyExtracted === 'index' ? index : item?.[keyExtracted]}
             index={index}
             value={String(item?.[keyExtracted])}
             name={String(item?.[keyExtracted])}

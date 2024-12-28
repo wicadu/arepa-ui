@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styled from '@emotion/styled'
-import { SerializedStyles, useTheme } from '@emotion/react'
+import { SerializedStyles } from '@emotion/react'
 
 import Typography from '../atoms/Typography'
 import Icon from '../atoms/Icon'
@@ -20,12 +20,13 @@ const _types = {
 interface Props {
   title: string
   description: string
-  type: UIElementStatusEnum
-  show: boolean
-  width: string
-  size?: UIElementSizesEnum
+  type: `${UIElementStatusEnum}`
+  show?: boolean
+  width?: string
+  size?: `${UIElementSizesEnum}`
   styles?: SerializedStyles | string
   time?: number
+  outlined?: boolean
   className?: string
 }
 
@@ -38,6 +39,7 @@ const defaultProps: Partial<Props> = {
   size: UIElementSizesEnum.Medium,
   styles: '',
   time: 0,
+  outlined: true,
   className: '',
 }
 
@@ -51,6 +53,7 @@ function Alert(props: Props) {
     size,
     styles,
     time,
+    outlined,
     className,
   } = {
     ...defaultProps,
@@ -58,10 +61,6 @@ function Alert(props: Props) {
   }
 
   const [showAlert, setShowAlert] = useState<boolean>(show)
-
-  const { colors } = useTheme()
-
-  const color = useMemo(() => colors.MAIN[String(type).toUpperCase()], [type])
 
   useEffect(() => {
     setShowAlert(show)
@@ -79,16 +78,23 @@ function Alert(props: Props) {
       type={type}
       size={size}
       styles={styles}
+      outlined={outlined}
       className={className}
     >
-      <Icon name={_types?.[type?.toLowerCase()]} size={28} color={color} />
+      <Icon
+        name={_types?.[type?.toLowerCase()]}
+        size={28}
+        datasets={{
+          'data-alert-icon': true,
+        }}
+      />
 
       <Content size={size}>
-        <Typography weight={700} color={color} children={title} />
-        <Typography color={color}>{description}</Typography>
+        <Typography type="default" weight={700} size={14} children={title} />
+        <Typography type="default" size={12} children={description} />
       </Content>
 
-      <OpacityCanceler color={color} />
+      <OpacityCanceler type={type} outlined={outlined} />
     </Container>
   )
 }
@@ -100,13 +106,24 @@ const Container = styled.div<Partial<Props>>`
   display: flex;
   align-items: center;
   gap: 5px;
+  overflow: hidden;
 
-  ${({ type, theme, show, width, size }) => {
+  [data-alert-icon='true'] {
+    z-index: 1;
+  }
+
+  ${({ type, theme, show, width, size, outlined }) => {
     if (!show) return 'display: none;'
 
     const { colors } = theme
 
+    const color: string = colors?.MAIN?.[String(type).toUpperCase()]
+
     let style: string = `
+      *, [data-alert-icon='true'] {
+        color: ${outlined ? color : colors?.FONT?.CONTRAST} !important;
+      }
+
       @media screen and (min-width: 768px) {
         .material-icons {
           font-size: 36px;
@@ -141,13 +158,11 @@ const Container = styled.div<Partial<Props>>`
       `
     }
 
-    const mainColor = colors.MAIN?.[String(type).toUpperCase()]
-
     style += `
       width: ${width};
-      color: ${mainColor};
+      color: ${color};
       background-color: ${colors.NEUTRAL.BACKGROUND};
-      border: 1px solid ${mainColor};
+      border: 1px solid ${color};
     `
 
     return style
@@ -158,7 +173,7 @@ const Container = styled.div<Partial<Props>>`
 
 const Content = styled.span<Partial<Props>>`
   flex: 1;
-  z-index: 2;
+  z-index: 1;
 
   ${({ size }) => {
     let style: string = ''
@@ -194,14 +209,16 @@ const Content = styled.span<Partial<Props>>`
 `
 
 const OpacityCanceler = styled.div<Partial<Props>>`
-  border-radius: 10px;
-  background-color: ${({ color }) => hexToRGBA(color, 0.1)};
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+
+  ${({ outlined, theme, type }) => {
+    const color: string = theme?.colors?.MAIN[String(type).toUpperCase()]
+    return `background-color: ${outlined ? hexToRGBA(color, 0.1) : color}`
+  }}
 `
 
 export default Alert

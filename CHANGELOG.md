@@ -1,3 +1,16 @@
+# 1.37.0
+
+- Refactored `getFormFieldsErrors` as `getObjectField` to generalize nested object field access
+- Added _defaultProps_ for `CheckoxGroup` and updated them in `Typography`
+- Created `Chronos` for date handling and documented `dateFormat` (still exported/used until **@wicadu/utils** is implemented)
+- Moved `ToastContext` to `Molecules/Toast` for better organization
+- Added `groupItemsByPath` _utils_ for grouping items by a specified nested field value using a path
+- Improved _styles_ in `Section` and `Alert` components
+- Implemented `OrderItem.OrderItemSpecs` to simplify and reduce prop complexity
+- Added _className_ prop in `Pricing` and _index_ in `FlatList.dataExtractor`
+- Updated `Article` _HTML_ structure for improved **SEO**
+- Styled code in `Select` component
+
 # 1.36.0
 
 - Added _datasets_ for _title_, _description_, and _icon_ in `Article`

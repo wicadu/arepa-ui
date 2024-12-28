@@ -1,32 +1,34 @@
 import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import Form from './Form'
 import InputFeedback from './InputFeedback'
 import styled from '@emotion/styled'
 
-import { getFormFieldsErrors } from '../../utils'
+import { getObjectField } from '../../utils'
 
 const { useForm } = Form
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired
+interface Props {
+  children: React.ReactNode
+  name: string
+  label?: string
 }
 
-type Props = InferProps<typeof propTypes>
+const defaultProps: Props = {
+  children: null,
+  name: '',
+  label: '',
+}
 
-function CheckboxGroup ({
-  children,
-  name,
-  label,
-  ...props
-}: Props) {
-  const {
-    formState: { errors },
-  } = useForm()
+function CheckboxGroup(props: Props) {
+  const { children, name, label, ...restOfprops } = {
+    ...defaultProps,
+    ...props,
+  }
 
-  const fieldError = getFormFieldsErrors(errors, name)
+  const { formState } = useForm()
+
+  const fieldError = getObjectField(formState?.errors, name)
 
   return (
     <Container>
@@ -36,14 +38,12 @@ function CheckboxGroup ({
         hasError={Boolean(fieldError?.message)}
         name={name}
       >
-        {
-          children.map(child =>
-            React.cloneElement(child, {
-              name,
-              ...props
-            })
-          )
-        }
+        {children.map((child) =>
+          React.cloneElement(child, {
+            name,
+            ...restOfprops,
+          })
+        )}
       </StyledInputFeedback>
     </Container>
   )
@@ -58,7 +58,5 @@ const StyledInputFeedback = styled(InputFeedback)`
     margin-bottom: 5px;
   }
 `
-
-CheckboxGroup.propTypes = propTypes
 
 export default CheckboxGroup

@@ -1,17 +1,24 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
 import styled from '@emotion/styled'
 
-import Alert from './Alert'
-import ToastProvider, { ToastData, ToastOptions, useToast } from '../hocs/ToastContext'
-import { UIElementStatusEnum } from '../ts/enums/UIElementStatusEnum'
+import Alert from '../Alert'
+import ToastProvider, {
+  ToastData,
+  ToastOptions,
+  useToast,
+} from './ToastContext'
+import { UIElementStatusEnum } from '../../ts/enums/UIElementStatusEnum'
 
 function useNotify() {
   const { addToast, removeToast } = useToast()
 
   const convertKeysToLowerCase = useCallback((obj: ToastData) => {
     return Object.fromEntries(
-      Object?.entries(obj || {})?.map(([key, value]) => [key.toLowerCase(), value])
+      Object?.entries(obj || {})?.map(([key, value]) => [
+        key.toLowerCase(),
+        value,
+      ])
     )
   }, [])
 
@@ -36,9 +43,9 @@ function useNotify() {
       const { title, description, time } = convertKeysToLowerCase(data)
       addToast({ type: UIElementStatusEnum.Info, title, description, time })
     },
-    remove: (id?: string | number ) => {
+    remove: (id?: string | number) => {
       removeToast(id)
-    }
+    },
   }
 
   return notify
@@ -52,24 +59,35 @@ interface Props {
 function Toast({ toasts, options }: Props) {
   if (!toasts?.length) return null
 
-  return toasts?.slice(0, 10)?.map(({ id, title, description, type }: ToastData, index) => (
-    <Container key={id} index={index} options={options}>
-      <Alert show type={type} title={title} description={description} />
-    </Container>
-  ))
+  const limitedToasts = useMemo(() => toasts?.slice(0, 10) || [], [toasts])
+
+  return limitedToasts?.map(
+    ({ id, title, description, type }: ToastData, index) => (
+      <Container key={id} index={index} options={options}>
+        <Alert
+          show
+          type={type}
+          title={title}
+          description={description}
+          outlined={false}
+        />
+      </Container>
+    )
+  )
 }
 
 const _ALERT_HEIGHT = 50
 
 const Container = styled.div<{
-  index: number,
+  index: number
   options: ToastOptions
 }>`
   position: fixed;
-  left: 15px;
-  right: 15px;
+  left: 30px;
+  right: -10px;
   z-index: 100;
-  top: ${({ index, options }) => index * (_ALERT_HEIGHT + 15) + options?.firstToastSpace}px;
+  top: ${({ index, options }) =>
+    index * (_ALERT_HEIGHT + 15) + options?.firstToastSpace}px;
 `
 
 Toast.Provider = ToastProvider

@@ -41,19 +41,18 @@ function Article({
   const { colors } = useTheme()
   return (
     <Container className={className} styles={styles}>
-      <div>
+      <header>
         <Row align="space-between" styles={cssHeaderStyles}>
           <Row gap={10}>
-            {iconName && (
-              <Icon
-                name={iconName}
-                color={colors?.FONT?.TITLE}
-                size={15}
-                datasets={{
-                  'data-article-title-icon': true,
-                }}
-              />
-            )}
+            <Icon
+              name={iconName}
+              color={colors?.FONT?.TITLE}
+              size={15}
+              datasets={{
+                'data-title-icon': true,
+                'data-title-icon-display': Boolean(iconName),
+              }}
+            />
             <Typography
               type="title-4"
               lineHeight={30}
@@ -64,16 +63,17 @@ function Article({
             />
           </Row>
 
-          <div>{rightChild}</div>
+          {rightChild}
         </Row>
-
-        <Typography
-          type="description"
-          size={12}
-          afterStyles={descriptionAfterStyles}
-          children={description}
-        />
-      </div>
+        {Boolean(description?.length) && (
+          <Typography
+            type="description"
+            size={12}
+            afterStyles={descriptionAfterStyles}
+            children={description}
+          />
+        )}
+      </header>
 
       {children}
     </Container>
@@ -93,6 +93,10 @@ const Container = styled.article<Partial<Props>>`
   display: flex;
   flex-direction: column;
   ${({ styles }) => styles}
+
+  [data-title-icon-display='false'] {
+    display: none;
+  }
 `
 
 Article.RightChildAsButton = RightChildAsButton

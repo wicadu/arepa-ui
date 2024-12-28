@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+} from 'react'
 
-import { UIElementStatusEnum } from '../ts/enums/UIElementStatusEnum'
-import Toast from '../molecules/Toast'
+import { UIElementStatusEnum } from '../../ts/enums/UIElementStatusEnum'
+import Toast from './Toast'
 
 export interface ToastData {
   id?: number
@@ -35,21 +41,22 @@ interface Props {
 
 const defaultOptions: ToastOptions = {
   firstToastSpace: 15,
-  direction: 'top'
+  direction: 'top',
 }
 
 function ToastProvider({ children, options }: Props) {
   const [toasts, setToasts] = useState<ToastData[]>([])
 
-  const removeToast = useCallback((id?: number | string) => {
-    if (!Boolean(id)) setToasts([])
+  const removeToast = useCallback(
+    (id?: number | string) => {
+      if (!Boolean(id)) setToasts([])
 
-    setToasts((prevToasts: ToastData[]) =>
-      prevToasts.filter((toast) => toast.id !== id)
-    )
-  }, [
-    toasts
-  ])
+      setToasts((prevToasts: ToastData[]) =>
+        prevToasts.filter((toast) => toast.id !== id)
+      )
+    },
+    [toasts]
+  )
 
   const addToast = useCallback((options: ToastData) => {
     const { title, type, description, time } = options || {}
@@ -59,7 +66,6 @@ function ToastProvider({ children, options }: Props) {
 
     setTimeout(() => removeToast(id), time || 3000)
   }, [])
-
 
   return (
     <ToastContext.Provider value={{ toasts, addToast, removeToast }}>

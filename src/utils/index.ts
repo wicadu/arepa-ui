@@ -9,15 +9,18 @@ import rutFormat from './rutFormat'
 import debounce from './debounce'
 import capitalize from './capitalize'
 import formatCurrency from './formatCurrency'
-import dateFormat from './dateFormat'
+// Todo: Everything has to be done throught chronos when migrating to @wicadu/utils
+import chronos from './chronos'
+import dateFormat from './chronos/dateFormat'
 import getErrorMessage from './getErrorMessage'
-import getFormFieldsErrors from './getFormFieldsErrors'
+import getObjectField from './getObjectField'
 import getBordersStyles from './getBordersStyles'
 import getFileSize from './getFileSize'
 import localStorage from './localStorage'
 import stringInterpolator from './stringInterpolator'
 import isNumber from './isNumber'
 import isObject from './isObject'
+import groupItemsByPath from './groupItemsByPath'
 
 yup.addMethod(yup.string, 'wicaduEmail', function validateEmail(message) {
   return this.matches(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`, {
@@ -38,13 +41,15 @@ export {
   debounce,
   capitalize,
   formatCurrency,
+  chronos,
   dateFormat,
   getErrorMessage,
-  getFormFieldsErrors,
+  getObjectField,
   getBordersStyles,
   getFileSize,
   localStorage,
   stringInterpolator,
   isNumber,
   isObject,
+  groupItemsByPath,
 }

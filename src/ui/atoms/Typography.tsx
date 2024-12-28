@@ -18,7 +18,7 @@ enum htmlType {
 }
 
 interface Props {
-  type: htmlType
+  type: `${htmlType}`
   align?: 'left' | 'center' | 'right'
   weight?: 100 | 300 | 400 | 600 | 700 | 'bold'
   size?: number
@@ -37,24 +37,22 @@ interface Props {
   datasets?: {
     [key: string]: string | number
   }
-  decoration: string
+  decoration?: string
   bold?: boolean
   styles?: string | SerializedStyles
   itemProp?: string
-}
-
-const defaultAfterStyles: Props['afterStyles'] = {
-  content: '',
-  size: 12,
-  weight: 300,
-  color: '',
 }
 
 const defaultProps: Partial<Props> = {
   type: htmlType.default,
   align: 'left',
   datasets: {},
-  afterStyles: defaultAfterStyles,
+  afterStyles: {
+    content: '',
+    size: 12,
+    weight: 300,
+    color: '',
+  },
 }
 
 function Typography(props: Props) {
@@ -122,7 +120,7 @@ const defaultStyles = ({
       : ''
   }
 
-  ${addAfterStyles({ ...defaultAfterStyles, ...afterStyles })}
+  ${addAfterStyles({ ...defaultProps?.afterStyles, ...afterStyles })}
 `
 
 const Title = styled.h1<Partial<Props>>`

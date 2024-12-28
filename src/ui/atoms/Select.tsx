@@ -7,7 +7,7 @@ import InputFeedback from '../hocs/InputFeedback'
 import Icon from './Icon'
 import useOutsideClick from '../../hooks/useOutsideClick'
 import Form from '../hocs/Form'
-import { capitalize, getFormFieldsErrors, hexToRGBA } from '../../utils'
+import { capitalize, getObjectField, hexToRGBA } from '../../utils'
 import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
 type Option = {
@@ -32,6 +32,7 @@ const defaultProps: Partial<Props> = {
   size: UIElementSizesEnum.Medium,
   withBorder: true,
   width: '100%',
+  defaultValue: undefined,
 }
 
 function SelectComponent(props: Props) {
@@ -45,16 +46,20 @@ function SelectComponent(props: Props) {
     ...restOfProps
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const [selectedOption, setSelectedOption] = useState<Option>()
   const [showOptions, setShowOptions] = useState<boolean>(false)
 
-  const { register, control, formState: { errors } } = Form.useForm()
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = Form.useForm()
   const ref = useRef(null)
 
-  const fieldError = getFormFieldsErrors(errors, name)
+  const fieldError = getObjectField(errors, name)
 
   const handleShowOptions = useCallback(() => {
     if (disabled) return
@@ -65,7 +70,7 @@ function SelectComponent(props: Props) {
   const handleSetOption = ({ label, value }: Option) => {
     const newOption = {
       label: String(label || ''),
-      value: String(value || '')
+      value: String(value || ''),
     }
 
     handleShowOptions()
@@ -76,12 +81,11 @@ function SelectComponent(props: Props) {
 
   useEffect(() => {
     if (Boolean(defaultValue)) {
-      setSelectedOption(options?.find(({ value }) => String(value) === String(defaultValue)))
+      setSelectedOption(
+        options?.find(({ value }) => String(value) === String(defaultValue))
+      )
     }
-  }, [
-    defaultValue,
-    options
-  ])
+  }, [defaultValue, options])
 
   const { label, value } = selectedOption || {}
 
@@ -94,7 +98,7 @@ function SelectComponent(props: Props) {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange } }) =>
+      render={({ field: { onChange } }) => (
         <Container
           {...restOfProps}
           errors={fieldError}
@@ -107,7 +111,7 @@ function SelectComponent(props: Props) {
               value={value}
               name={name}
               id={name}
-              {...register(name) as any}
+              {...(register(name) as any)}
             />
             <SelectedValueRendering
               {...restOfProps}
@@ -139,7 +143,7 @@ function SelectComponent(props: Props) {
             )}
           </Wrapper>
         </Container>
-      }
+      )}
       defaultValue={defaultValue}
     />
   )
@@ -154,7 +158,8 @@ const Wrapper = styled.div`
   -ms-user-select: none;
   user-select: none;
 
-  p, li {
+  p,
+  li {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -181,9 +186,9 @@ const SelectedValueRendering = styled.div<Partial<Props & any>>`
 
   border: 1px solid
     ${({ theme, withBorder }) =>
-    withBorder
-      ? theme.colors.NEUTRAL.SELECTED
-      : theme.colors.NEUTRAL.TRANSPARENT};
+      withBorder
+        ? theme.colors.NEUTRAL.SELECTED
+        : theme.colors.NEUTRAL.TRANSPARENT};
 
   ${({ theme, hasError }) =>
     hasError && `border: 1px solid ${theme.colors.MAIN.ERROR};`}
@@ -211,12 +216,14 @@ const OptionsContainer = styled.ul<any>`
   background: ${({ theme }) => theme.colors.NEUTRAL.CARD};
   border: 1px solid
     ${({ theme }: any) => hexToRGBA(theme.colors.NEUTRAL.SELECTED, 0.5)};
-  max-height: 350px;
+  max-height: 200px;
+  margin-top: 5px !important;
   position: absolute;
   left: 0;
   right: 0;
   overflow: auto;
-  z-index: 1;
+  z-index: 3;
+  box-shadow: 0 0px 8px -5px rgba(0, 0, 0, 0.3);
 `
 
 const OptionItem = styled.li<any>`
@@ -226,7 +233,7 @@ const OptionItem = styled.li<any>`
   &:hover {
     border-radius: 5px;
     background-color: ${({ theme }) =>
-    hexToRGBA(theme.colors.MAIN.PRIMARY, 0.04)};
+      hexToRGBA(theme.colors.MAIN.PRIMARY, 0.04)};
   }
 `
 

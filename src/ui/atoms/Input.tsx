@@ -6,7 +6,7 @@ import { SerializedStyles } from '@emotion/react'
 import InputFeedback, { Wrapper } from '../hocs/InputFeedback'
 import Form from '../hocs/Form'
 import Icon, { IconProps } from './Icon'
-import { getFormFieldsErrors } from '../../utils'
+import { getObjectField } from '../../utils'
 import { UIElementSizesEnum } from '../ts/enums/UIElementSizesEnum'
 
 type IconPosition = 'left' | 'right'
@@ -67,7 +67,7 @@ function InputComponent(props: Props) {
     register,
   } = Form.useForm()
 
-  const fieldError: any = getFormFieldsErrors(errors, name)
+  const fieldError: any = getObjectField(errors, name)
 
   const Container: React.FC<any> = useMemo(
     () => (doNotShowFeedback ? Wrapper : InputFeedback),

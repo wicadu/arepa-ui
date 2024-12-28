@@ -8,6 +8,7 @@ interface Props extends Partial<TypographyProps> {
   amount: number
   currencySize?: number
   currencyWeight?: number
+  className?: string
 }
 
 const defaultProps: Partial<Props> = {
@@ -15,6 +16,7 @@ const defaultProps: Partial<Props> = {
   amount: 0,
   currencySize: 12,
   currencyWeight: 500,
+  className: '',
 }
 
 function Pricing(props: Props) {
@@ -26,6 +28,7 @@ function Pricing(props: Props) {
     weight,
     currencySize,
     currencyWeight,
+    className,
     ...restOfProps
   } = {
     ...defaultProps,
@@ -56,6 +59,7 @@ function Pricing(props: Props) {
         size: currencySize,
         weight: currencyWeight,
       }}
+      className={className}
     >
       <meta itemProp="priceCurrency" content={currencyCode} />
       <meta itemProp="price" content={amount} />
