@@ -10,19 +10,16 @@ import Image from '../../atoms/Image'
 
 import OrderItemSkeleton from './Skeleton'
 import OrderItemBottom from './OrderItemBottom'
+import OrderItemSpecs, { type Price, type Spec } from './OrderItemSpecs'
 
-type Spec = {
-  key?: string
-  value?: string | number
-}
-
-interface Props {
+export interface Props {
   image?: string
   label?: string
   name: string
+  time?: string
   description: string
-  customSpecComponent?: React.ReactElement
   specs?: Spec[]
+  price: Price
   imageLoadingType?: 'eager' | 'lazy'
   fallbackImage?: string
   containerStyles?: SerializedStyles | string
@@ -34,8 +31,10 @@ interface Props {
 const defaultProps: Props = {
   image: '',
   name: '',
+  time: '',
   description: '',
   specs: [],
+  price: {} as Price,
   fallbackImage: '',
   imageLoadingType: 'eager',
   imageComponent: 'img',
@@ -45,10 +44,11 @@ const defaultProps: Props = {
 function OrderItem(props: Props) {
   const {
     specs,
+    price,
     name,
     label,
     image,
-    customSpecComponent,
+    time,
     onClick,
     description,
     fallbackImage,
@@ -69,15 +69,15 @@ function OrderItem(props: Props) {
       itemProp="item"
       itemScope
       itemType="https://schema.org/Product"
+      className={className}
     >
-      <Typography
+      <StyledLabel
         type="helper"
         numberOfLines={1}
         weight={700}
         size={10}
         children={label}
         itemProp="gtin13"
-        styles={cssLabelStyles}
       />
 
       <Content>
@@ -96,15 +96,32 @@ function OrderItem(props: Props) {
 
         <Column align="space-between" gap={0} flex={1}>
           <Column gap={0}>
-            <Typography
-              type="title-3"
-              numberOfLines={1}
-              weight={700}
-              size={16}
-              children={name}
-              itemProp="name"
-              styles={cssTitleStyles}
-            />
+            {time ? (
+              <Row gap={0} align="space-between">
+                <Typography
+                  type="title-3"
+                  numberOfLines={1}
+                  weight={700}
+                  size={16}
+                  children={name}
+                  itemProp="name"
+                  styles={cssTitleStyles}
+                />
+
+                <Typography type="description" size={12} children={time} />
+              </Row>
+            ) : (
+              <Typography
+                type="title-3"
+                numberOfLines={1}
+                weight={700}
+                size={16}
+                children={name}
+                itemProp="name"
+                styles={cssTitleStyles}
+              />
+            )}
+
             <Typography
               type="description"
               numberOfLines={2}
@@ -115,27 +132,7 @@ function OrderItem(props: Props) {
             />
           </Column>
 
-          {customSpecComponent ? (
-            React.cloneElement(customSpecComponent)
-          ) : (
-            <Row gap={0} align="space-between">
-              {specs?.map(({ key, value }) => (
-                <Typography
-                  key={`${key}-${value}`}
-                  type="description"
-                  children={value}
-                  weight={700}
-                  size={14}
-                  styles={cssSpecsStyles}
-                  afterStyles={{
-                    content: ` ${key ?? ''}`,
-                    size: 10,
-                    weight: 300,
-                  }}
-                />
-              ))}
-            </Row>
-          )}
+          <OrderItemSpecs specs={specs} price={price} />
         </Column>
       </Content>
     </Column>
@@ -152,7 +149,7 @@ const Content = styled.div`
   gap: 5px;
 `
 
-const cssLabelStyles = css`
+const StyledLabel = styled(Typography)`
   @media screen and (min-width: 768px) {
     font-size: 14px;
   }
@@ -169,17 +166,6 @@ const cssDescriptionStyles = css`
     font-size: 18px;
     -webkit-line-clamp: 1;
     line-height: normal;
-  }
-`
-
-const cssSpecsStyles = css`
-  @media screen and (min-width: 768px) {
-    font-size: 18px;
-    line-height: 22px;
-
-    &::after {
-      font-size: 16px;
-    }
   }
 `
 
