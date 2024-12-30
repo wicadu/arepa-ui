@@ -10,7 +10,7 @@ type GroupRecord<T> = Record<string, T[]>
  * @returns A record where each key is a unique value of the specified field,
  *          and the value is an array of items with that field value.
  */
-function groupItemsByPath<T>(items: T[], path: string): GroupRecord<T> {
+function groupArrayByPath<T>(items: T[], path: string): GroupRecord<T> {
   return items.reduce((groups: GroupRecord<T>, item: T) => {
     const key = getObjectField(item, path)
 
@@ -26,4 +26,4 @@ function groupItemsByPath<T>(items: T[], path: string): GroupRecord<T> {
   }, {} as GroupRecord<T>)
 }
 
-export default groupItemsByPath
+export default groupArrayByPath
