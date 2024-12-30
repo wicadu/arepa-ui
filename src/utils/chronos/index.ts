@@ -1,5 +1,6 @@
 import dateFormat from './dateFormat'
 import type { DateFormatOptions } from './dateFormat'
+import toMilliseconds, { TimeType } from './toMilliseconds'
 
 /**
  * `chronos` is a versatile date utility that wraps around `dateFormat`.
@@ -84,6 +85,19 @@ function chronos(date: Date | string = new Date()) {
         date: dateTime?.trim(),
         time: hoursTime?.trim(),
       }
+    },
+
+    /**
+     * Subtracts a given amount of time from the current date.
+     * @param {number} value - The amount of time to subtract.
+     * @param {TimeType} type - The unit of the provided time.
+     * @returns {Date} - The resulting date.
+     * @example
+     * const updatedDate = chronos(new Date()).subtract(5, 'days')
+     */
+    subtract: (value: number, type: TimeType): Date => {
+      const timeToSSubtract: number = toMilliseconds(value, type)
+      return new Date(standardizedDate.getTime() - timeToSSubtract)
     },
   }
 
