@@ -23,6 +23,7 @@ interface Props<ItemT> {
   dataExtractor: DataExtracted<ItemT> | null | undefined
   endMessage: React.ReactElement | null
   styles: string | SerializedStyles
+  direction?: 'column' | 'row'
 }
 
 const defaultProps: Partial<Props<any>> = {
@@ -34,7 +35,8 @@ const defaultProps: Partial<Props<any>> = {
   itemWrapperProps: {},
   listWrapperProps: {},
   endMessage: null,
-  keyExtracted: '',
+  keyExtracted: 'id',
+  direction: 'column',
   fetchNext() {},
   dataExtractor(item) {
     return item
@@ -54,6 +56,7 @@ function FlatList<ItemT>(props: Props<ItemT>) {
     dataExtractor,
     keyExtracted,
     endMessage,
+    direction,
     styles,
   } = {
     ...defaultProps,
@@ -74,10 +77,11 @@ function FlatList<ItemT>(props: Props<ItemT>) {
     <InfiniteScroll
       dataLength={data?.length}
       hasMore={hasMore}
+      direction={direction}
       next={fetchNext}
       endMessage={endMessage}
     >
-      <ListWrapper styles={styles} {...listWrapperProps}>
+      <ListWrapper styles={styles} direction={direction} {...listWrapperProps}>
         {data?.map((item, index) => (
           <ItemWrapper
             key={keyExtracted === 'index' ? index : item?.[keyExtracted]}
@@ -111,8 +115,8 @@ function FlatList<ItemT>(props: Props<ItemT>) {
 
 export const Container = styled.div<Partial<Props<unknown>>>`
   display: flex;
-  flex-direction: column;
   gap: 15px;
+  flex-direction: ${({ direction }) => direction};
 
   ${({ styles }) => styles}
 `
