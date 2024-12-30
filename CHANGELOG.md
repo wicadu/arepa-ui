@@ -1,3 +1,10 @@
+# 1.37.1
+
+- Added _direction_ prop for supporting horizontal infinite scroll in `FlatList`
+- Added `sortArrayByPath` _utils_ for sorting items by a specified nested field value using a path
+- Renamed `groupItemsByPath` to `groupArrayByPath` _utils_
+- Added `.subtract()` method to `chronos` for subtracting a specified amount of time from a specified date.
+
 # 1.37.0
 
 - Refactored `getFormFieldsErrors` as `getObjectField` to generalize nested object field access

@@ -5,12 +5,13 @@ import styled from '@emotion/styled'
 import Spin from '../atoms/Spin'
 
 interface Props {
-  next: () => void,
-  dataLength: number,
-  scrollableTarget?: string,
+  next: () => void
+  dataLength: number
+  scrollableTarget?: string
   hasMore: boolean
   children: React.ReactElement[] | React.ReactElement
   endMessage: React.ReactElement | null
+  direction?: 'column' | 'row'
 }
 
 const defaultProps: Props = {
@@ -18,18 +19,31 @@ const defaultProps: Props = {
   dataLength: 0,
   hasMore: false,
   children: null,
-  endMessage: null
+  endMessage: null,
+  direction: 'column',
 }
 
 function InfiniteScroll(props: Props) {
-  const { next, dataLength, scrollableTarget, hasMore, children, endMessage } = {
+  const {
+    next,
+    dataLength,
+    scrollableTarget,
+    hasMore,
+    children,
+    endMessage,
+    direction,
+  } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
+
   return (
     <InfiniteScrollComponent
       dataLength={dataLength}
       next={next}
+      style={{
+        'overflow-y': direction === 'column' ? 'auto' : 'hidden',
+      }}
       hasMore={hasMore}
       loader={
         <SpinWrapper>
