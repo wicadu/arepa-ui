@@ -159,8 +159,8 @@ const Input = styled.input<
     if (size === UIElementSizesEnum.Large) styles += 'height: 50px;'
 
     if (buildIcon) {
-      if (iconPosition === 'left') styles += 'padding-left: 35px;'
-      if (iconPosition === 'right') styles += 'padding-right: 35px;'
+      if (iconPosition === 'left') styles += 'padding-left: 30px;'
+      if (iconPosition === 'right') styles += 'padding-right: 30px;'
     }
 
     return styles
@@ -183,8 +183,8 @@ const IconContainer = styled.div<{
   ${({ position }) => {
     let styles = ''
 
-    if (position === 'left') styles += 'left: 10px;'
-    if (position === 'right') styles += 'right: 10px;'
+    if (position === 'left') styles += 'left: 0px;'
+    if (position === 'right') styles += 'right: 0px;'
 
     return styles
   }}

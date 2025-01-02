@@ -42,7 +42,7 @@ function InfiniteScroll(props: Props) {
       dataLength={dataLength}
       next={next}
       style={{
-        'overflow-y': direction === 'column' ? 'auto' : 'hidden',
+        overflowY: direction === 'column' ? 'auto' : 'hidden',
       }}
       hasMore={hasMore}
       loader={
