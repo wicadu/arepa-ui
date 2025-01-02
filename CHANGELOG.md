@@ -1,3 +1,9 @@
+# 1.37.2
+
+- Added documentation for `useElementOnScreen` to imporve _hooks_ code clarity
+- Updated `Input` styles to adjust alignment and appearance when adding icon
+- Enhanced `Section` with a _forwardedRef_ prop to enable ref forwarding
+
 # 1.37.1
 
 - Added _direction_ prop for supporting horizontal infinite scroll in `FlatList`
