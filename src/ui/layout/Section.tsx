@@ -26,6 +26,7 @@ interface Props {
   className?: string
   styles?: SerializedStyles | string
   titleHtmlType?: string
+  forwardedRef?: React.Ref<HTMLDivElement>
 }
 
 const defaultProps: Partial<Props> = {
@@ -40,6 +41,7 @@ const defaultProps: Partial<Props> = {
   children: null,
   className: '',
   styles: '',
+  forwardedRef: undefined,
 }
 
 function Section(props: Props) {
@@ -55,6 +57,7 @@ function Section(props: Props) {
     className,
     styles,
     descriptionProps,
+    forwardedRef,
   } = {
     ...defaultProps,
     ...props,
@@ -66,7 +69,7 @@ function Section(props: Props) {
   )
 
   return (
-    <Container className={className} styles={styles}>
+    <Container className={className} styles={styles} ref={forwardedRef}>
       {title && <meta itemProp="name" content={title} />}
 
       {renderHeader && (
