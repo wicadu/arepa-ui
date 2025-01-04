@@ -24,6 +24,7 @@ interface Props<ItemT> {
   endMessage: React.ReactElement | null
   styles: string | SerializedStyles
   direction?: 'column' | 'row'
+  className?: string
 }
 
 const defaultProps: Partial<Props<any>> = {
@@ -37,6 +38,7 @@ const defaultProps: Partial<Props<any>> = {
   endMessage: null,
   keyExtracted: 'id',
   direction: 'column',
+  className: '',
   fetchNext() {},
   dataExtractor(item) {
     return item
@@ -58,6 +60,7 @@ function FlatList<ItemT>(props: Props<ItemT>) {
     endMessage,
     direction,
     styles,
+    className,
   } = {
     ...defaultProps,
     ...props,
@@ -80,6 +83,7 @@ function FlatList<ItemT>(props: Props<ItemT>) {
       direction={direction}
       next={fetchNext}
       endMessage={endMessage}
+      className={className}
     >
       <ListWrapper styles={styles} direction={direction} {...listWrapperProps}>
         {data?.map((item, index) => (
