@@ -7,11 +7,26 @@ interface Props {
   tabs: React.ReactElement[]
   styles?: SerializedStyles | string
   className?: string
+  defaultValue: number
   onChangeTabs: (index: number) => void
 }
 
-function Tabs({ headers, tabs, styles, className, onChangeTabs }: Props) {
-  const [selectedTab, setSelectedTab] = useState(0)
+const defaultProps: Partial<Props> = {
+  headers: [],
+  tabs: [],
+  styles: '',
+  className: '',
+  defaultValue: 0,
+  onChangeTabs() {},
+}
+
+function Tabs(props: Props) {
+  const { headers, tabs, styles, className, defaultValue, onChangeTabs } = {
+    ...defaultProps,
+    ...props,
+  }
+
+  const [selectedTab, setSelectedTab] = useState(defaultValue)
 
   const { colors } = useTheme()
 
