@@ -8,30 +8,38 @@ enum spinType {
   warning = 'warning',
   ghost = 'ghost',
   white = 'white',
+  link = 'link',
 }
 
 interface Props {
-  center?: boolean,
-  size?: number,
-  type: spinType,
+  center?: boolean
+  size?: number
+  type: `${spinType}`
+  className?: string
 }
 
-const defaultProps = {
+const defaultProps: Partial<Props> = {
   size: 40,
   type: spinType.primary,
+  className: '',
 }
 
 function SpinComponent(props: Props) {
-  const { center, size, type, ...propsLeft } = {
+  const { center, size, type, className, ...restOfProps } = {
     ...defaultProps,
     ...props,
   }
 
   return (
-    <Wrapper center={center} data-testid="loading-spin-testid" {...propsLeft}>
+    <Wrapper
+      center={center}
+      data-testid="loading-spin-testid"
+      className={className}
+      {...restOfProps}
+    >
       <Spin size={size} type={type}>
-        <div className='double-bounce1' />
-        <div className='double-bounce2' />
+        <div className="double-bounce1" />
+        <div className="double-bounce2" />
       </Spin>
     </Wrapper>
   )
@@ -64,12 +72,12 @@ const Spin = styled.div<Props>`
     left: 0;
 
     background-color: ${({ type, theme }) => {
-    if (type === spinType.ghost) return theme.colors.NEUTRAL.SELECTED
-    if (type === spinType.white) return theme.colors.FONT.TITLE
-    if (type === spinType.link) return theme.colors.MAIN.PRIMARY
+      if (type === spinType.ghost) return theme.colors.NEUTRAL.SELECTED
+      if (type === spinType.white) return theme.colors.FONT.TITLE
+      if (type === spinType.link) return theme.colors.MAIN.PRIMARY
 
-    return theme.colors.MAIN?.[String(type).toUpperCase()]
-  }};
+      return theme.colors.MAIN?.[String(type).toUpperCase()]
+    }};
 
     -webkit-animation: sk-bounce 2s infinite ease-in-out;
     animation: sk-bounce 2s infinite ease-in-out;
