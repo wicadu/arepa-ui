@@ -1,3 +1,8 @@
+# 1.37.4
+
+- Added _defaultValue_ prop alongside defining _defaultProps_ in `Tabs`
+- Refined _propTypes_ for _Interfaces_ in `Toggle` for better type validation
+
 # 1.37.3
 
 - Refined _propTypes_ for _Interfaces_ in `Radio.Controller` and `Radio.Group` for better type validation
