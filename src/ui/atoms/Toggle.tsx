@@ -1,64 +1,58 @@
-import React, { useCallback, useMemo, useState } from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import React, { useMemo, useState } from 'react'
 
 import styled from '@emotion/styled'
 import { useTheme } from '@emotion/react'
 
 import Spin from './Spin'
 
-const propTypes = {
-  onClick: PropTypes.func,
-  defaultValue: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool,
-  controlled: PropTypes.bool,
-  loading: PropTypes.bool
+interface Props {
+  defaultValue?: boolean
+  disabled?: boolean
+  controlled?: boolean
+  loading?: boolean
+  onClick?: (value: boolean) => void
 }
 
-type Props = InferProps<typeof propTypes>
-
-const defaultProps: Props = {
-  onClick: null,
+const defaultProps: Partial<Props> = {
   defaultValue: false,
   disabled: false,
   controlled: false,
-  loading: false
+  loading: false,
+  onClick(_: boolean) {},
 }
 
-function Toggle ({ defaultValue, disabled, onClick, controlled, loading }: Props) {
+function Toggle(props: Props) {
+  const { defaultValue, disabled, onClick, controlled, loading } = {
+    ...defaultProps,
+    ...props,
+  }
+
   const [active, setActive] = useState<boolean>(defaultValue)
 
   const { colors } = useTheme()
 
-  const value: boolean = useMemo(() => controlled ? defaultValue : active, [
-    active,
-    defaultValue,
-    controlled
-  ])
+  const value: boolean = useMemo(
+    () => (controlled ? defaultValue : active),
+    [active, defaultValue, controlled]
+  )
 
-  const handleToggle = useCallback(() => {
+  const onChange = () => {
     if (disabled) return
 
     setActive(!value)
     onClick?.(!value)
-  }, [onClick, disabled, value])
+  }
 
   if (loading) return <Spin color={colors.MAIN.PRIMARY} size={20} />
 
   return (
-    <Container onClick={handleToggle} active={value} disabled={disabled}>
+    <Container onClick={onChange} active={value} disabled={disabled}>
       <Circle />
     </Container>
   )
 }
 
-type StylesTypes = {
-  active: boolean
-  disabled: boolean
-  theme?: any
-}
-
-
-const Container = styled.div`
+const Container = styled.div<Partial<Props>>`
   & {
     height: 20px;
     width: 40px;
@@ -66,13 +60,16 @@ const Container = styled.div`
     align-content: center;
     display: flex;
     cursor: pointer;
-    opacity: ${({ disabled }: StylesTypes) => disabled ? 0.65 : 1};
+    opacity: ${({ disabled }) => (disabled ? 0.65 : 1)};
     padding: 0 5px;
 
-    ${({ theme, active }: StylesTypes) => active ? `
+    ${({ theme, active }) =>
+      active
+        ? `
       justify-content: flex-end;
       background-color: ${theme.colors.MAIN.PRIMARY};
-    ` : `
+    `
+        : `
       justify-content: flex-start;
       background-color: ${theme.colors.FONT.DESCRIPTION};
     `}
@@ -85,8 +82,5 @@ const Circle = styled.div`
   border-radius: 12px;
   align-self: center;
 `
-
-Toggle.propTypes = propTypes
-Toggle.defaultProps = defaultProps
 
 export default Toggle
