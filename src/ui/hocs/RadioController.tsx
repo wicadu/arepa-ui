@@ -1,30 +1,38 @@
 import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 import styled from '@emotion/styled'
 import { SerializedStyles } from '@emotion/react'
 
-const propTypes = {
-  children: PropTypes.element.isRequired,
-  name: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  containerStyles: PropTypes.any
+interface Props {
+  children: React.ReactNode
+  name: string
+  value: string | number
+  disabled?: boolean
+  containerStyles?: SerializedStyles | string
 }
 
-type Props = InferProps<typeof propTypes>
-
-const defaultProps = {
-  value: ''
+const defaultProps: Partial<Props> = {
+  value: '',
 }
 
-function RadioController({ children, name, value: defaultValue, containerStyles, ...props }: Props) {
+function RadioController(props: Props) {
+  const {
+    children,
+    name,
+    value: defaultValue,
+    containerStyles,
+    ...restOfProps
+  } = {
+    ...defaultProps,
+    ...props,
+  }
+
   const { control } = useFormContext()
 
   const formValue = useWatch({
     control,
-    name
+    name,
   })
 
   return (
@@ -33,28 +41,26 @@ function RadioController({ children, name, value: defaultValue, containerStyles,
       control={control}
       render={({ field: { onChange } }) => {
         const handleOnChange = () => {
-          if (props.disabled) return
+          if (restOfProps.disabled) return
           onChange(defaultValue)
         }
 
         return (
           <ItemWrapper onClick={handleOnChange} styles={containerStyles}>
-            {React.cloneElement(children, { checked: String(formValue) === String(defaultValue), ...props })}
+            {React.cloneElement(children, {
+              checked: String(formValue) === String(defaultValue),
+              ...restOfProps,
+            })}
           </ItemWrapper>
         )
       }}
-      defaultValue=''
+      defaultValue=""
     />
   )
 }
 
 const ItemWrapper = styled.div<{ styles?: SerializedStyles | string }>`
-  width: 100%
-
-  ${({ styles }) => styles}
+  width: 100% ${({ styles }) => styles};
 `
-
-RadioController.propTypes = propTypes
-RadioController.defaultProps = defaultProps
 
 export default RadioController

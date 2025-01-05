@@ -1,3 +1,9 @@
+# 1.37.3
+
+- Refined _propTypes_ for _Interfaces_ in `Radio.Controller` and `Radio.Group` for better type validation
+- Implemented custom scrollbar _styles_ for horizontal display in `FlatList`
+- Added _className_ prop into Spin
+
 # 1.37.2
 
 - Added documentation for `useElementOnScreen` to imporve _hooks_ code clarity

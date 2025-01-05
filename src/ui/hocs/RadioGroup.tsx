@@ -1,17 +1,22 @@
-import React from 'react'
-import PropTypes, { InferProps } from 'prop-types'
+import React, { ReactNode, ReactElement } from 'react'
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired
+interface Props {
+  children: ReactNode
+  name: string
 }
-
-type Props = InferProps<typeof propTypes>
 
 function RadioGroup({ children, name, ...props }: Props) {
-  return children.map(child => React.cloneElement(Array.isArray(child) ? child[0] : child, { name, ...props }))
-}
+  const flatChildren = React.Children.toArray(children).flat()
 
-RadioGroup.propTypes = propTypes
+  return flatChildren?.map((child: ReactElement, index: number) =>
+    React.isValidElement(child)
+      ? React.cloneElement(child, {
+          key: child.key || index,
+          name,
+          ...props,
+        })
+      : null
+  )
+}
 
 export default RadioGroup
