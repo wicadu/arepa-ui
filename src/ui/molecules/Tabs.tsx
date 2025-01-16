@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { SerializedStyles, useTheme } from '@emotion/react'
+import { hexToRGBA } from '../../utils'
 
 interface Props {
   headers: React.ReactElement[]
@@ -93,7 +94,9 @@ const HeaderTab = styled.li<{ isActive: boolean; isDisabledTab: boolean }>`
   height: 50px;
   border-bottom: 1px solid
     ${({ theme, isActive }) =>
-      isActive ? theme?.colors.MAIN.INFO : theme.colors?.NEUTRAL.TRANSPARENT};
+      isActive
+        ? theme?.colors.MAIN.INFO
+        : hexToRGBA(theme.colors.FONT.DESCRIPTION, 0.3)};
 
   ${({ isDisabledTab }) => {
     let styles = ``
