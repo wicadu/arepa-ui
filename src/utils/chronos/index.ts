@@ -1,7 +1,13 @@
+import toMilliseconds, { type TimeType } from './toMilliseconds'
+
 import getDateDifference from './getDiffBetweenDates'
 import dateFormat, { type DateFormatOptions } from './dateFormat'
-import getHours, { type HoursOptions } from './getHours'
-import toMilliseconds, { type TimeType } from './toMilliseconds'
+
+import getMinute, { MinuteOptions } from './getMinute'
+import getHour, { HourOptions } from './getHour'
+import getDay, { DayOptions } from './getDay'
+import getWeek, { WeekOptions } from './getWeek'
+import getMonth, { MonthOptions } from './getMonth'
 
 export type Time = Date | string
 
@@ -26,7 +32,9 @@ export type Time = Date | string
  * console.log(`Date: ${chrono}`) // "Date: 25 de diciembre de 2024 11:59 PM"
  */
 function chronos(date: Time = new Date()) {
-  const standardizedDate = new Date(date)
+  const localeDate = new Date(date)
+  const timezoneOffset = localeDate.getTimezoneOffset() * 60000
+  const standardizedDate = new Date(localeDate.getTime() + timezoneOffset)
 
   // Instance methods to access specific date components
   const instance = {
@@ -48,26 +56,36 @@ function chronos(date: Time = new Date()) {
      * Retrieves the month component of the date (1-based, e.g., January = 1).
      * @returns {number} - The month (e.g., 12 for December).
      */
-    month: () => standardizedDate.getMonth() + 1,
+    month: (options: MonthOptions = {}) => getMonth(standardizedDate, options),
 
     /**
-     * Retrieves the day of the month.
-     * @returns {number} - The day of the month (e.g., 25).
+     * Retrieves the week day based on the specified options.
+     * @param {WeekOptions} [options={}] - Options for configuring the week format.
+     * @returns {string} - The formatted week string (e.g., "Mon", "Monday").
      */
-    day: () => standardizedDate.getDate(),
+    week: (options: WeekOptions = {}) => getWeek(standardizedDate, options),
+
+    /**
+     * Retrieves the formatted day component of the time based on the specified options.
+     * @param {DayOptions} [options={}] - Options for configuring the day format.
+     * @returns {string} - The formatted day string (e.g., "12 Sept", "13 Tue").
+     */
+    day: (options: DayOptions = {}) => getDay(standardizedDate, options),
 
     /**
      * Retrieves the hours component of the time based on the specified options.
-     * @param {HoursOptions} [options={}] - Options for configuring the hour format.
+     * @param {HourOptions} [options={}] - Options for configuring the hour format.
      * @returns {string | number} - The hours (e.g., 23 for 11 PM in 24-hour format, or "11 PM" in 12-hour format).
      */
-    hour: (options: HoursOptions = {}) => getHours(standardizedDate, options),
+    hour: (options: HourOptions = {}) => getHour(standardizedDate, options),
 
     /**
-     * Retrieves the minutes component of the time.
-     * @returns {number} - The minutes (e.g., 59).
+     * Retrieves the minutes component of the time based on the specified options.
+     * @param {MinuteOptions} [options={}] - Options for configuring the minute format.
+     * @returns {string | number} - The minutes (e.g., "01", "02" for padded, or 1, 2 for unpadded).
      */
-    minute: () => standardizedDate.getMinutes(),
+    minute: (options: MinuteOptions = {}) =>
+      getMinute(standardizedDate, options),
 
     /**
      * Retrieves date and time components as an object with `date` and `time` properties.
