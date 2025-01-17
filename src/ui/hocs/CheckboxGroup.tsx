@@ -6,8 +6,6 @@ import styled from '@emotion/styled'
 
 import { getObjectField } from '../../utils'
 
-const { useForm } = Form
-
 interface Props {
   children: React.ReactNode
   name: string
@@ -26,9 +24,10 @@ function CheckboxGroup(props: Props) {
     ...props,
   }
 
-  const { formState } = useForm()
+  const { formState } = Form.useForm()
 
   const fieldError = getObjectField(formState?.errors, name)
+  const flatChildren = React.Children.toArray(children).flat()
 
   return (
     <Container>
@@ -38,11 +37,14 @@ function CheckboxGroup(props: Props) {
         hasError={Boolean(fieldError?.message)}
         name={name}
       >
-        {children.map((child) =>
-          React.cloneElement(child, {
-            name,
-            ...restOfprops,
-          })
+        {flatChildren?.map((child: React.ReactElement, index: number) =>
+          React.isValidElement(child)
+            ? React.cloneElement(child, {
+                key: child.key || index,
+                name,
+                ...restOfprops,
+              })
+            : null
         )}
       </StyledInputFeedback>
     </Container>

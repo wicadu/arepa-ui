@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 import { SerializedStyles, useTheme } from '@emotion/react'
@@ -13,7 +12,7 @@ export enum Types {
   Success = 'success',
   Error = 'error',
   Info = 'info',
-  Warning = 'warning'
+  Warning = 'warning',
 }
 
 const _types = {
@@ -31,13 +30,15 @@ interface Props {
   iconSize?: number
   textStyles?: SerializedStyles | string
   containerStyles?: SerializedStyles | string
+  className?: string
 }
 
 const defaultProps: Partial<Props> = {
   type: Types.Info,
   textSize: 14,
   iconSize: 18,
-  textStyles: ''
+  textStyles: '',
+  className: '',
 }
 
 function StatusChip(props: Props) {
@@ -48,17 +49,22 @@ function StatusChip(props: Props) {
     textColor,
     textSize,
     iconSize,
-    textStyles
+    textStyles,
+    className,
   } = {
     ...defaultProps,
-    ...props
+    ...props,
   }
 
   const { colors } = useTheme()
 
   return (
-    <Row gap={5} styles={containerStyles}>
-      <CheckIcon name={_types?.[type?.toLowerCase()]} type={type} size={iconSize} />
+    <Row gap={5} className={className} styles={containerStyles}>
+      <CheckIcon
+        name={_types?.[type?.toLowerCase()]}
+        type={type}
+        size={iconSize}
+      />
 
       {text && (
         <Typography
@@ -77,7 +83,8 @@ function StatusChip(props: Props) {
 const CheckIcon = styled(Icon)`
   ${({ theme, type }) => {
     const mainColor =
-      theme.colors.MAIN?.[String(type).toUpperCase()] || theme?.colors.MAIN.PRIMARY
+      theme.colors.MAIN?.[String(type).toUpperCase()] ||
+      theme?.colors.MAIN.PRIMARY
 
     return `
       border-radius: 25px;

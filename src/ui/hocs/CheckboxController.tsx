@@ -11,31 +11,28 @@ const { useForm } = Form
 
 const propTypes = {
   children: PropTypes.element.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   index: PropTypes.number.isRequired,
   value: PropTypes.string,
   checked: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 }
 
 type Props = InferProps<typeof propTypes>
 
-function CheckboxController({
-  children,
-  name,
-  index,
-  ...props
-}: Props) {
+function CheckboxController({ children, name, index, ...props }: Props) {
   const { control } = useForm()
 
   return (
     <Container>
-      <VirtualInputs fields={[
-        {
-          name: `${name}.${index}.value`,
-          defaultValue: props.value,
-        }
-      ]} />
+      <VirtualInputs
+        fields={[
+          {
+            name: `${name}.${index}.value`,
+            defaultValue: props.value,
+          },
+        ]}
+      />
       <Controller
         name={`${name}.${index}.checked`}
         control={control}
@@ -61,7 +58,7 @@ function CheckboxController({
 const Container = styled.div``
 
 const ItemWrapper = styled.div`
-  width: 100%
+  width: 100%;
 `
 
 CheckboxController.propTypes = propTypes
