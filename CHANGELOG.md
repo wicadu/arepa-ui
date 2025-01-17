@@ -1,3 +1,14 @@
+# 1.38.0
+
+- Added `.getDateDifference()` to `chronos` to get difference between two dates in the specified granularity
+- Added `.getHour()` to `chronos` to format hours of a given date based on the options
+- Added `.getDay()` to `chronos` to format days of a given date based on the options
+- Added `.getMinute()` to `chronos` to format minutes of a given date based on the options
+- Added `.getWeek()` to `chronos` to format weeks of a given date based on the options
+- Added `.getMonth` to `chronos` to format months of a given date based on the options
+- Added _className_ prop in `StatusChip` and fixed color _styles_ in `Tabs`
+- Refactored `Checkbox.Group` and `Checkbox.Controller` for better _error handling_
+
 # 1.37.4
 
 - Added _defaultValue_ prop alongside defining _defaultProps_ in `Tabs`
