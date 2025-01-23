@@ -133,6 +133,23 @@ function chronos(date: Time = new Date()) {
     diff: (end: Time, granularity: TimeType): number => {
       return getDateDifference(standardizedDate, end, granularity)
     },
+
+    /**
+     * Converts the current date into an ISO 8601 string while accounting for the timezone offset.
+     * @returns {string} - The ISO 8601 formatted string of the date (e.g., "2025-01-23T12:34:56.789Z").
+     * @example
+     * const chrono = chronos(new Date("2025-01-23T09:34:56.789-03:00"))
+     * console.log(chrono.toISOString())
+     * // Output: "2025-01-23T12:34:56.789Z"
+     */
+    toISOString: (): string => {
+      const time: Date = date as Date
+
+      const timezoneOffset = time.getTimezoneOffset() * 60000
+      const localDate = new Date(time.getTime() - timezoneOffset)
+
+      return localDate.toISOString()
+    },
   }
 
   return instance
