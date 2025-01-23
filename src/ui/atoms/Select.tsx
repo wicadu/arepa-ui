@@ -49,7 +49,10 @@ function SelectComponent(props: Props) {
     ...props,
   }
 
-  const [selectedOption, setSelectedOption] = useState<Option>()
+  const [selectedOption, setSelectedOption] = useState<Option>({
+    value: '',
+    label: '',
+  })
   const [showOptions, setShowOptions] = useState<boolean>(false)
 
   const {
