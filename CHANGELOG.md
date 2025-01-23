@@ -1,3 +1,10 @@
+# 1.38.1
+
+- Added `.toISOString()` to convert date into an ISO 8601 string
+- Added _BadgeType.Ghost_ in `Badge` for an alternative white scale style
+- Fixed 'Component is changing an uncontrolled input to be controlled' error in `Select`
+- Added _role_ prop in `UserCard` to identify store hierarchy
+
 # 1.38.0
 
 - Added `.getDateDifference()` to `chronos` to get difference between two dates in the specified granularity
