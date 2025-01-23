@@ -8,6 +8,7 @@ enum BadgeType {
   Success = 'success',
   Error = 'error',
   Warning = 'warning',
+  Ghost = 'ghost',
 }
 
 interface Props extends Partial<React.HTMLAttributes<HTMLDivElement>> {
@@ -72,17 +73,31 @@ const Container = styled.div<Partial<Props>>`
   ${({ type, inverse, theme }) => {
     const { colors } = theme
 
-    const mainColor = colors.MAIN?.[String(type).toUpperCase()]
-
-    return `
-      background-color: ${inverse ? colors.NEUTRAL.TRANSPARENT : mainColor};
-      color: ${inverse ? mainColor : colors.FONT.CONTRAST};
-      border: 1px solid ${mainColor};
-
+    let styles = `
       font-size: 14px;
       text-align: center;
       font-weight: 700;
     `
+
+    if (type === BadgeType.Ghost) {
+      styles += `
+        color: ${colors.FONT.DESCRIPTION};
+        background-color: ${
+          inverse ? colors.NEUTRAL.TRANSPARENT : colors.NEUTRAL.SELECTED
+        };
+        border: 1px solid ${colors.NEUTRAL.SELECTED};
+    `
+    } else {
+      const mainColor = colors.MAIN?.[String(type).toUpperCase()]
+
+      styles += `
+        background-color: ${inverse ? colors.NEUTRAL.TRANSPARENT : mainColor};
+        color: ${inverse ? mainColor : colors.FONT.CONTRAST};
+        border: 1px solid ${mainColor};
+      `
+    }
+
+    return styles
   }}
 
   ${({ styles }) => styles}
