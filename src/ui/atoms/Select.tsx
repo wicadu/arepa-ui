@@ -180,7 +180,7 @@ const SelectedValueRendering = styled.div<Partial<Props & any>>`
   align-items: center;
   justify-content: space-between;
   border-radius: 10px;
-  padding: 0 15px;
+  padding: 0 12px;
   cursor: pointer;
 
   background-color: ${({ theme }) => theme.colors.NEUTRAL.CARD};
