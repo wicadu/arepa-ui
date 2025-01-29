@@ -14,6 +14,7 @@ type IconPosition = 'left' | 'right'
 interface InputIcon extends IconProps {
   position: IconPosition
   component?: React.ReactElement
+  horizontalSpace?: number
 }
 
 interface Props {
@@ -41,6 +42,7 @@ const defaultProps: Partial<Props> = {
     name: '',
     onClick() {},
     size: 18,
+    horizontalSpace: 0,
   },
   containerStyles: '',
   width: '100%',
@@ -89,7 +91,10 @@ function InputComponent(props: Props) {
       styles={containerStyles}
     >
       {buildIcon && (
-        <IconContainer position={icon?.position}>
+        <IconContainer
+          position={icon?.position}
+          horizontalSpace={icon?.horizontalSpace}
+        >
           {React.isValidElement(icon?.component) ? (
             icon?.component
           ) : (
@@ -103,6 +108,7 @@ function InputComponent(props: Props) {
         id={name}
         buildIcon={buildIcon}
         iconPosition={icon?.position}
+        iconHorizontalSpace={icon?.horizontalSpace}
         name={name}
         type={htmlType}
         hasError={Boolean(fieldError?.message)}
@@ -121,7 +127,7 @@ const Input = styled.input<
   }
 >`
   border-radius: 7px;
-  padding: 0 15px;
+  padding: 0 12px;
   font-family: 'Catamaran', sans-serif;
   font-optical-sizing: auto;
   font-weight: 100;
@@ -151,7 +157,7 @@ const Input = styled.input<
     margin: 0;
   }
 
-  ${({ size, buildIcon, iconPosition }) => {
+  ${({ size, buildIcon, iconPosition = 'left', iconHorizontalSpace = 0 }) => {
     let styles = ''
 
     if (size === UIElementSizesEnum.Small) styles += 'height: 40px;'
@@ -159,8 +165,10 @@ const Input = styled.input<
     if (size === UIElementSizesEnum.Large) styles += 'height: 50px;'
 
     if (buildIcon) {
-      if (iconPosition === 'left') styles += 'padding-left: 30px;'
-      if (iconPosition === 'right') styles += 'padding-right: 30px;'
+      const totalSpace: number = iconHorizontalSpace + 30
+
+      if (iconPosition === 'left') styles += `padding-left: ${totalSpace}px;`
+      if (iconPosition === 'right') styles += `padding-right: ${totalSpace}px;`
     }
 
     return styles
@@ -170,8 +178,8 @@ const Input = styled.input<
 `
 
 const IconContainer = styled.div<{
-  children: React.ReactElement
   position: IconPosition
+  horizontalSpace: number
 }>`
   align-items: center;
   display: flex;
@@ -180,11 +188,11 @@ const IconContainer = styled.div<{
   transform: translate(0, -50%);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  ${({ position }) => {
+  ${({ position = 'left', horizontalSpace = 0 }) => {
     let styles = ''
 
-    if (position === 'left') styles += 'left: 0px;'
-    if (position === 'right') styles += 'right: 0px;'
+    if (position === 'left') styles += `left: ${horizontalSpace}px;`
+    if (position === 'right') styles += `right: ${horizontalSpace}px;`
 
     return styles
   }}
