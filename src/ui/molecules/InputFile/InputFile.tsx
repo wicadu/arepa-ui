@@ -21,6 +21,7 @@ interface Props {
   accept: string
   containerStyles?: SerializedStyles | string
   uploaderStyles?: SerializedStyles | string
+  className?: string
   onChangeInput(f: File | File[]): void
 }
 
@@ -29,6 +30,7 @@ const defaultProps: Partial<Props> = {
   disabled: false,
   width: '100%',
   accept: '.jpg, .jpeg, .png, .svg, .webp, application/pdf',
+  className: '',
   onChangeInput() {},
 }
 
@@ -44,6 +46,7 @@ function InputFile(props: Props) {
     doNotShowErrors,
     containerStyles,
     uploaderStyles,
+    className,
     onChangeInput,
   } = {
     ...defaultProps,
@@ -83,6 +86,7 @@ function InputFile(props: Props) {
           hasError={Boolean(fieldError?.message)}
           name={name}
           doNotShowErrors={doNotShowErrors}
+          className={className}
           styles={containerStyles}
         >
           <Row gap={35}>
