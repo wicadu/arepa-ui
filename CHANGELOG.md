@@ -1,3 +1,9 @@
+# 1.38.2
+
+- Added _horizontalSpace_ prop for controlling better lateral spaces in `Input`
+- Added _className_ prop in `InputFile`
+- Updated _padding_ style in `Select`
+
 # 1.38.1
 
 - Added `.toISOString()` to convert date into an ISO 8601 string
